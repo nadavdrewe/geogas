@@ -1,0 +1,36 @@
+{
+  "type": "part_guide",
+  "slug": "pressure-relief-valve",
+  "partKey": "pressure-relief-valve",
+  "parentServiceSlug": "boiler-repair",
+  "linkTitle": "pressure relief valve",
+  "metaTitle": "Pressure Relief Valve | Signs It Has Failed",
+  "metaDescription": "Learn what a pressure relief valve does, how it affects boiler pressure and when it may need replacing.",
+  "h1": "Pressure Relief Valve",
+  "intro": "The pressure relief valve is a safety component that helps protect the heating system if pressure rises too high. If it is faulty, it can contribute to leaks and repeated pressure loss.",
+  "replacementCost": "Replacement cost depends on boiler model, access and whether other pressure-control parts also need attention.",
+  "diyAllowed": false,
+  "safetyWarning": "Pressure relief valve issues are tied to sealed-system safety and should be handled by an engineer.",
+  "symptoms": [
+    "Water dripping from the discharge pipe",
+    "Pressure dropping after the system heats up",
+    "Repeated pressure-related lockouts"
+  ],
+  "sections": [
+    {
+      "heading": "What the pressure relief valve does",
+      "body": "The valve is designed to release water if the system pressure rises to an unsafe level, helping protect the boiler and pipework."
+    },
+    {
+      "heading": "How a faulty valve causes problems",
+      "body": "If the valve has discharged and does not reseal properly, the system may keep losing water and pressure even though the original overpressure event has passed."
+    },
+    {
+      "heading": "Why it should be diagnosed with the wider pressure issue",
+      "body": "A failed relief valve can be the problem, but it can also be the result of another fault such as a failed expansion vessel, so both need checking together."
+    }
+  ],
+  "relatedProblemSlugs": ["boiler-pressure-dropping", "boiler-keeps-losing-pressure"],
+  "relatedLocationSlugs": ["boiler-repair-camden"]
+}
+

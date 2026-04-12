@@ -1,0 +1,44 @@
+{
+  "type": "brand_service",
+  "slug": "baxi-boiler-repair",
+  "brand": "Baxi",
+  "serviceKey": "boiler-repair",
+  "parentServiceSlug": "boiler-repair",
+  "primaryLocation": "London",
+  "linkTitle": "Baxi boiler repair in London",
+  "metaTitle": "Baxi Boiler Repair in London | Local Engineer",
+  "metaDescription": "Need Baxi boiler repair in London? Local support for ignition faults, pressure problems, leaks and hot water issues.",
+  "h1": "Baxi Boiler Repair in London",
+  "intro": "We provide Baxi boiler repair across London for ignition faults, pressure problems, leaks, hot water issues and general breakdown diagnosis.",
+  "pricingGuidance": "Baxi repair pricing depends on the fault found, the model and whether parts are needed after diagnosis.",
+  "localProof": "Booked for Baxi faults across London by homeowners and landlords who need a clear diagnosis and reliable next-step advice.",
+  "areasCovered": ["Camden", "Islington", "Hackney", "West London"],
+  "commonFaults": [
+    "Ignition and firing faults",
+    "Pressure loss and boiler lockouts",
+    "Leaks and discharge issues",
+    "No hot water or weak performance"
+  ],
+  "sections": [
+    {
+      "heading": "Common Baxi repair calls",
+      "body": "Typical call-outs involve ignition problems, poor hot water, pressure loss and leaks that trigger shutdowns or unreliable performance."
+    },
+    {
+      "heading": "Why brand-specific symptoms still need diagnosis",
+      "body": "A Baxi boiler can show brand-specific behaviour, but the real fault still has to be confirmed before parts are ordered or replaced."
+    },
+    {
+      "heading": "How we approach repair decisions",
+      "body": "We explain the fault, the likely repair route and whether the cost still makes sense compared with the age and condition of the boiler."
+    }
+  ],
+  "relatedProblemSlugs": [
+    "boiler-not-igniting",
+    "boiler-pressure-dropping",
+    "boiler-leaking-water"
+  ],
+  "relatedLocationSlugs": ["boiler-repair-camden", "boiler-repair-islington"],
+  "relatedPartSlugs": ["pressure-relief-valve"]
+}
+

@@ -1,0 +1,32 @@
+{
+  "type": "location_service",
+  "slug": "gas-engineer-islington",
+  "serviceKey": "gas-engineer",
+  "parentServiceSlug": "gas-engineer",
+  "location": "Islington",
+  "linkTitle": "gas engineer in Islington",
+  "metaTitle": "Gas Engineer Islington | Local Gas Safe Support",
+  "metaDescription": "Need a gas engineer in Islington? Local Gas Safe support for boiler faults, gas safety checks and landlord work.",
+  "h1": "Gas Engineer in Islington",
+  "intro": "We provide gas engineering support in Islington for boiler work, gas safety inspections, landlord checks and local fault finding where safe diagnosis and clear communication matter.",
+  "localProof": "Gas engineer visits around Angel, Highbury and Barnsbury where homes and rentals need a local Gas Safe point of contact.",
+  "areasCovered": ["Angel", "Highbury", "Barnsbury", "Canonbury"],
+  "nearbyAreas": ["Camden", "Highbury", "Holloway", "Clerkenwell"],
+  "sections": [
+    {
+      "heading": "Local gas engineering support across Islington",
+      "body": "We help with boiler diagnosis, gas safety work, servicing and the kinds of day-to-day appliance issues that need a qualified local engineer."
+    },
+    {
+      "heading": "Support for homes, rentals and agents",
+      "body": "Many Islington bookings involve tenant access, landlord reporting and managed properties where clear communication is as important as the technical work."
+    },
+    {
+      "heading": "Why local coverage matters",
+      "body": "A local engineer can usually offer easier scheduling, more practical follow-up and faster attendance for faults that need checking promptly."
+    }
+  ],
+  "relatedProblemSlugs": ["boiler-not-igniting", "boiler-pressure-dropping"],
+  "relatedLocationSlugs": ["gas-engineer-camden", "gas-safety-certificate-islington"]
+}
+

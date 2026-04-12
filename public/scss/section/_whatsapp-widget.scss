@@ -1,0 +1,239 @@
+.whatsapp-widget {
+  position: fixed;
+  inset-inline-end: 16px;
+  bottom: max(30px, calc(env(safe-area-inset-bottom) + 10px));
+  z-index: 1002;
+  display: grid;
+  justify-items: end;
+  gap: 8px;
+
+  &__panel {
+    width: min(320px, calc(100vw - 20px));
+    border-radius: 14px;
+    border: 1px solid rgba(15, 23, 42, 0.12);
+    background: #ffffff;
+    box-shadow: 0 14px 32px rgba(15, 23, 42, 0.2);
+    padding: 12px;
+    animation: whatsapp-panel-in 0.2s ease;
+    max-height: min(68vh, 360px);
+    overflow: auto;
+  }
+
+  &__panel-head {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 8px;
+    margin-bottom: 8px;
+  }
+
+  &__panel-brand {
+    min-width: 0;
+    display: grid;
+    gap: 4px;
+
+    small {
+      font-size: 12px;
+      line-height: 17px;
+      color: #64748b;
+      font-weight: 600;
+    }
+  }
+
+  &__brand {
+    background: #ffffff;
+    border-radius: 10px;
+    border: 1px solid rgba(15, 23, 42, 0.08);
+    padding: 4px 6px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: fit-content;
+
+    img {
+      width: 108px;
+      height: auto;
+      display: block;
+    }
+  }
+
+  &__close {
+    width: 30px;
+    height: 30px;
+    border-radius: 999px;
+    border: 1px solid rgba(15, 23, 42, 0.14);
+    background: #f8fafc;
+    color: #0f172a;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s ease;
+    cursor: pointer;
+
+    &:hover {
+      background: #eef2f7;
+    }
+  }
+
+  &__copy {
+    margin: 0 0 10px;
+    font-size: 14px;
+    line-height: 21px;
+    color: #475569;
+  }
+
+  &__cta {
+    width: 100%;
+    border: 0;
+    border-radius: 10px;
+    padding: 10px 12px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background: #25d366;
+    color: #ffffff;
+    font-size: 14px;
+    line-height: 20px;
+    font-weight: 700;
+    transition: background-color 0.2s ease;
+    cursor: pointer;
+
+    &:hover {
+      background: #1eb85a;
+    }
+
+    i {
+      font-size: 18px;
+    }
+  }
+
+  &__number {
+    display: block;
+    margin-top: 8px;
+    font-size: 12px;
+    line-height: 18px;
+    color: #64748b;
+    text-align: center;
+    letter-spacing: 0.2px;
+  }
+
+  &__trigger {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    border: 1px solid rgba(15, 23, 42, 0.16);
+    border-radius: 999px;
+    background: #ffffff;
+    color: #0f172a;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 20px;
+    padding: 8px 12px 8px 8px;
+    box-shadow: 0 10px 24px rgba(15, 23, 42, 0.18);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    cursor: pointer;
+
+    &:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 12px 28px rgba(15, 23, 42, 0.22);
+      color: #0f172a;
+    }
+  }
+
+  &__icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 999px;
+    background: #25d366;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    i {
+      font-size: 17px;
+      line-height: 1;
+      color: #ffffff;
+    }
+  }
+
+  &__label {
+    white-space: nowrap;
+  }
+
+  &.is-open {
+    .whatsapp-widget__trigger {
+      background: #f8fafc;
+    }
+  }
+}
+
+@media (max-width: 991px) {
+  .whatsapp-widget {
+    inset-inline-end: 12px;
+    bottom: max(22px, calc(env(safe-area-inset-bottom) + 10px));
+
+    &__panel {
+      width: min(304px, calc(100vw - 16px));
+    }
+
+    &__trigger {
+      padding: 8px 10px 8px 8px;
+    }
+
+    &__label {
+      font-size: 13px;
+      line-height: 19px;
+    }
+  }
+}
+
+@media (max-width: 575px) {
+  .whatsapp-widget {
+    inset-inline-end: auto;
+    inset-inline-start: 10px;
+    bottom: max(16px, calc(env(safe-area-inset-bottom) + 8px));
+
+    &__panel {
+      width: min(286px, calc(100vw - 14px));
+      padding: 10px;
+    }
+
+    &__brand img {
+      width: 96px;
+    }
+
+    &__trigger {
+      padding: 7px;
+      box-shadow: 0 9px 20px rgba(15, 23, 42, 0.16);
+    }
+
+    &__icon {
+      width: 30px;
+      height: 30px;
+    }
+  }
+}
+
+@media (max-width: 420px) {
+  .whatsapp-widget {
+    &__label {
+      display: none;
+    }
+
+    &__trigger {
+      padding: 7px;
+    }
+  }
+}
+
+@keyframes whatsapp-panel-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

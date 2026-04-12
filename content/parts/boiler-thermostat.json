@@ -1,0 +1,36 @@
+{
+  "type": "part_guide",
+  "slug": "boiler-thermostat",
+  "partKey": "boiler-thermostat",
+  "parentServiceSlug": "boiler-repair",
+  "linkTitle": "boiler thermostat",
+  "metaTitle": "Boiler Thermostat | Common Fault Signs and Repair Advice",
+  "metaDescription": "Learn what a boiler thermostat does, signs it may be faulty and when thermostat problems need professional repair.",
+  "h1": "Boiler Thermostat",
+  "intro": "The thermostat helps control when your boiler fires and how the system responds to temperature demand. When it is faulty, the boiler may stop responding properly or behave unpredictably.",
+  "replacementCost": "Thermostat cost varies depending on whether the issue is with the boiler thermostat, room controls or related wiring.",
+  "diyAllowed": false,
+  "safetyWarning": "Thermostat faults can overlap with electrical and control issues, so diagnosis matters before parts are changed.",
+  "symptoms": [
+    "Boiler not responding to temperature demand",
+    "Heating turning on or off unpredictably",
+    "Hot water or heating timing problems"
+  ],
+  "sections": [
+    {
+      "heading": "What the thermostat controls",
+      "body": "The thermostat is part of the boiler's control logic. It helps manage temperature demand and influences when the boiler should fire, modulate or stop."
+    },
+    {
+      "heading": "How thermostat faults appear",
+      "body": "A faulty thermostat can look like a boiler fault even when the underlying issue is really in the controls, the sensor input or the electrical connection."
+    },
+    {
+      "heading": "Why diagnosis comes before replacement",
+      "body": "Because thermostat symptoms overlap with other control issues, it is better to confirm the fault properly before replacing parts."
+    }
+  ],
+  "relatedProblemSlugs": ["boiler-not-igniting", "boiler-not-heating-water"],
+  "relatedLocationSlugs": ["boiler-repair-islington"]
+}
+

@@ -1,0 +1,36 @@
+{
+  "type": "location_service",
+  "slug": "emergency-boiler-repair-islington",
+  "serviceKey": "emergency-boiler-repair",
+  "parentServiceSlug": "emergency-boiler-repair",
+  "location": "Islington",
+  "linkTitle": "emergency boiler repair in Islington",
+  "metaTitle": "Emergency Boiler Repair Islington | Local Boiler Engineer",
+  "metaDescription": "Need emergency boiler repair in Islington? Local call-outs for leaks, lockouts, no heating and no hot water.",
+  "h1": "Emergency Boiler Repair in Islington",
+  "intro": "We provide emergency boiler repair in Islington for breakdowns that leave you with no heating, no hot water, a leaking appliance or a boiler that keeps locking out unexpectedly.",
+  "localProof": "Urgent attendance around Angel, Holloway and Highbury where heating outages and water leaks need fast diagnosis from a local engineer.",
+  "areasCovered": ["Angel", "Highbury", "Holloway", "Barnsbury"],
+  "nearbyAreas": ["Camden", "Highbury", "Holloway", "Hackney"],
+  "sections": [
+    {
+      "heading": "Fast emergency boiler call-outs across Islington",
+      "body": "We help Islington customers with urgent boiler faults where immediate loss of heating or hot water is causing major disruption."
+    },
+    {
+      "heading": "Leaks, lockouts and no hot water",
+      "body": "The most common emergency issues are active leaks, boilers that refuse to ignite and lockouts that keep returning even after a reset."
+    },
+    {
+      "heading": "Local repair support when timing matters",
+      "body": "Local attendance matters in Islington where managed properties, tenant access and tighter appointment windows are often part of the emergency booking."
+    }
+  ],
+  "relatedProblemSlugs": [
+    "boiler-leaking-water",
+    "boiler-not-igniting",
+    "boiler-reset-button-not-working"
+  ],
+  "relatedLocationSlugs": ["boiler-repair-islington", "emergency-boiler-repair-camden"]
+}
+

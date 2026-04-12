@@ -1,0 +1,50 @@
+{
+  "type": "problem",
+  "slug": "boiler-making-noise",
+  "problemKey": "boiler-making-noise",
+  "parentServiceSlug": "boiler-repair",
+  "linkTitle": "boiler making noise",
+  "metaTitle": "Boiler Making Noise | What It Means and When to Call",
+  "metaDescription": "Boiler making noise? Learn what banging, humming or gurgling sounds can mean and when to call a heating engineer.",
+  "h1": "Why Is My Boiler Making Noise?",
+  "intro": "If your boiler has started banging, humming, vibrating or gurgling, the noise is usually a sign that something in the boiler or heating system is no longer working normally.",
+  "safetyWarning": "New or worsening boiler noises should be checked before they turn into a full breakdown.",
+  "urgency": "medium",
+  "symptoms": [
+    "Banging or kettling sounds",
+    "Humming, vibrating or rattling",
+    "Noise that gets worse as the boiler heats up"
+  ],
+  "safeChecks": [
+    "Note when the noise happens during the heating cycle",
+    "Check the pressure gauge for obvious issues",
+    "Look for any visible drips or movement around exposed pipework"
+  ],
+  "doNotDiy": [
+    "Do not remove covers to investigate internal components",
+    "Do not attempt to bleed or adjust sealed boiler parts without guidance",
+    "Do not ignore loud noises that are getting worse"
+  ],
+  "typicalFixes": [
+    "Resolving pressure and circulation issues",
+    "Replacing worn internal components",
+    "Correcting component faults linked to overheating or vibration"
+  ],
+  "sections": [
+    {
+      "heading": "What boiler noise can point to",
+      "body": "Unusual noise can come from poor circulation, pressure issues, wear in internal parts or water behaving badly inside the heat exchanger."
+    },
+    {
+      "heading": "Why noises should not be dismissed",
+      "body": "Noisy operation is often the early warning sign of a fault rather than just an irritation. Left alone, the same issue can lead to lockouts, leaks or component failure."
+    },
+    {
+      "heading": "When the noise needs an engineer",
+      "body": "If the boiler is suddenly loud, the sound is worsening or you are also seeing poor heating performance, book a repair visit to find the cause properly."
+    }
+  ],
+  "relatedPartSlugs": ["boiler-expansion-vessel"],
+  "relatedLocationSlugs": ["boiler-repair-hackney"]
+}
+

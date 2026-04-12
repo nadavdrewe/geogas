@@ -1,0 +1,44 @@
+{
+  "type": "brand_service",
+  "slug": "worcester-bosch-boiler-repair",
+  "brand": "Worcester Bosch",
+  "serviceKey": "boiler-repair",
+  "parentServiceSlug": "boiler-repair",
+  "primaryLocation": "London",
+  "linkTitle": "Worcester Bosch boiler repair in London",
+  "metaTitle": "Worcester Bosch Boiler Repair in London | Local Engineer",
+  "metaDescription": "Need Worcester Bosch boiler repair in London? Local support for pressure faults, ignition issues, leaks and no hot water.",
+  "h1": "Worcester Bosch Boiler Repair in London",
+  "intro": "We provide Worcester Bosch boiler repair across London for pressure faults, lockouts, leaks, hot water issues and the kinds of repeat breakdowns that need proper diagnosis.",
+  "pricingGuidance": "Worcester Bosch repair pricing depends on the model, the confirmed fault and whether any replacement parts are needed.",
+  "localProof": "Booked across North and Central London for Worcester Bosch faults where customers want diagnosis first and straight answers on repair versus replacement.",
+  "areasCovered": ["Camden", "Islington", "Hackney", "Haringey"],
+  "commonFaults": [
+    "Pressure loss and lockouts",
+    "Ignition or start-up faults",
+    "Leaking components",
+    "Poor heating or hot water performance"
+  ],
+  "sections": [
+    {
+      "heading": "Common Worcester Bosch faults",
+      "body": "Typical issues include pressure loss, ignition trouble, poor hot water performance and faults that cause intermittent lockouts."
+    },
+    {
+      "heading": "Why model-specific diagnosis matters",
+      "body": "The same symptom can mean different things across different Worcester Bosch models, so proper diagnosis matters before parts are changed."
+    },
+    {
+      "heading": "Repair or replace?",
+      "body": "That decision depends on the age of the boiler, the parts involved and whether the appliance has become a repeat source of disruption."
+    }
+  ],
+  "relatedProblemSlugs": [
+    "boiler-pressure-dropping",
+    "boiler-keeps-losing-pressure",
+    "boiler-not-heating-water"
+  ],
+  "relatedLocationSlugs": ["boiler-repair-islington", "boiler-repair-camden"],
+  "relatedPartSlugs": ["pressure-relief-valve"]
+}
+

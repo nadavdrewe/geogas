@@ -1,0 +1,80 @@
+{
+  "type": "service",
+  "slug": "boiler-repair",
+  "serviceKey": "boiler-repair",
+  "primaryLocation": "London",
+  "linkTitle": "boiler repair in London",
+  "metaTitle": "Boiler Repair in London | Fast Local Gas Engineer",
+  "metaDescription": "Need boiler repair in London? Fast response from a Gas Safe engineer for no heating, no hot water, leaks, pressure loss and boiler faults.",
+  "h1": "Boiler Repair in London",
+  "intro": "If your boiler has stopped working, is leaking, losing pressure or not producing hot water, we provide fast boiler repair across London with clear advice and practical fault diagnosis.",
+  "pricingGuidance": "Boiler repair visits are priced from a standard diagnostic call-out, with clear advice before additional parts or labour are approved.",
+  "localProof": "Trusted by homeowners, landlords and property managers for breakdowns across Camden, Islington, Hackney and wider London.",
+  "areasCovered": ["Camden", "Islington", "Hackney", "Westminster", "Southwark"],
+  "sections": [
+    {
+      "heading": "Common boiler faults we repair",
+      "body": "We deal with many day-to-day breakdowns, from total loss of heating to intermittent hot water and recurring fault codes.",
+      "bullets": [
+        "No heating or no hot water",
+        "Pressure loss and lockouts",
+        "Leaks, drips and noisy operation",
+        "Ignition and thermostat faults"
+      ]
+    },
+    {
+      "heading": "What to expect from a repair visit",
+      "body": "We start with safe fault finding, explain what has failed and talk through the most sensible repair route before major work is carried out.",
+      "bullets": [
+        "Initial diagnosis and system checks",
+        "Clear explanation of the fault",
+        "Repair recommendation and likely next steps",
+        "Testing before we leave"
+      ]
+    },
+    {
+      "heading": "Why customers book us for boiler repair",
+      "body": "We focus on quick diagnosis, realistic repair advice and communication that makes sense when you are dealing with a heating breakdown."
+    }
+  ],
+  "reviews": [
+    {
+      "name": "Anna R.",
+      "quote": "They found the cause of a recurring pressure drop and explained it in plain English before fixing it.",
+      "location": "Camden"
+    },
+    {
+      "name": "Michael P.",
+      "quote": "Fast visit, honest advice and the boiler was back on the same day.",
+      "location": "Islington"
+    }
+  ],
+  "internalLinks": [
+    {
+      "label": "boiler repair guides",
+      "href": "/guides",
+      "intent": "guide"
+    }
+  ],
+  "relatedProblemSlugs": [
+    "boiler-pressure-dropping",
+    "boiler-keeps-losing-pressure",
+    "boiler-not-igniting",
+    "boiler-not-heating-water",
+    "boiler-making-noise",
+    "boiler-leaking-water",
+    "boiler-reset-button-not-working",
+    "radiators-not-heating-up"
+  ],
+  "relatedLocationSlugs": [
+    "boiler-repair-camden",
+    "boiler-repair-islington",
+    "boiler-repair-hackney"
+  ],
+  "relatedBrandSlugs": [
+    "vaillant-boiler-repair",
+    "worcester-bosch-boiler-repair",
+    "ideal-boiler-repair"
+  ],
+  "relatedGuideSlugs": ["how-often-should-a-boiler-be-serviced"]
+}

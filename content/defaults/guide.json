@@ -1,0 +1,26 @@
+{
+  "type": "guide",
+  "heroEyebrow": "Heating and gas guide",
+  "cta": {
+    "eyebrow": "Need direct help?",
+    "heading": "Speak to a local gas engineer",
+    "text": "If you would rather have the system checked properly, call us or book a visit and we will talk you through the next step.",
+    "primaryLabel": "Contact us",
+    "primaryHref": "/contact"
+  },
+  "faq": [
+    {
+      "question": "Do I need to book an engineer straight away?",
+      "answer": "That depends on the symptoms, but repeated faults, no heating, no hot water and any sign of leaks should be checked promptly."
+    },
+    {
+      "question": "Can regular servicing reduce future breakdowns?",
+      "answer": "Yes. Routine servicing often helps catch wear, pressure issues and combustion problems before they turn into a breakdown."
+    },
+    {
+      "question": "Do you cover London properties for this type of work?",
+      "answer": "Yes. We cover homes, rentals and managed properties across London and selected surrounding areas."
+    }
+  ]
+}
+

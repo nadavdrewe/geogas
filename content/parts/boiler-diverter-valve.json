@@ -1,0 +1,36 @@
+{
+  "type": "part_guide",
+  "slug": "boiler-diverter-valve",
+  "partKey": "boiler-diverter-valve",
+  "parentServiceSlug": "boiler-repair",
+  "linkTitle": "boiler diverter valve",
+  "metaTitle": "Boiler Diverter Valve | Signs It Has Failed",
+  "metaDescription": "Learn what a boiler diverter valve does, how faults affect hot water and heating, and when replacement may be needed.",
+  "h1": "Boiler Diverter Valve",
+  "intro": "The diverter valve helps a combi boiler switch between heating and hot water demand. When it sticks or fails, the boiler may struggle to send heat where it is needed.",
+  "replacementCost": "Replacement cost varies by boiler model and access, and the fault should be confirmed before parts are ordered.",
+  "diyAllowed": false,
+  "safetyWarning": "Diverter valve faults affect internal boiler operation and should be diagnosed professionally.",
+  "symptoms": [
+    "Heating works but hot water does not",
+    "Hot water is inconsistent or lukewarm",
+    "Boiler responds slowly when switching demand"
+  ],
+  "sections": [
+    {
+      "heading": "What the diverter valve does",
+      "body": "On many combi boilers, the diverter valve directs heat either to the radiators or to the hot water circuit depending on what the property is calling for."
+    },
+    {
+      "heading": "How failure shows up",
+      "body": "When the valve sticks, wears out or does not switch cleanly, you can end up with poor hot water performance even though other parts of the system still seem to work."
+    },
+    {
+      "heading": "What the repair usually involves",
+      "body": "The first step is to confirm that the diverter valve is genuinely at fault. Once confirmed, the repair may involve replacing the valve or associated parts."
+    }
+  ],
+  "relatedProblemSlugs": ["boiler-not-heating-water"],
+  "relatedLocationSlugs": ["boiler-repair-islington"]
+}
+

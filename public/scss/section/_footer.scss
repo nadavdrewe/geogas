@@ -1,0 +1,284 @@
+/*==========================================================================
+* Subscribe One CSS
+==========================================================================*/
+.subscribe__area {
+  position: relative;
+  z-index: 1;
+  background-image: url("/img/pages/cta-bg.jpg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  padding: 80px 0;
+  &::after {
+    content: "";
+    position: absolute;
+    inset-inline-start: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--color-1);
+    opacity: 0.6;
+    z-index: -1;
+  }
+  &-title h1 {
+    color: var(--text-white);
+    text-align: center;
+  }
+  &-form form {
+    position: relative;
+    z-index: 1;
+    margin: 0 60px;
+    margin-top: 35px;
+    input {
+      background: #18181a87;
+      border-color: #ffffff1f;
+      border-width: 2px;
+      font-weight: 300;
+      &:focus,
+      &::placeholder {
+        color: var(--text-white);
+        border-color: var(--secondary-color-2);
+      }
+    }
+    button {
+      position: absolute;
+      inset-inline-end: 0;
+      top: 0;
+      border: 0 !important;
+      padding: 20px 44px;
+    }
+  }
+  &-form form.newsletter-subscribe-form {
+    display: grid;
+    gap: 12px;
+    margin-top: 35px;
+    input {
+      width: 100%;
+    }
+    button {
+      position: static;
+      width: 100%;
+      padding: 18px 24px;
+    }
+    .contact__form-feedback {
+      margin-top: 0;
+      color: #e2e8f0;
+      &.is-success {
+        color: #bbf7d0;
+      }
+      &.is-error {
+        color: #fecaca;
+      }
+    }
+  }
+}
+/*==========================================================================
+* Subscribe Two CSS
+==========================================================================*/
+.subscribe__two {
+  padding: 80px 0;
+  background: var(--color-1);
+  &-title h1 {
+    color: var(--text-white);
+  }
+  &-form form {
+    input {
+      background: #18181a87;
+      border-color: #ffffff1f;
+      border-width: 2px;
+      font-weight: 300;
+      &:focus,
+      &::placeholder {
+        color: var(--text-white);
+        border-color: var(--secondary-color-2);
+      }
+    }
+    button {
+      width: 100%;
+      margin-top: 20px;
+    }
+  }
+  &-form form.newsletter-subscribe-form {
+    display: grid;
+    gap: 12px;
+    button {
+      margin-top: 0;
+    }
+    .contact__form-feedback {
+      margin-top: 0;
+      color: #cbd5e1;
+      &.is-success {
+        color: #bbf7d0;
+      }
+      &.is-error {
+        color: #fecaca;
+      }
+    }
+  }
+}
+/*==========================================================================
+* Footer One CSS
+==========================================================================*/
+.footer__one {
+  background: var(--color-1);
+  padding-top: 90px;
+  position: relative;
+  z-index: 1;
+  background-image: url("/img/shape/footer-bg.png");
+  background-repeat: no-repeat;
+  background-position: center right;
+  &-widget {
+    p {
+      margin-bottom: 0;
+      color: var(--color-5);
+    }
+    h4 {
+      margin-bottom: 30px;
+      color: var(--text-white);
+    }
+    .logo {
+      margin-bottom: 35px;
+      img {
+        max-width: 140px;
+      }
+    }
+    .social__icon {
+      margin-top: 30px;
+      ul li a i {
+        width: 45px;
+        height: 45px;
+        font-size: 16px;
+      }
+    }
+    .info {
+      &-item {
+        display: flex;
+        align-items: center;
+        margin-bottom: 25px;
+        gap: 20px;
+        &-icon {
+          i {
+            color: var(--secondary-color-2);
+            font-size: 20px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--color-4);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+          }
+        }
+        &-content {
+          span {
+            color: var(--color-3);
+            display: inline-block;
+          }
+          h6 {
+            max-width: 240px;
+            font-size: 18px;
+            line-height: 28px;
+            a {
+              transition: all 0.4s ease-out;
+              color: var(--text-white);
+              &:hover {
+                color: var(--secondary-color-2);
+              }
+            }
+          }
+        }
+        &:last-child {
+          margin: 0;
+        }
+      }
+    }
+    &-hour {
+      p {
+        margin-bottom: 10px;
+      }
+    }
+  }
+}
+/*==========================================================================
+* Footer Two CSS
+==========================================================================*/
+.footer-widget-menu {
+  ul {
+    padding: 0;
+    margin: 0;
+    li {
+      padding: 0;
+      list-style: none;
+      margin-bottom: 12px;
+      &:last-child {
+        margin: 0;
+      }
+      a {
+        color: var(--color-5);
+        transition: 0.4s;
+        position: relative;
+        font-weight: 200;
+        &::before {
+          content: "\f324";
+          color: var(--secondary-color-2);
+          font-size: 13px;
+          line-height: 23px;
+          position: absolute;
+          opacity: 0;
+          transition: 0.4s;
+          inset-inline-start: 0px;
+          font-family: "Font Awesome 5 Pro";
+          font-weight: 400;
+          top: 0;
+        }
+        &:hover {
+          color: var(--secondary-color-2);
+          padding-inline-start: 18px;
+          &::before {
+            opacity: 1;
+          }
+        }
+      }
+    }
+  }
+}
+.footer__two {
+  background: var(--color-1);
+  background-repeat: no-repeat;
+  background-image: url("/img/shape/footer-bg.png");
+  &-area {
+    padding-top: 90px;
+    border-top: 1px solid var(--color-7);
+  }
+}
+@media (max-width: 1199px) {
+  .subscribe__two-title h1 {
+    font-size: 60px;
+    line-height: 70px;
+  }
+}
+@media (max-width: 767px) {
+  .subscribe__two-title h1,
+  .subscribe__area-title h1 {
+    font-size: 46px;
+    line-height: 56px;
+  }
+}
+@media (max-width: 575px) {
+  .subscribe__area-form form {
+    margin: 35px 0 0 0;
+    button {
+      padding: 20px 20px;
+    }
+  }
+  .subscribe__area-form form.newsletter-subscribe-form {
+    button {
+      padding: 18px 20px;
+    }
+  }
+  .subscribe__two-title h1,
+  .subscribe__area-title h1 {
+    font-size: 36px;
+    line-height: 46px;
+  }
+}

@@ -1,0 +1,51 @@
+{
+  "type": "problem",
+  "slug": "boiler-reset-button-not-working",
+  "problemKey": "boiler-reset-button-not-working",
+  "parentServiceSlug": "boiler-repair",
+  "linkTitle": "boiler reset button not working",
+  "metaTitle": "Boiler Reset Button Not Working | What It Usually Means",
+  "metaDescription": "Boiler reset button not working? Learn what that usually means, what is safe to check and when to call an engineer.",
+  "h1": "Why Is My Boiler Reset Button Not Working?",
+  "intro": "If the boiler reset button is not clearing the fault, or the boiler resets and immediately locks out again, the problem is usually deeper than a simple control glitch.",
+  "safetyWarning": "Repeated resets can mask the real fault and may leave the boiler locking out again straight away.",
+  "urgency": "high",
+  "symptoms": [
+    "The reset button does nothing",
+    "The boiler resets and then locks out again",
+    "You still have no heating or hot water after resetting"
+  ],
+  "safeChecks": [
+    "Check whether the boiler has power and the controls are calling for heat",
+    "Check the display for a fault code before pressing reset again",
+    "Check the pressure gauge for obvious low pressure"
+  ],
+  "doNotDiy": [
+    "Do not keep pressing reset repeatedly",
+    "Do not open the casing to chase the internal fault",
+    "Do not ignore a boiler that is locking out again immediately"
+  ],
+  "typicalFixes": [
+    "Repairing the underlying ignition or control fault",
+    "Restoring pressure or sensor operation",
+    "Replacing a failed control-related component"
+  ],
+  "sections": [
+    {
+      "heading": "What the reset button is actually doing",
+      "body": "The reset function tells the boiler to try its start-up sequence again after a lockout. If the original fault is still present, resetting will not solve it."
+    },
+    {
+      "heading": "Why the reset may appear not to work",
+      "body": "The boiler may be immediately detecting the same fault again, which is why the reset feels ineffective or only works for a few seconds."
+    },
+    {
+      "heading": "When to stop resetting and call an engineer",
+      "body": "If the reset does not clear the lockout, or the boiler trips again right away, book a repair visit so the actual cause can be diagnosed safely."
+    }
+  ],
+  "relatedPartSlugs": ["boiler-thermostat"],
+  "relatedLocationSlugs": ["boiler-repair-camden"],
+  "relatedBrandSlugs": ["ideal-boiler-repair", "vaillant-boiler-repair"]
+}
+

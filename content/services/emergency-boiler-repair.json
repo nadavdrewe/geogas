@@ -1,0 +1,47 @@
+{
+  "type": "service",
+  "slug": "emergency-boiler-repair",
+  "serviceKey": "emergency-boiler-repair",
+  "primaryLocation": "London",
+  "linkTitle": "emergency boiler repair in London",
+  "metaTitle": "Emergency Boiler Repair in London | Fast Call-Outs",
+  "metaDescription": "Need emergency boiler repair in London? Call for urgent help with no heating, no hot water, leaks and boiler faults from a local Gas Safe engineer.",
+  "h1": "Emergency Boiler Repair in London",
+  "intro": "If your boiler has failed without warning, you have no heating or hot water, or water is leaking from the appliance, we provide emergency boiler repair support across London.",
+  "pricingGuidance": "Emergency boiler repair is priced from an urgent diagnostic call-out, with any major parts or follow-up work explained before approval.",
+  "localProof": "Called for urgent breakdowns across London when heating failure or water leaks need a fast response and a sensible repair plan.",
+  "areasCovered": ["Camden", "Islington", "Hackney", "West London", "South London"],
+  "sections": [
+    {
+      "heading": "When a boiler fault is an emergency",
+      "body": "An urgent call-out makes sense when you have no heating, no hot water, a leak from the appliance or a boiler that will not safely stay running."
+    },
+    {
+      "heading": "What we prioritise on an urgent visit",
+      "body": "The first priority is safety and fault diagnosis. Once the immediate problem is identified, we explain whether it can be repaired on the spot or whether parts and follow-up are needed."
+    },
+    {
+      "heading": "Fast response without rushed advice",
+      "body": "Urgent situations still need proper diagnosis. We focus on practical next steps rather than guessing at a repair when the fault needs a closer look."
+    }
+  ],
+  "internalLinks": [
+    {
+      "label": "boiler repair in London",
+      "href": "/boiler-repair",
+      "intent": "service"
+    }
+  ],
+  "relatedProblemSlugs": [
+    "boiler-leaking-water",
+    "boiler-not-igniting",
+    "boiler-not-heating-water",
+    "boiler-reset-button-not-working"
+  ],
+  "relatedLocationSlugs": [
+    "boiler-repair-camden",
+    "boiler-repair-islington",
+    "emergency-boiler-repair-camden",
+    "emergency-boiler-repair-islington"
+  ]
+}

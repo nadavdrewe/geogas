@@ -1,0 +1,260 @@
+/*==========================================================================
+* Breadcrumb CSS
+==========================================================================*/
+.breadcrumb__area {
+  position: relative;
+  z-index: 1;
+  padding: 174px 0;
+  background-image: url("/img/shape/breadcrumb.jpg");
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  &-title {
+    h1 {
+      font-size: 64px;
+      line-height: 74px;
+    }
+  }
+  &-meta ul {
+    padding: 0;
+    margin: 0;
+    display: inline-flex;
+    gap: 15px;
+    align-items: center;
+    li {
+      list-style: none;
+      color: var(--primary-color-1);
+      font-size: 24px;
+      line-height: 34px;
+      display: inline-flex;
+      gap: 15px;
+      align-items: center;
+      font-family: var(--heading-font);
+      a {
+        transition: 0.4s;
+        color: var(--color-1);
+        &:hover {
+          color: var(--primary-color-1);
+        }
+      }
+      i {
+        color: var(--color-1);
+        font-size: 16px;
+      }
+    }
+  }
+}
+/*==========================================================================
+* Error CSS
+==========================================================================*/
+.error {
+  &-page {
+    text-align: center;
+    h1 {
+      font-size: 240px;
+      line-height: 1;
+      font-weight: 600;
+      span {
+        color: var(--primary-color-1);
+      }
+    }
+    h2 {
+      margin: 15px 0 30px 0;
+    }
+    p {
+      margin-bottom: 35px;
+    }
+  }
+}
+/*==========================================================================
+* Theme Pagination CSS
+==========================================================================*/
+.pagination {
+  ul {
+    margin: 0;
+    padding: 0;
+    display: inline-flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    li {
+      list-style: none;
+      .active {
+        background: var(--color-8);
+        border-color: var(--color-8);
+        color: var(--heading-color);
+      }
+      a {
+        border: 1px solid #181818;
+        display: flex;
+        height: 50px;
+        width: 50px;
+        align-items: center;
+        justify-content: center;
+        transition: 0.4s;
+        border-radius: 50%;
+        color: var(--heading-color);
+        &:hover {
+          background: var(--color-8);
+          border-color: var(--color-8);
+          color: var(--heading-color);
+        }
+      }
+    }
+  }
+}
+/*==========================================================================
+* Inner Page Engineer Spot
+==========================================================================*/
+.inner-engineer-spot {
+  padding: 36px 0 10px;
+  &__card {
+    position: relative;
+    overflow: hidden;
+    border-radius: 24px;
+    padding: 28px;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    background: linear-gradient(135deg, #111 0%, #1d1d1d 52%, #2a2a2a 100%);
+    box-shadow: 0 20px 55px rgba(0, 0, 0, 0.16);
+  }
+  &__card::before {
+    content: "";
+    position: absolute;
+    top: -80px;
+    right: -60px;
+    width: 240px;
+    height: 240px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.08);
+    pointer-events: none;
+  }
+  &__content {
+    position: relative;
+    z-index: 1;
+    h3 {
+      color: var(--white);
+      margin-bottom: 12px;
+      max-width: 520px;
+    }
+    p {
+      color: rgba(255, 255, 255, 0.86);
+      margin-bottom: 16px;
+      max-width: 560px;
+    }
+  }
+  &__eyebrow {
+    display: inline-flex;
+    margin-bottom: 10px;
+    padding: 7px 12px;
+    font-size: 13px;
+    line-height: 1;
+    font-weight: 600;
+    border-radius: 999px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--white);
+    background: rgba(255, 255, 255, 0.14);
+  }
+  &__meta {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  &__name {
+    color: var(--white);
+    font-weight: 700;
+  }
+  &__role {
+    font-size: 14px;
+    line-height: 24px;
+    color: rgba(255, 255, 255, 0.75);
+  }
+  &__actions {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  &__image {
+    position: relative;
+    border-radius: 18px;
+    background: linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.12) 0%,
+      rgba(255, 255, 255, 0.04) 100%
+    );
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    min-height: 320px;
+    padding: 16px;
+  }
+  &__image-frame {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    min-height: 286px;
+  }
+  &__image-tag {
+    object-fit: contain;
+    object-position: center bottom;
+    filter: drop-shadow(0 20px 24px rgba(0, 0, 0, 0.22));
+  }
+  &--red &__card {
+    background: linear-gradient(135deg, #171717 0%, #6f0f16 55%, #cc212f 100%);
+  }
+  &--teal &__card {
+    background: linear-gradient(135deg, #10202c 0%, #0d4c57 55%, #1497a8 100%);
+  }
+  &--green &__card {
+    background: linear-gradient(135deg, #122116 0%, #1f6330 56%, #46b34f 100%);
+  }
+}
+@media (max-width: 575px) {
+  .breadcrumb__area {
+    padding: 140px 0;
+    &-title h1 {
+      font-size: 42px;
+      line-height: 52px;
+    }
+    &-meta ul li {
+      font-size: 16px;
+      line-height: 26px;
+    }
+  }
+  .error-page h1 {
+    font-size: 140px;
+    line-height: 150px;
+  }
+  .inner-engineer-spot {
+    padding-top: 24px;
+    &__card {
+      padding: 22px 18px;
+      border-radius: 20px;
+    }
+    &__content h3 {
+      font-size: 26px;
+      line-height: 36px;
+    }
+    &__image {
+      min-height: 260px;
+      padding: 10px;
+    }
+    &__image-frame {
+      min-height: 240px;
+    }
+  }
+}
+@media (max-width: 359px) {
+  .breadcrumb__area {
+    &-title {
+      h1 {
+        font-size: 38px;
+        line-height: 48px;
+      }
+    }
+  }
+  .inner-engineer-spot__actions .button-1,
+  .inner-engineer-spot__actions .button-2 {
+    width: 100%;
+    justify-content: center;
+  }
+}

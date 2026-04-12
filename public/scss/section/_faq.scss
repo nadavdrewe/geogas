@@ -1,0 +1,255 @@
+/*==========================================================================
+* FAQ One CSS
+==========================================================================*/
+.faq__one {
+  overflow: hidden;
+  &-image {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    .shape {
+      position: absolute;
+      inset-inline-start: 0;
+      bottom: 0;
+      z-index: -1;
+    }
+  }
+  &-right {
+    &-title {
+      margin-bottom: 40px;
+      p {
+        margin-bottom: 0;
+        margin-top: 12px;
+      }
+    }
+  }
+}
+.faq__area {
+  &-item {
+    margin-bottom: 20px;
+    background: var(--color-2);
+    border: 1px solid #181818;
+    border-radius: 20px;
+    &:last-child {
+      margin: 0;
+    }
+    h5 {
+      cursor: pointer;
+      padding: 18px 20px;
+      font-size: 20px;
+      line-height: 30px;
+    }
+    .icon {
+      position: relative;
+      border-radius: 20px 20px 0 0;
+      &::after {
+        content: "\2b";
+        font-family: "Font Awesome 6 Pro";
+        font-weight: 300;
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        color: var(--heading-color);
+        inset-inline-end: 20px;
+        font-size: 18px;
+        transition: 0.4s;
+        background: var(--secondary-color-1);
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        text-align: center;
+      }
+      &:not(.collapsed) {
+        background: var(--secondary-color-1);
+        &::after {
+          content: "\f068";
+          background: var(--bg-white);
+          color: var(--heading-color);
+        }
+      }
+    }
+    &-body {
+      border-radius: 0 0 20px 20px;
+      background: var(--bg-white);
+      transition: 0.3s;
+      p {
+        padding: 18px 20px 22px 20px;
+        margin-bottom: 0;
+      }
+    }
+  }
+}
+/*==========================================================================
+* FAQ Two CSS
+==========================================================================*/
+.faq__two {
+  &--page {
+    .faq__two-image .parallax-image-wrap {
+      overflow: visible !important;
+    }
+    .faq__two-image .parallax-image {
+      transform: none;
+      transform-origin: top center;
+    }
+    .faq__two-right-accordion {
+      max-height: none;
+      overflow: visible;
+      padding-inline-end: 0;
+    }
+  }
+  &-right {
+    &-title {
+      margin-bottom: 40px;
+      p {
+        margin-bottom: 0;
+        margin-top: 12px;
+      }
+    }
+    &-scroll-note {
+      margin-top: 10px;
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      font-size: 13px;
+      line-height: 20px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.18px;
+      color: #475569;
+      &::before {
+        content: "";
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #dc2626, #f97316);
+      }
+    }
+    &-accordion {
+      max-height: min(72vh, 760px);
+      overflow-y: auto;
+      padding-inline-end: 8px;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(207, 31, 39, 0.5) rgba(15, 23, 42, 0.08);
+      &::-webkit-scrollbar {
+        width: 7px;
+      }
+      &::-webkit-scrollbar-track {
+        background: rgba(15, 23, 42, 0.08);
+        border-radius: 999px;
+      }
+      &::-webkit-scrollbar-thumb {
+        background: linear-gradient(180deg, rgba(207, 31, 39, 0.8), rgba(249, 115, 22, 0.75));
+        border-radius: 999px;
+      }
+    }
+    .faq__area-item {
+      background: var(--bg-white);
+      border-radius: 5px;
+      h5 span {
+        width: 40px;
+        height: 40px;
+        background: var(--color-2);
+        color: var(--color-1);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 5px;
+        margin-inline-end: 20px;
+      }
+      .icon {
+        border-radius: 5px 5px 0 0;
+        &::after {
+          background: var(--color-2);
+        }
+      }
+      &-body {
+        border-radius: 0 0 5px 5px;
+        p {
+          padding-top: 0;
+          padding-inline-start: 80px;
+        }
+      }
+    }
+    .faq__area-item-body,
+    .faq__area-item .icon:not(.collapsed) {
+      background: var(--secondary-color-3);
+      span,
+      &::after {
+        background: #e5adc8;
+      }
+    }
+  }
+}
+.faq__two-right-accordion--full {
+  max-height: none;
+  overflow: visible;
+  padding-inline-end: 0;
+}
+.faq__two--page .faq__two-right .faq__area-item h5 {
+  font-size: 19px;
+  line-height: 28px;
+}
+.faq__two--page .faq__two-right .faq__area-item .icon::after {
+  inset-inline-end: 14px;
+}
+.faq__two--page .faq__two-right .faq__area-item-body p {
+  padding-inline-end: 18px;
+}
+.faq-page {
+  .faq__two-right .faq__area-item-body,
+  .faq__two-right .faq__area-item .icon:not(.collapsed) {
+    background: var(--color-8);
+  }
+  .faq__two-right .faq__area-item-body span,
+  .faq__two-right .faq__area-item-body::after,
+  .faq__two-right .faq__area-item .icon:not(.collapsed) span,
+  .faq__two-right .faq__area-item .icon:not(.collapsed)::after {
+    background: #a397df;
+  }
+}
+@media (max-width: 991px) {
+  .faq__two-right-title {
+    margin-bottom: 24px;
+  }
+  .faq__two--page .faq__two-right .faq__area-item h5 {
+    font-size: 18px;
+    line-height: 27px;
+  }
+}
+@media (max-width: 575px) {
+  .faq__two-right-accordion--full,
+  .faq__two--page .faq__two-right-accordion {
+    max-height: none;
+    overflow: visible;
+    padding-inline-end: 0;
+  }
+  .faq__two--page .faq__two-right .faq__area-item h5 {
+    font-size: 17px;
+    line-height: 25px;
+  }
+  .faq__two--page .faq__two-right .faq__area-item .icon::after {
+    inset-inline-end: 10px;
+  }
+  .faq__two-right-accordion {
+    max-height: min(66vh, 560px);
+    padding-inline-end: 4px;
+  }
+  .faq__two-right-scroll-note {
+    font-size: 12px;
+    line-height: 18px;
+  }
+  .faq__two-right .faq__area-item-body p {
+    padding-inline-start: 20px;
+  }
+  .faq__area-item h5 {
+    padding: 18px 10px;
+  }
+  .faq__two-right .faq__area-item h5 span {
+    width: 30px;
+    height: 30px;
+  }
+  .faq__one-image .shape {
+    inset-inline-start: -6px;
+    max-width: 95%;
+  }
+}

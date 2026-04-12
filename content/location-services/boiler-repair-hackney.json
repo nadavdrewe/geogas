@@ -1,0 +1,36 @@
+{
+  "type": "location_service",
+  "slug": "boiler-repair-hackney",
+  "serviceKey": "boiler-repair",
+  "parentServiceSlug": "boiler-repair",
+  "location": "Hackney",
+  "linkTitle": "boiler repair in Hackney",
+  "metaTitle": "Boiler Repair Hackney | Local Gas Engineer",
+  "metaDescription": "Looking for boiler repair in Hackney? Local boiler engineer for leaks, pressure loss, no hot water, fault codes and emergency boiler breakdowns.",
+  "h1": "Boiler Repair in Hackney",
+  "intro": "We provide boiler repair in Hackney for homeowners, landlords and letting agents who need a local engineer for breakdowns, leaks, pressure loss and heating faults.",
+  "localProof": "Regular support across Hackney Central, London Fields and Stoke Newington for homes, conversions and managed rentals.",
+  "areasCovered": ["Hackney Central", "London Fields", "Stoke Newington", "Dalston"],
+  "nearbyAreas": ["Islington", "Bethnal Green", "Stoke Newington", "Dalston"],
+  "sections": [
+    {
+      "heading": "Local repairs for Hackney breakdowns",
+      "body": "We attend common boiler faults across Hackney including no heating, no hot water, repeated repressurising and appliance leaks."
+    },
+    {
+      "heading": "Fault patterns we often see in Hackney",
+      "body": "Call-outs often involve older systems with recurring pressure issues, boilers that short-cycle or appliances that keep cutting out at awkward times."
+    },
+    {
+      "heading": "Support for homeowners and managed properties",
+      "body": "We work with residents directly as well as letting agents and landlords who need practical repair advice and clear communication around access."
+    }
+  ],
+  "relatedProblemSlugs": [
+    "boiler-pressure-dropping",
+    "boiler-making-noise",
+    "boiler-leaking-water"
+  ],
+  "relatedLocationSlugs": ["boiler-repair-islington", "boiler-repair-camden"]
+}
+

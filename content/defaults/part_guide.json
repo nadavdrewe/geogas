@@ -1,0 +1,26 @@
+{
+  "type": "part_guide",
+  "heroEyebrow": "Boiler component guide",
+  "cta": {
+    "eyebrow": "Need a repair visit?",
+    "heading": "Book a boiler repair call-out",
+    "text": "If the failed part is affecting heating, hot water or boiler pressure, we can diagnose the fault and advise on repair versus replacement.",
+    "primaryLabel": "Book online",
+    "primaryHref": "/contact"
+  },
+  "faq": [
+    {
+      "question": "Can this part always be repaired instead of replaced?",
+      "answer": "Not always. Some parts can be adjusted or re-pressurised, but many failed components need replacing once they are confirmed faulty."
+    },
+    {
+      "question": "Will replacing one part solve the whole issue?",
+      "answer": "Often it will, but the right answer depends on proper diagnosis. Symptoms like low pressure or no hot water can be caused by more than one component."
+    },
+    {
+      "question": "Should I book an engineer if the boiler still works sometimes?",
+      "answer": "Yes. Intermittent faults usually point to a part that is deteriorating and can lead to a full breakdown if ignored."
+    }
+  ]
+}
+

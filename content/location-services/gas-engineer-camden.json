@@ -1,0 +1,43 @@
+{
+  "type": "location_service",
+  "slug": "gas-engineer-camden",
+  "serviceKey": "gas-engineer",
+  "parentServiceSlug": "gas-engineer",
+  "location": "Camden",
+  "linkTitle": "gas engineer in Camden",
+  "metaTitle": "Gas Engineer Camden | Local Gas Safe Support",
+  "metaDescription": "Need a gas engineer in Camden? Local Gas Safe support for boiler work, gas safety checks, fault finding and landlord properties.",
+  "h1": "Gas Engineer in Camden",
+  "intro": "We provide gas engineering support in Camden for boiler work, gas safety visits, landlord checks and general fault finding where a local Gas Safe engineer is needed.",
+  "localProof": "Booked across Camden for rental property access, appliance checks and boiler fault finding where fast local attendance matters.",
+  "areasCovered": ["Camden Town", "Kentish Town", "Regent's Park", "King's Cross"],
+  "nearbyAreas": ["Islington", "Kentish Town", "Hampstead", "King's Cross"],
+  "sections": [
+    {
+      "heading": "Local gas engineering support in Camden",
+      "body": "We help with boiler diagnostics, gas safety checks, servicing and the day-to-day issues that need a qualified local engineer."
+    },
+    {
+      "heading": "Work for homes, landlords and agents",
+      "body": "Camden call-outs often involve managed rentals and access coordination, so communication and reporting are built into the visit."
+    },
+    {
+      "heading": "Why Camden customers book a local Gas Safe engineer",
+      "body": "Local coverage helps with faster scheduling, follow-up visits and practical support when a fault needs more than one step to resolve."
+    }
+  ],
+  "internalLinks": [
+    {
+      "label": "gas safety certificate in London",
+      "href": "/gas-safety-certificate",
+      "intent": "service"
+    },
+    {
+      "label": "boiler repair in Camden",
+      "href": "/boiler-repair-camden",
+      "intent": "location"
+    }
+  ],
+  "relatedProblemSlugs": ["boiler-not-igniting"]
+}
+

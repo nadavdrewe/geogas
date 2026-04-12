@@ -1,0 +1,54 @@
+{
+  "type": "brand_service",
+  "slug": "vaillant-boiler-repair",
+  "brand": "Vaillant",
+  "serviceKey": "boiler-repair",
+  "parentServiceSlug": "boiler-repair",
+  "primaryLocation": "London",
+  "linkTitle": "Vaillant boiler repair in London",
+  "metaTitle": "Vaillant Boiler Repair in London | Local Gas Engineer",
+  "metaDescription": "Need Vaillant boiler repair in London? Local support for pressure loss, ignition faults, leaks, no hot water and common fault codes.",
+  "h1": "Vaillant Boiler Repair in London",
+  "intro": "We repair Vaillant boilers across London, including common problems such as pressure loss, ignition issues, leaks, no hot water and repeated lockouts.",
+  "pricingGuidance": "Vaillant repair pricing depends on the fault, model and whether replacement parts are required after diagnosis.",
+  "localProof": "Called for Vaillant breakdowns across Camden, Islington and surrounding London areas where quick diagnosis matters.",
+  "areasCovered": ["Camden", "Islington", "Hackney", "Westminster"],
+  "commonFaults": [
+    "Pressure loss and repeated top-ups",
+    "Ignition and lockout faults",
+    "Leaks and internal component wear",
+    "Poor hot water performance"
+  ],
+  "sections": [
+    {
+      "heading": "Common Vaillant boiler faults",
+      "body": "We regularly see Vaillant boilers with pressure loss, ignition trouble, hot water issues and leaks that need proper diagnosis rather than guesswork."
+    },
+    {
+      "heading": "Fault codes are only the starting point",
+      "body": "A Vaillant fault code is helpful, but it does not replace diagnosis. The code still needs to be matched to what the boiler and system are actually doing."
+    },
+    {
+      "heading": "Repair or replace?",
+      "body": "That depends on the age of the boiler, the fault involved and whether there is a history of repeat breakdowns. We explain the sensible route once the problem is confirmed."
+    }
+  ],
+  "reviews": [
+    {
+      "name": "Daniel S.",
+      "quote": "Our Vaillant kept locking out and they found the real cause instead of just clearing the code.",
+      "location": "Hackney"
+    }
+  ],
+  "relatedProblemSlugs": [
+    "boiler-pressure-dropping",
+    "boiler-not-igniting",
+    "boiler-not-heating-water"
+  ],
+  "relatedLocationSlugs": [
+    "boiler-repair-camden",
+    "boiler-repair-islington"
+  ],
+  "relatedPartSlugs": ["boiler-expansion-vessel"]
+}
+

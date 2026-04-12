@@ -1,0 +1,628 @@
+import { readFile } from "fs/promises";
+import path from "path";
+import { NextResponse } from "next/server";
+import OpenAI from "openai";
+
+export const runtime = "nodejs";
+export const dynamic = "force-dynamic";
+
+type SourceKind = "pricing" | "brochure";
+
+type KnowledgeChunk = {
+  id: string;
+  source: SourceKind;
+  text: string;
+  normalized: string;
+};
+
+type KnowledgeBase = {
+  chunks: KnowledgeChunk[];
+};
+
+type ChatRole = "user" | "assistant";
+
+type ChatHistoryItem = {
+  role: ChatRole;
+  text: string;
+};
+
+type ChatStreamChunkEvent = {
+  type: "chunk";
+  delta: string;
+};
+
+type ChatStreamFinalEvent = {
+  type: "final";
+  sources: string[];
+  suggestions: string[];
+  confidence: "low" | "medium" | "high";
+  sourceKinds: SourceKind[];
+};
+
+type ChatStreamErrorEvent = {
+  type: "error";
+  error: string;
+};
+
+type ChatStreamEvent =
+  | ChatStreamChunkEvent
+  | ChatStreamFinalEvent
+  | ChatStreamErrorEvent;
+
+type GuardrailResult =
+  | {
+      kind: "emergency";
+      answer: string;
+      suggestions: string[];
+    }
+  | {
+      kind: "business_info";
+      answer: string;
+      suggestions: string[];
+    }
+  | {
+      kind: "out_of_scope";
+      answer: string;
+      suggestions: string[];
+    }
+  | {
+      kind: "none";
+    };
+
+const STOP_WORDS = new Set([
+  "the",
+  "and",
+  "for",
+  "with",
+  "this",
+  "that",
+  "from",
+  "into",
+  "about",
+  "your",
+  "you",
+  "are",
+  "can",
+  "pls",
+  "please",
+  "what",
+  "when",
+  "where",
+  "which",
+  "have",
+  "does",
+  "need",
+  "want",
+  "just",
+  "tell",
+  "me",
+  "our",
+  "all",
+  "any",
+]);
+
+const BUSINESS_LOCATIONS = "London, Sussex and Surrey";
+const BUSINESS_CONTACT_HOURS = {
+  regularDays: "Monday - Saturday",
+  regularHours: "8AM - 7PM",
+  emergency: "Emergency 24/7",
+};
+
+const STATIC_BUSINESS_FACTS = [
+  `Operating locations: ${BUSINESS_LOCATIONS}.`,
+  `Contact hours: ${BUSINESS_CONTACT_HOURS.regularDays}, ${BUSINESS_CONTACT_HOURS.regularHours}.`,
+  `${BUSINESS_CONTACT_HOURS.emergency} emergency support is available.`,
+].join(" ");
+
+let knowledgePromise: Promise<KnowledgeBase> | null = null;
+let openaiClient: OpenAI | null = null;
+
+const normalize = (value: string): string =>
+  value
+    .toLowerCase()
+    .replace(/\s+/g, " ")
+    .replace(/[^\w\s£/+-]/g, " ")
+    .trim();
+
+const tokenize = (value: string): string[] => {
+  return normalize(value)
+    .split(" ")
+    .filter((token) => token.length > 2 && !STOP_WORDS.has(token));
+};
+
+const splitIntoChunks = (
+  source: SourceKind,
+  text: string,
+  maxChars = 360
+): KnowledgeChunk[] => {
+  const lines = text
+    .replace(/\r/g, "")
+    .split("\n")
+    .map((line) => line.trim())
+    .filter(Boolean);
+
+  const chunks: KnowledgeChunk[] = [];
+  let bucket = "";
+  let index = 0;
+
+  for (const line of lines) {
+    const candidate = bucket ? `${bucket} ${line}` : line;
+    if (candidate.length > maxChars && bucket) {
+      chunks.push({
+        id: `${source}-${index}`,
+        source,
+        text: bucket,
+        normalized: normalize(bucket),
+      });
+      index += 1;
+      bucket = line;
+      continue;
+    }
+    bucket = candidate;
+  }
+
+  if (bucket) {
+    chunks.push({
+      id: `${source}-${index}`,
+      source,
+      text: bucket,
+      normalized: normalize(bucket),
+    });
+  }
+
+  return chunks;
+};
+
+const sourcePath = (source: SourceKind): string =>
+  source === "pricing"
+    ? "/info/price.txt"
+    : "/info/geo-gas-brochure-2026.pdf";
+
+const scoreToConfidence = (score: number): "low" | "medium" | "high" => {
+  if (score >= 8) return "high";
+  if (score >= 4) return "medium";
+  return "low";
+};
+
+const hasServiceKeywords = (question: string): boolean => {
+  return (
+    /(gas|boiler|heating|plumbing|drain|contract|cover|call[- ]?out|landlord|inspection|certificate|service|repair|install|installation|price|pricing|quote|vat|helpline|engineer|leak)/i.test(
+      question
+    )
+  );
+};
+
+const getGuardrail = (question: string): GuardrailResult => {
+  const text = question.trim();
+
+  if (
+    /(smell of gas|gas smell|gas leak|carbon monoxide|co alarm|boiler fumes|hissing gas|gas emergency)/i.test(
+      text
+    )
+  ) {
+    return {
+      kind: "emergency",
+      answer:
+        "If you can smell gas or suspect carbon monoxide, leave the property immediately, avoid switches/flames, and call the UK Gas Emergency Service on 0800 111 999 now. For urgent Geo Gas attendance, call 07854 451941.",
+      suggestions: [
+        "Repeat emergency phone numbers",
+        "What details should I give on the emergency call?",
+        "Can I still book an urgent engineer visit now?",
+      ],
+    };
+  }
+
+  if (
+    /(no heating|no hot water|major leak|burst pipe|boiler stopped|boiler not working|urgent call[- ]?out)/i.test(
+      text
+    )
+  ) {
+    return {
+      kind: "emergency",
+      answer:
+        "This sounds urgent. Call our 24/7 emergency line on 07854 451941 now. If you also suspect a gas leak, leave the property and call 0800 111 999 immediately.",
+      suggestions: [
+        "What should I do before the engineer arrives?",
+        "How quickly can an emergency engineer attend?",
+        "Can you explain emergency call-out pricing?",
+      ],
+    };
+  }
+
+  if (
+    /(opening hours|contact hours|business hours|when are you open|what time.*open|what time.*close|opening times)/i.test(
+      text
+    )
+  ) {
+    return {
+      kind: "business_info",
+      answer:
+        "Our main contact hours are Monday - Saturday, 8AM - 7PM. Emergency support is available 24/7.",
+      suggestions: [
+        "What areas do you cover?",
+        "How do I book a call-out?",
+        "What is your emergency number?",
+      ],
+    };
+  }
+
+  if (
+    /(areas do you cover|where do you cover|what areas.*cover|operating locations|coverage area|service area|do you cover.*(london|sussex|surrey))/i.test(
+      text
+    )
+  ) {
+    return {
+      kind: "business_info",
+      answer:
+        "We operate across London, Sussex and Surrey. Main contact hours are Monday - Saturday, 8AM - 7PM, with emergency support available 24/7.",
+      suggestions: [
+        "How do I request a quote?",
+        "What are your current call-out rates?",
+        "Do you offer landlord gas safety inspections?",
+      ],
+    };
+  }
+
+  if (
+    /(weather|football|soccer|nba|nfl|stock|crypto|bitcoin|recipe|restaurant|movie|song|lyrics|travel|flight|hotel|politics|election|coding|programming)/i.test(
+      text
+    ) &&
+    !hasServiceKeywords(text)
+  ) {
+    return {
+      kind: "out_of_scope",
+      answer:
+        "I can only help with Geo Gas services: current pricing, contracts, boiler/heating/plumbing support, landlord checks, and service cover terms.",
+      suggestions: [
+        "Show current call-out pricing",
+        "What is included in HomeCare contracts?",
+        "How much is a landlord gas safety inspection?",
+      ],
+    };
+  }
+
+  return { kind: "none" };
+};
+
+const parseBrochureText = async (pdfBuffer: Buffer): Promise<string> => {
+  const { PDFParse } = await import("pdf-parse");
+  const parser = new PDFParse({ data: new Uint8Array(pdfBuffer) });
+
+  try {
+    const parsed = await parser.getText();
+    return parsed.text
+      .replace(/\s+\n/g, "\n")
+      .replace(/\n{3,}/g, "\n\n")
+      .trim();
+  } finally {
+    await parser.destroy();
+  }
+};
+
+const readBrochureText = async (): Promise<string> => {
+  const brochureTextPath = path.join(
+    process.cwd(),
+    "public/info/GEO Gas Brochure 2026.txt"
+  );
+
+  try {
+    return await readFile(brochureTextPath, "utf8");
+  } catch {
+    const brochurePdfPath = path.join(
+      process.cwd(),
+      "public/info/GEO Gas Brochure 2026.pdf"
+    );
+    const brochureBuffer = await readFile(brochurePdfPath);
+    return parseBrochureText(brochureBuffer);
+  }
+};
+
+const getKnowledgeBase = async (): Promise<KnowledgeBase> => {
+  if (!knowledgePromise) {
+    knowledgePromise = (async () => {
+      const pricingPath = path.join(process.cwd(), "public/info/price.txt");
+
+      const [pricingRaw, brochureRaw] = await Promise.all([
+        readFile(pricingPath, "utf8"),
+        readBrochureText(),
+      ]);
+      const chunks = [
+        ...splitIntoChunks("pricing", pricingRaw, 300),
+        ...splitIntoChunks("brochure", brochureRaw, 430),
+      ];
+
+      return { chunks };
+    })();
+  }
+
+  return knowledgePromise;
+};
+
+const detectIntent = (question: string) => {
+  const pricingIntent =
+    /(price|pricing|cost|quote|how much|vat|hour|call[- ]?out|service fee|installation)/i.test(
+      question
+    );
+  const coverageIntent =
+    /(cover|covered|include|included|exclude|contract|terms|service|helpline|response|claims)/i.test(
+      question
+    );
+  const greeting = /^(hi|hello|hey|yo|good morning|good evening)\b/i.test(
+    question.trim()
+  );
+
+  return { pricingIntent, coverageIntent, greeting };
+};
+
+const rankChunks = (question: string, knowledge: KnowledgeBase) => {
+  const { pricingIntent, coverageIntent } = detectIntent(question);
+  const tokens = tokenize(question);
+
+  return knowledge.chunks
+    .map((chunk) => {
+      let score = 0;
+
+      for (const token of tokens) {
+        if (chunk.normalized.includes(token)) {
+          score += token.length > 5 ? 2 : 1;
+        }
+      }
+
+      if (pricingIntent && chunk.source === "pricing") score += 3;
+      if (coverageIntent && chunk.source === "brochure") score += 2;
+      if (/landlord|inspection|certificate|gas safe/i.test(question)) {
+        if (/landlord|inspection|certificate|gas safe/i.test(chunk.text)) score += 2;
+      }
+
+      return { chunk, score };
+    })
+    .filter((item) => item.score > 0)
+    .sort((a, b) => b.score - a.score);
+};
+
+const buildSuggestions = (question: string): string[] => {
+  const { pricingIntent, coverageIntent, greeting } = detectIntent(question);
+  const tokens = tokenize(question);
+
+  if (greeting || tokens.length === 0) {
+    return [
+      "What are your current gas and boiler call-out rates?",
+      "How much is a landlord gas inspection?",
+      "What is included in your home care contracts?",
+    ];
+  }
+
+  if (pricingIntent) {
+    return [
+      "Break this down by daytime vs evening rates",
+      "What is the starting price for boiler installation?",
+      "Show landlord bundle pricing",
+    ];
+  }
+
+  if (coverageIntent) {
+    return [
+      "Explain what is included in every contract",
+      "What is excluded from contract cover?",
+      "What is the response time and helpline detail?",
+    ];
+  }
+
+  return [
+    "Show boiler servicing prices",
+    "What are your drain call-out rates?",
+    "What does the contract include and exclude?",
+  ];
+};
+
+const getOpenAI = (): OpenAI => {
+  if (!openaiClient) {
+    const apiKey = process.env.OPENAI_API_KEY;
+    if (!apiKey) {
+      throw new Error(
+        "OPENAI_API_KEY is not set. Add it to your environment to use the chatbot."
+      );
+    }
+    openaiClient = new OpenAI({ apiKey });
+  }
+  return openaiClient;
+};
+
+const SYSTEM_PROMPT = `You are the Geo Gas website assistant.
+You must answer ONLY using the supplied context.
+Rules:
+1) If the context does not contain the answer, clearly say you cannot confirm from current Geo Gas files.
+2) Do not invent prices, terms, names or policies.
+3) Keep responses concise, practical, and customer-friendly.
+4) When giving prices, keep currency/time windows exactly as written.
+5) Mention if details appear to come from brochure terms versus live pricing text.
+6) If user follow-up depends on previous turns, use the provided conversation excerpt.
+7) You may also use the supplied static Geo Gas business facts for operating locations and contact hours.`;
+
+const encodeStreamEvent = (event: ChatStreamEvent): Uint8Array => {
+  return new TextEncoder().encode(`${JSON.stringify(event)}\n`);
+};
+
+const sanitizeHistory = (history: unknown): ChatHistoryItem[] => {
+  if (!Array.isArray(history)) return [];
+
+  return history
+    .slice(-8)
+    .map((item) => {
+      const role = item?.role === "assistant" ? "assistant" : "user";
+      const text = typeof item?.text === "string" ? item.text.trim() : "";
+      return text ? { role, text } : null;
+    })
+    .filter((item): item is ChatHistoryItem => item !== null);
+};
+
+const createReply = async (
+  question: string,
+  history: ChatHistoryItem[],
+  knowledge: KnowledgeBase,
+  signal: AbortSignal
+): Promise<ReadableStream<Uint8Array>> => {
+  const ranked = rankChunks(question, knowledge).slice(0, 8);
+  const guardrail = getGuardrail(question);
+  const suggestions =
+    guardrail.kind === "none" ? buildSuggestions(question) : guardrail.suggestions;
+  const encoder = new TextEncoder();
+
+  return new ReadableStream<Uint8Array>({
+    async start(controller) {
+      const send = (event: ChatStreamEvent) => {
+        controller.enqueue(encodeStreamEvent(event));
+      };
+
+      try {
+        if (guardrail.kind !== "none") {
+          send({ type: "chunk", delta: guardrail.answer });
+          send({
+            type: "final",
+            sources: [],
+            suggestions,
+            confidence: "high",
+            sourceKinds: [],
+          });
+          return;
+        }
+
+        if (!ranked.length) {
+          const fallback =
+            "I could not find a clear match in the current price list or brochure text. Please ask with a specific service, contract term, or time window.";
+          send({ type: "chunk", delta: fallback });
+          send({
+            type: "final",
+            sources: ["/info/price.txt", "/info/geo-gas-brochure-2026.pdf"],
+            suggestions,
+            confidence: "low",
+            sourceKinds: ["pricing", "brochure"],
+          });
+          return;
+        }
+
+        const context = ranked
+          .map((item, index) => {
+            return `[${index + 1}] (${item.chunk.source}) ${item.chunk.text}`;
+          })
+          .join("\n");
+
+        const sources = Array.from(
+          new Set(ranked.map((item) => sourcePath(item.chunk.source)))
+        );
+        const sourceKinds = Array.from(
+          new Set(ranked.map((item) => item.chunk.source))
+        );
+        const confidence = scoreToConfidence(ranked[0]?.score ?? 0);
+        const conversationExcerpt =
+          history.length > 0
+            ? history
+                .map((item) =>
+                  `${item.role === "assistant" ? "Assistant" : "User"}: ${item.text}`
+                )
+                .join("\n")
+            : "No prior conversation.";
+
+        const client = getOpenAI();
+        const responseStream = client.responses.stream({
+          model: process.env.OPENAI_MODEL || "gpt-4.1-mini",
+          temperature: 0.1,
+          max_output_tokens: 500,
+          instructions: SYSTEM_PROMPT,
+          input:
+            `Conversation excerpt:\n${conversationExcerpt}\n\n` +
+            `Current user question:\n${question}\n\n` +
+            `Static Geo Gas business facts:\n${STATIC_BUSINESS_FACTS}\n\n` +
+            `Context from Geo Gas files:\n${context}\n\n` +
+            "Answer using only this context.",
+        });
+
+        const onAbort = () => responseStream.abort();
+        signal.addEventListener("abort", onAbort, { once: true });
+
+        let hasText = false;
+
+        try {
+          for await (const event of responseStream) {
+            if (event.type !== "response.output_text.delta") continue;
+            if (!event.delta) continue;
+            hasText = true;
+            controller.enqueue(
+              encoder.encode(
+                `${JSON.stringify({ type: "chunk", delta: event.delta })}\n`
+              )
+            );
+          }
+          await responseStream.finalResponse();
+        } finally {
+          signal.removeEventListener("abort", onAbort);
+        }
+
+        if (!hasText) {
+          send({
+            type: "chunk",
+            delta:
+              "I could not generate a response from the current Geo Gas context.",
+          });
+        }
+
+        send({
+          type: "final",
+          sources,
+          suggestions,
+          confidence,
+          sourceKinds,
+        });
+      } catch (error) {
+        send({
+          type: "error",
+          error:
+            error instanceof Error
+              ? error.message
+              : "Chatbot request failed unexpectedly.",
+        });
+      } finally {
+        controller.close();
+      }
+    },
+  });
+};
+
+export async function POST(request: Request) {
+  try {
+    const body = (await request.json()) as {
+      message?: string;
+      history?: unknown;
+    };
+    const question = body.message?.trim();
+    const history = sanitizeHistory(body.history);
+
+    if (!question) {
+      return NextResponse.json(
+        { error: "A message is required." },
+        { status: 400 }
+      );
+    }
+
+    const knowledge = await getKnowledgeBase();
+    const stream = await createReply(question, history, knowledge, request.signal);
+
+    return new Response(stream, {
+      headers: {
+        "Content-Type": "application/x-ndjson; charset=utf-8",
+        "Cache-Control": "no-cache, no-transform",
+        Connection: "keep-alive",
+      },
+    });
+  } catch (error) {
+    return NextResponse.json(
+      {
+        error:
+          error instanceof Error
+            ? error.message
+            : "Chatbot request failed unexpectedly.",
+      },
+      { status: 500 }
+    );
+  }
+}

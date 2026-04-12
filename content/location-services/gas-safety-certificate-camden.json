@@ -1,0 +1,43 @@
+{
+  "type": "location_service",
+  "slug": "gas-safety-certificate-camden",
+  "serviceKey": "gas-safety-certificate",
+  "parentServiceSlug": "gas-safety-certificate",
+  "location": "Camden",
+  "linkTitle": "gas safety certificate in Camden",
+  "metaTitle": "Gas Safety Certificate Camden | Local Gas Safe Engineer",
+  "metaDescription": "Need a gas safety certificate in Camden? Local Gas Safe engineer for appliance checks, reporting and certification support.",
+  "h1": "Gas Safety Certificate in Camden",
+  "intro": "We provide gas safety certificate visits in Camden for homeowners, landlords and agents who need gas appliances checked by a local Gas Safe engineer with clear reporting afterwards.",
+  "localProof": "Gas safety bookings around Camden Town, Kentish Town and Primrose Hill where homes and rentals need clear inspection records and easy local scheduling.",
+  "areasCovered": ["Camden Town", "Kentish Town", "Primrose Hill", "King's Cross"],
+  "nearbyAreas": ["Islington", "Hampstead", "Kentish Town", "King's Cross"],
+  "sections": [
+    {
+      "heading": "Gas safety inspections across Camden",
+      "body": "We carry out gas safety visits across Camden for owner-occupied homes and rental properties that need proper checks and straightforward reporting."
+    },
+    {
+      "heading": "Who usually books this service in Camden",
+      "body": "Bookings often come from landlords, homeowners and letting agents who want a reliable local engineer for appliance checks and certification."
+    },
+    {
+      "heading": "Why clear follow-up matters",
+      "body": "A useful gas safety visit should make the condition of the appliances clear and explain any remedial work or further steps without ambiguity."
+    }
+  ],
+  "internalLinks": [
+    {
+      "label": "landlord gas safety certificate in Camden",
+      "href": "/landlord-gas-safety-certificate-camden",
+      "intent": "location"
+    },
+    {
+      "label": "gas engineer in Camden",
+      "href": "/gas-engineer-camden",
+      "intent": "location"
+    }
+  ],
+  "relatedLocationSlugs": ["gas-safety-certificate-islington"]
+}
+

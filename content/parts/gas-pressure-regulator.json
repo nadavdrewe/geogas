@@ -1,0 +1,36 @@
+{
+  "type": "part_guide",
+  "slug": "gas-pressure-regulator",
+  "partKey": "gas-pressure-regulator",
+  "parentServiceSlug": "gas-engineer",
+  "linkTitle": "gas pressure regulator",
+  "metaTitle": "Gas Pressure Regulator | What It Does and Fault Signs",
+  "metaDescription": "Learn what a gas pressure regulator does, signs of trouble and why regulator faults need professional attention.",
+  "h1": "Gas Pressure Regulator",
+  "intro": "A gas pressure regulator helps maintain the correct gas pressure for safe appliance operation. If there is a regulator issue, it needs professional attention rather than DIY investigation.",
+  "replacementCost": "Replacement cost depends on the appliance setup and where the regulator fault sits in the wider gas installation.",
+  "diyAllowed": false,
+  "safetyWarning": "Gas regulator faults are safety-critical and should only be assessed by a qualified Gas Safe engineer.",
+  "symptoms": [
+    "Gas appliance performance is inconsistent",
+    "Pressure-related appliance faults are being reported",
+    "There is concern about unstable gas supply behaviour"
+  ],
+  "sections": [
+    {
+      "heading": "What a gas pressure regulator does",
+      "body": "The regulator controls gas pressure so appliances receive supply within the range they are designed to operate on."
+    },
+    {
+      "heading": "Why regulator issues are different from normal boiler faults",
+      "body": "A regulator problem affects gas supply behaviour rather than just water pressure or heating controls, so it needs the right gas-safe diagnostic approach."
+    },
+    {
+      "heading": "When to call a gas engineer",
+      "body": "If there is any suspicion of a regulator issue or unstable gas appliance behaviour, book a qualified gas engineer rather than trying to investigate the gas train yourself."
+    }
+  ],
+  "relatedProblemSlugs": ["boiler-not-igniting"],
+  "relatedLocationSlugs": ["gas-engineer-camden"]
+}
+

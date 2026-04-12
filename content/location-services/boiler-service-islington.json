@@ -1,0 +1,36 @@
+{
+  "type": "location_service",
+  "slug": "boiler-service-islington",
+  "serviceKey": "boiler-service",
+  "parentServiceSlug": "boiler-service",
+  "location": "Islington",
+  "linkTitle": "boiler service in Islington",
+  "metaTitle": "Boiler Service Islington | Local Gas Safe Engineer",
+  "metaDescription": "Need a boiler service in Islington? Book an annual service with a local Gas Safe engineer for homes, landlords and managed properties.",
+  "h1": "Boiler Service in Islington",
+  "intro": "We provide boiler service visits in Islington for owner-occupied homes, landlords and managed properties that need annual servicing and clear advice on boiler condition.",
+  "localProof": "Servicing appointments around Angel, Highbury and Barnsbury where annual boiler checks are often booked ahead of winter or tenancy changes.",
+  "areasCovered": ["Angel", "Highbury", "Barnsbury", "Canonbury"],
+  "nearbyAreas": ["Camden", "Highbury", "Holloway", "Clerkenwell"],
+  "sections": [
+    {
+      "heading": "Boiler servicing across Islington",
+      "body": "We provide annual boiler services across Islington to help pick up safety concerns, performance issues and wear before they become urgent call-outs."
+    },
+    {
+      "heading": "Support for homes and rentals",
+      "body": "A lot of Islington service bookings come from landlords and managed properties where clear reporting and sensible follow-up recommendations matter."
+    },
+    {
+      "heading": "Why local annual servicing helps",
+      "body": "Regular local servicing makes it easier to keep records up to date, catch faults earlier and reduce the risk of winter breakdowns."
+    }
+  ],
+  "relatedProblemSlugs": [
+    "boiler-pressure-dropping",
+    "boiler-not-heating-water",
+    "boiler-making-noise"
+  ],
+  "relatedLocationSlugs": ["boiler-repair-islington", "boiler-service-camden"]
+}
+

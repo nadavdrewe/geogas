@@ -1,0 +1,50 @@
+{
+  "type": "problem",
+  "slug": "boiler-not-heating-water",
+  "problemKey": "boiler-not-heating-water",
+  "parentServiceSlug": "boiler-repair",
+  "linkTitle": "boiler not heating water",
+  "metaTitle": "Boiler Not Heating Water | Causes and Repair Advice",
+  "metaDescription": "Boiler not heating water? Learn the common causes, what you can check safely and when to book a boiler repair visit.",
+  "h1": "Why Is My Boiler Not Heating Water?",
+  "intro": "If the heating comes on but the hot water does not, or the water only gets lukewarm, the problem is usually linked to controls, internal components or the way the system is switching demand.",
+  "safetyWarning": "Poor or no hot water usually points to a fault that needs diagnosis rather than repeated resets.",
+  "urgency": "medium",
+  "symptoms": [
+    "Hot water is lukewarm or runs cold quickly",
+    "Heating works but taps do not get hot",
+    "Boiler runs but does not deliver consistent hot water"
+  ],
+  "safeChecks": [
+    "Check timer and hot water control settings",
+    "Confirm whether both heating and hot water are affected",
+    "Check for visible fault codes or pressure warnings"
+  ],
+  "doNotDiy": [
+    "Do not open the boiler to inspect valves or sensors",
+    "Do not attempt electrical testing inside the appliance",
+    "Do not ignore the fault if hot water keeps cutting out"
+  ],
+  "typicalFixes": [
+    "Replacing a faulty diverter valve",
+    "Repairing controls or thermostat issues",
+    "Diagnosing and replacing worn internal components"
+  ],
+  "sections": [
+    {
+      "heading": "What this problem usually indicates",
+      "body": "A hot-water fault often means the boiler is not switching correctly between heating and domestic hot water demand, or that a component is not responding properly."
+    },
+    {
+      "heading": "Why hot water faults can seem intermittent",
+      "body": "Some boilers will still produce heat at times when the affected component is failing, which is why the problem may appear random before it becomes a full breakdown."
+    },
+    {
+      "heading": "When to call for a repair visit",
+      "body": "If the hot water is unreliable, slow to heat or completely absent, it is worth booking diagnosis before the fault leaves you with no service at all."
+    }
+  ],
+  "relatedPartSlugs": ["boiler-diverter-valve", "boiler-thermostat"],
+  "relatedLocationSlugs": ["boiler-repair-islington"]
+}
+

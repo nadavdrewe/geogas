@@ -1,0 +1,46 @@
+{
+  "type": "location_service",
+  "slug": "gas-safety-certificate-islington",
+  "serviceKey": "gas-safety-certificate",
+  "parentServiceSlug": "gas-safety-certificate",
+  "location": "Islington",
+  "linkTitle": "gas safety certificate in Islington",
+  "metaTitle": "Gas Safety Certificate Islington | Local Gas Engineer",
+  "metaDescription": "Need a gas safety certificate in Islington? Local Gas Safe engineer for appliance checks, landlord reporting and certification support.",
+  "h1": "Gas Safety Certificate in Islington",
+  "intro": "We provide gas safety certificate visits in Islington for homeowners, landlords and letting agents who need clear inspection reporting and reliable local attendance.",
+  "localProof": "Frequently booked in Angel, Barnsbury and Highbury for rental properties, managed blocks and owner-occupied homes.",
+  "areasCovered": ["Angel", "Barnsbury", "Highbury", "Canonbury"],
+  "nearbyAreas": ["Camden", "Highbury", "Holloway", "Clerkenwell"],
+  "sections": [
+    {
+      "heading": "Gas safety visits across Islington",
+      "body": "We carry out gas safety checks for homes and rentals across Islington, with attention to access, appliance count and clear documentation afterwards."
+    },
+    {
+      "heading": "Support for landlords and property managers",
+      "body": "We understand the extra coordination needed when tenants, agents and multiple appliances are involved in one inspection."
+    },
+    {
+      "heading": "Why local coverage helps in Islington",
+      "body": "Local attendance helps keep inspections moving, especially where tenant access and tighter time windows are part of the booking."
+    }
+  ],
+  "internalLinks": [
+    {
+      "label": "landlord gas safety certificate in London",
+      "href": "/landlord-gas-safety-certificate",
+      "intent": "service"
+    },
+    {
+      "label": "gas engineer in London",
+      "href": "/gas-engineer",
+      "intent": "service"
+    }
+  ],
+  "relatedLocationSlugs": [
+    "gas-safety-certificate-camden",
+    "gas-safety-certificate-hackney",
+    "landlord-gas-safety-certificate-islington"
+  ]
+}

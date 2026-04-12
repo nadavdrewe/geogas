@@ -1,0 +1,36 @@
+{
+  "type": "part_guide",
+  "slug": "boiler-expansion-vessel",
+  "partKey": "boiler-expansion-vessel",
+  "parentServiceSlug": "boiler-repair",
+  "linkTitle": "boiler expansion vessel",
+  "metaTitle": "Boiler Expansion Vessel | What It Does and Signs It Has Failed",
+  "metaDescription": "Learn what a boiler expansion vessel does, how it affects system pressure and when it may need replacing by an engineer.",
+  "h1": "Boiler Expansion Vessel",
+  "intro": "The expansion vessel helps your heating system handle pressure changes as water heats up and cools down. When it fails, pressure problems and shutdowns often follow.",
+  "replacementCost": "Replacement cost usually depends on boiler access and model, but it is commonly quoted as a component replacement rather than a minor adjustment.",
+  "diyAllowed": false,
+  "safetyWarning": "Expansion vessel faults are linked to pressure behaviour and should be checked by an engineer.",
+  "symptoms": [
+    "Pressure rising and falling sharply",
+    "Repeated pressure loss after topping up",
+    "Water discharging outside through the relief pipe"
+  ],
+  "sections": [
+    {
+      "heading": "What the expansion vessel does",
+      "body": "As water heats up, it expands. The vessel absorbs that extra pressure so the sealed system can keep operating within a safe range."
+    },
+    {
+      "heading": "Signs the vessel may have failed",
+      "body": "A failed vessel often shows up as unstable pressure, repeated lockouts or a relief valve discharging water when the system heats up."
+    },
+    {
+      "heading": "Repair versus replacement",
+      "body": "Some issues can be confirmed and corrected during diagnosis, but a failed vessel often needs replacement rather than repeated repressurising."
+    }
+  ],
+  "relatedProblemSlugs": ["boiler-pressure-dropping", "boiler-making-noise"],
+  "relatedLocationSlugs": ["boiler-repair-camden"]
+}
+

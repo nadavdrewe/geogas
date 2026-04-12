@@ -1,0 +1,53 @@
+{
+  "type": "service",
+  "slug": "boiler-service",
+  "serviceKey": "boiler-service",
+  "primaryLocation": "London",
+  "linkTitle": "boiler service in London",
+  "metaTitle": "Boiler Service in London | Annual Boiler Checks",
+  "metaDescription": "Book a boiler service in London with a Gas Safe engineer. Annual servicing helps spot wear, safety issues and efficiency problems before they become breakdowns.",
+  "h1": "Boiler Service in London",
+  "intro": "Regular boiler servicing helps keep your heating system safer, more efficient and less likely to fail without warning. We provide boiler service visits across London for homes and rental properties.",
+  "pricingGuidance": "Boiler service pricing starts from a standard annual service visit, with any repair work or additional parts quoted separately if faults are found.",
+  "localProof": "Booked by homeowners, landlords and managing agents who want annual servicing recorded properly and explained clearly.",
+  "areasCovered": ["Camden", "Islington", "Hackney", "Haringey", "West London"],
+  "sections": [
+    {
+      "heading": "What a boiler service is for",
+      "body": "A service is not just a tick-box visit. It is the point where wear, pressure issues, combustion concerns and poor system performance are picked up before they turn into breakdowns."
+    },
+    {
+      "heading": "What is checked during a service",
+      "body": "The exact checks depend on the appliance, but a service usually includes visual inspection, operational checks and safety-focused testing around the boiler and its controls.",
+      "bullets": [
+        "Boiler condition and signs of leaks",
+        "Combustion and flue-related checks where required",
+        "Pressure and control operation",
+        "General system performance observations"
+      ]
+    },
+    {
+      "heading": "Who should book annual servicing",
+      "body": "Annual servicing is sensible for owner-occupied homes, rental properties and any boiler that is heavily used through the colder months."
+    }
+  ],
+  "internalLinks": [
+    {
+      "label": "boiler repair in London",
+      "href": "/boiler-repair",
+      "intent": "service"
+    },
+    {
+      "label": "gas safety certificate in London",
+      "href": "/gas-safety-certificate",
+      "intent": "service"
+    },
+    {
+      "label": "guides hub",
+      "href": "/guides",
+      "intent": "guide"
+    }
+  ],
+  "relatedGuideSlugs": ["how-often-should-a-boiler-be-serviced"],
+  "relatedLocationSlugs": ["boiler-service-camden", "boiler-service-islington"]
+}

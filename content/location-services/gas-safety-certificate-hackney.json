@@ -1,0 +1,43 @@
+{
+  "type": "location_service",
+  "slug": "gas-safety-certificate-hackney",
+  "serviceKey": "gas-safety-certificate",
+  "parentServiceSlug": "gas-safety-certificate",
+  "location": "Hackney",
+  "linkTitle": "gas safety certificate in Hackney",
+  "metaTitle": "Gas Safety Certificate Hackney | Local Gas Engineer",
+  "metaDescription": "Need a gas safety certificate in Hackney? Local Gas Safe engineer for home and landlord gas safety checks.",
+  "h1": "Gas Safety Certificate in Hackney",
+  "intro": "We provide gas safety certificate visits in Hackney for homeowners, landlords and property managers who need a local Gas Safe engineer and clear inspection reporting.",
+  "localProof": "Gas safety appointments across London Fields, Dalston and Hackney Central where rentals and owner-occupied homes need reliable local attendance.",
+  "areasCovered": ["Hackney Central", "London Fields", "Dalston", "Stoke Newington"],
+  "nearbyAreas": ["Islington", "Dalston", "Bethnal Green", "Stoke Newington"],
+  "sections": [
+    {
+      "heading": "Gas safety checks across Hackney",
+      "body": "We carry out gas safety checks across Hackney with attention to appliance condition, access arrangements and clear follow-up notes."
+    },
+    {
+      "heading": "Landlord and managed-property support",
+      "body": "Hackney bookings often involve rentals and managed properties where tenant access and certification timing need to be handled cleanly."
+    },
+    {
+      "heading": "Why local coverage helps in Hackney",
+      "body": "A local engineer makes it easier to arrange visits quickly and follow up if any remedial work is identified during the inspection."
+    }
+  ],
+  "internalLinks": [
+    {
+      "label": "gas engineer in London",
+      "href": "/gas-engineer",
+      "intent": "service"
+    },
+    {
+      "label": "landlord gas safety certificate in London",
+      "href": "/landlord-gas-safety-certificate",
+      "intent": "service"
+    }
+  ],
+  "relatedLocationSlugs": ["gas-safety-certificate-islington"]
+}
+

@@ -1,0 +1,51 @@
+{
+  "type": "problem",
+  "slug": "boiler-pressure-dropping",
+  "problemKey": "boiler-pressure-dropping",
+  "parentServiceSlug": "boiler-repair",
+  "linkTitle": "boiler pressure keeps dropping",
+  "metaTitle": "Boiler Pressure Dropping | Causes and Repair",
+  "metaDescription": "Boiler pressure dropping? Learn the common causes, what you can check safely and when to call a Gas Safe engineer for repair.",
+  "h1": "Why Is My Boiler Pressure Dropping?",
+  "intro": "If your boiler pressure keeps dropping, there is usually a fault somewhere in the heating system. It may be minor at first, but repeated pressure loss usually needs proper diagnosis.",
+  "safetyWarning": "Repeated pressure loss is usually a symptom of another fault and should not be ignored.",
+  "urgency": "medium",
+  "symptoms": [
+    "Low-pressure reading on the gauge",
+    "Boiler cutting out or locking out",
+    "Needing to top the pressure up often"
+  ],
+  "safeChecks": [
+    "Look for visible leaks around radiators, valves and exposed pipework",
+    "Check whether radiators were recently bled",
+    "Confirm what the pressure gauge is reading when the system is cold"
+  ],
+  "doNotDiy": [
+    "Do not open the boiler casing or attempt internal repairs",
+    "Do not replace expansion vessels or pressure parts yourself",
+    "Do not treat repeated topping up as the long-term fix"
+  ],
+  "typicalFixes": [
+    "Repairing system leaks",
+    "Replacing a failed expansion vessel",
+    "Replacing or reseating a faulty pressure relief component"
+  ],
+  "sections": [
+    {
+      "heading": "What pressure loss usually means",
+      "body": "A sealed heating system needs stable pressure to work properly. If the pressure keeps dropping, water is escaping somewhere or a pressure-handling component is no longer doing its job."
+    },
+    {
+      "heading": "Common causes of recurring pressure loss",
+      "body": "The cause may be a visible leak, a failed expansion vessel, a faulty pressure-related component or an issue that only shows up when the system heats up."
+    },
+    {
+      "heading": "When to book an engineer",
+      "body": "If the pressure keeps falling, the boiler shuts down or you can see signs of leaking water, it is time to have the system inspected properly rather than just topping it back up."
+    }
+  ],
+  "relatedPartSlugs": ["boiler-expansion-vessel"],
+  "relatedLocationSlugs": ["boiler-repair-camden"],
+  "relatedBrandSlugs": ["vaillant-boiler-repair"]
+}
+

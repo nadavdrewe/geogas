@@ -1,0 +1,44 @@
+{
+  "type": "brand_service",
+  "slug": "ideal-boiler-repair",
+  "brand": "Ideal",
+  "serviceKey": "boiler-repair",
+  "parentServiceSlug": "boiler-repair",
+  "primaryLocation": "London",
+  "linkTitle": "Ideal boiler repair in London",
+  "metaTitle": "Ideal Boiler Repair in London | Local Gas Engineer",
+  "metaDescription": "Need Ideal boiler repair in London? Local engineer for lockouts, pressure issues, leaks, no hot water and common Ideal boiler faults.",
+  "h1": "Ideal Boiler Repair in London",
+  "intro": "We repair Ideal boilers across London, helping with common faults such as repeated lockouts, pressure loss, leaks and poor hot water performance.",
+  "pricingGuidance": "Ideal boiler repair pricing depends on diagnosis, parts required and whether the appliance has had repeated previous faults.",
+  "localProof": "Called to Ideal boiler breakdowns across Camden, Islington and wider London for homes and rental properties.",
+  "areasCovered": ["Camden", "Islington", "Hackney", "South London"],
+  "commonFaults": [
+    "Repeated resets and lockouts",
+    "Pressure-related shutdowns",
+    "Leaking components",
+    "Hot water inconsistency"
+  ],
+  "sections": [
+    {
+      "heading": "Common Ideal boiler faults",
+      "body": "We regularly see Ideal boilers with lockouts, pressure problems, hot water faults and leaks that need careful diagnosis."
+    },
+    {
+      "heading": "Resetting is not the same as repairing",
+      "body": "If the boiler keeps needing a reset, the underlying cause still needs to be found rather than just cleared temporarily."
+    },
+    {
+      "heading": "When to consider replacement",
+      "body": "If the appliance is aging and the faults are repeating, we explain whether repair is still sensible or whether replacement is the better route."
+    }
+  ],
+  "relatedProblemSlugs": [
+    "boiler-reset-button-not-working",
+    "boiler-pressure-dropping",
+    "boiler-not-heating-water"
+  ],
+  "relatedLocationSlugs": ["boiler-repair-camden", "boiler-repair-hackney"],
+  "relatedPartSlugs": ["boiler-thermostat"]
+}
+

@@ -1,0 +1,942 @@
+/*------------------------------------------------------------------------
+
+Template Name:  Pipepro - Handyman & Plumber NextJS Template
+Author: Mugli
+Support: mugli@gmail.com
+Description: 
+Version: 1.0
+
+--------------------------------------------------------------------------
+TABLE OF CONTENTS
+--------------------------------------------------------------------------
+
+* Google Fonts
+* Color & Font CSS
+* Common CSS
+* Form CSS
+* Hedging CSS
+* Button Styles CSS
+* Scroll Top CSS
+* Preloader CSS
+* Shape & Image Animation CSS
+* Icon Animation CSS
+* Space And Container CSS
+* Header One CSS
+* Header Two CSS
+* Menu Bar Sticky CSS
+* Menu Sidebar CSS
+* Responsive Menu Sidebar CSS
+* Banner One CSS
+* Banner Two CSS
+* About One CSS
+* Service One CSS
+* Service Two CSS
+* Service Details CSS
+* Video Area CSS
+* Team One CSS
+* Team Two CSS
+* Work Process CSS
+* Work CSS
+* Counter One CSS
+* Counter Two CSS
+* Portfolio One CSS
+* Portfolio Two CSS
+* Portfolio Details CSS
+* FAQ One CSS
+* FAQ Two CSS
+* Testimonial One CSS
+* Testimonial Two CSS
+* Pricing Plan CSS
+* Blog One CSS
+* Blog Two CSS
+* Blog Details CSS
+* Blog Details CSS
+* Contact One CSS
+* Contact Two CSS
+* Contact Page CSS
+* All Side Bar
+* Cta One CSS
+* Solutions CSS
+* Breadcrumb CSS
+* Error CSS
+* Theme Pagination CSS
+* Subscribe One CSS
+* Subscribe Two CSS
+* Footer One CSS
+* Footer Two CSS
+* Copyright CSS
+
+/*==========================================================================
+* Google Fonts
+==========================================================================*/
+@import url("https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,100..900;1,100..900&display=swap");
+
+/*==========================================================================
+* Color & Font CSS
+==========================================================================*/
+:root {
+  --body-font: "Archivo", sans-serif;
+  --heading-font: "Archivo", sans-serif;
+  --body-color: #18181b;
+  --heading-color: #18181b;
+  --text-white: #ffffff;
+  --bg-white: #ffffff;
+  --primary-color-1: #cf1f27;
+  --secondary-color-1: #f97316;
+  --secondary-color-2: #f6c545;
+  --secondary-color-3: #fbc0bf;
+  --secondary-color-4: #ffe5a6;
+  --color-1: #15171a;
+  --color-2: #f6f7f8;
+  --color-3: #d8dbe0;
+  --color-4: #2f343b;
+  --color-5: #9aa0a8;
+  --color-6: #6e777d;
+  --color-7: #262a2f;
+  --color-8: #f4a1a5;
+  --box-shadow: 0px 20px 60px rgba(0, 0, 0, 0.04);
+}
+
+/*==========================================================================
+* Common CSS
+==========================================================================*/
+html {
+  overflow-x: clip;
+}
+
+body {
+  font-family: var(--body-font);
+  color: var(--body-color);
+  font-size: 20px;
+  line-height: 30px;
+  font-weight: 300;
+  overflow-x: clip;
+  &::-webkit-scrollbar {
+    width: 5px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background-color: #e5e7eb;
+    border-radius: 5px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: var(--primary-color-1);
+    border-radius: 5px;
+  }
+}
+img {
+  max-width: 100%;
+  height: auto;
+  transition: 0.4s;
+}
+a {
+  outline: none;
+  color: inherit;
+  text-decoration: none;
+}
+a,
+button,
+i {
+  text-decoration: none;
+  color: inherit;
+}
+a:focus,
+a:hover {
+  text-decoration: none;
+  color: inherit;
+}
+.section-padding {
+  padding: 120px 0px;
+}
+.section-padding-two {
+  padding: 120px 0 90px 0;
+}
+.section-padding-three {
+  padding: 90px 0 120px 0;
+}
+@media (max-width: 575px) {
+  .section-padding {
+    padding: 90px 0px;
+  }
+  .section-padding-two {
+    padding: 90px 0 60px 0;
+  }
+  .section-padding-three {
+    padding: 60px 0 90px 0;
+  }
+}
+.display-none {
+  display: none;
+}
+.display-block {
+  display: block;
+}
+.img__full {
+  width: 100%;
+}
+
+/*==========================================================================
+* Form CSS
+==========================================================================*/
+button,
+input[type="button"],
+input[type="reset"],
+input[type="submit"] {
+  background: var(--primary-color-1);
+  border-color: transparent;
+  border-radius: 5px;
+  color: var(--text-white);
+  padding: 17px 40px;
+}
+button:hover,
+input[type="button"]:hover,
+input[type="reset"]:hover,
+input[type="submit"]:hover {
+  border-color: transparent;
+}
+button:active,
+button:focus,
+input[type="button"]:active,
+input[type="button"]:focus,
+input[type="reset"]:active,
+input[type="reset"]:focus,
+input[type="submit"]:active,
+input[type="submit"]:focus {
+  border-color: transparent;
+}
+input[type="text"],
+input[type="file"],
+input[type="email"],
+input[type="url"],
+input[type="password"],
+input[type="search"],
+input[type="number"],
+input[type="tel"],
+input[type="range"],
+input[type="date"],
+input[type="month"],
+input[type="week"],
+input[type="time"],
+input[type="datetime"],
+input[type="datetime-local"],
+input[type="color"],
+textarea {
+  color: var(--body-color);
+  border-radius: 6px;
+  width: 100%;
+  height: 60px;
+  border: 1px solid #181818;
+  padding: 0 15px;
+  &::placeholder {
+    color: var(--body-color);
+  }
+}
+input[type="text"]:focus,
+input[type="file"]:focus,
+input[type="email"]:focus,
+input[type="url"]:focus,
+input[type="password"]:focus,
+input[type="search"]:focus,
+input[type="number"]:focus,
+input[type="tel"]:focus,
+input[type="range"]:focus,
+input[type="date"]:focus,
+input[type="month"]:focus,
+input[type="week"]:focus,
+input[type="time"]:focus,
+input[type="datetime"]:focus,
+input[type="datetime-local"]:focus,
+input[type="color"]:focus,
+textarea:focus {
+  color: var(--body-color);
+  outline: none;
+  box-shadow: none;
+  border-color: var(--primary-color-1);
+}
+select {
+  border: 1px solid rgba(var(--border-color-2), 0.1);
+}
+textarea {
+  width: 100%;
+  height: 150px;
+  padding-top: 15px;
+}
+button,
+button:hover,
+button:focus {
+  box-shadow: none;
+  border: none;
+  outline: none;
+}
+
+/*==========================================================================
+* Hedging CSS
+==========================================================================*/
+$list: (h1, 76px, 86px, 0, 0, var(--heading-color), var(--heading-font), 600),
+  (h2, 54px, 64px, 0, 0, var(--heading-color), var(--heading-font), 600),
+  (h3, 32px, 42px, 0, 0, var(--heading-color), var(--heading-font), 500),
+  (h4, 28px, 38px, 0, 0, var(--heading-color), var(--heading-font), 500),
+  (h5, 24px, 34px, 0, 0, var(--heading-color), var(--heading-font), 500),
+  (h6, 20px, 30px, 0, 0, var(--heading-color), var(--heading-font), 500);
+@each $name, $size, $height, $p, $m, $color, $font, $weight in $list {
+  #{$name} {
+    font-size: $size;
+    line-height: $height;
+    padding: $p;
+    margin: $m;
+    color: $color;
+    font-family: $font;
+    font-weight: $weight;
+    text-transform: capitalize;
+  }
+}
+@media (max-width: 1199px) {
+  h2 {
+    font-size: 46px;
+    line-height: 56px;
+  }
+}
+@media (max-width: 575px) {
+  body {
+    font-size: 18px;
+    line-height: 28px;
+  }
+  h2 {
+    font-size: 36px;
+    line-height: 46px;
+  }
+  h3 {
+    font-size: 28px;
+    line-height: 38px;
+  }
+  h4 {
+    font-size: 24px;
+    line-height: 34px;
+  }
+  h5 {
+    font-size: 20px;
+    line-height: 30px;
+  }
+}
+
+/*==========================================================================
+* Button Styles CSS
+==========================================================================*/
+.button-1,
+.button-2,
+.button-3,
+.button-4,
+.button-5 {
+  background: var(--color-1);
+  color: var(--text-white);
+  display: inline-flex;
+  gap: 5px;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  line-height: 20px;
+  padding: 19px 44px 17px 44px;
+  font-family: var(--body-font);
+  transition: 0.4s;
+  font-weight: 500;
+  border-radius: 10px;
+  border-right: 4px solid var(--primary-color-1);
+  border-bottom: 4px solid var(--primary-color-1);
+  &:hover {
+    background: var(--secondary-color-4);
+    color: var(--heading-color);
+    border-right: 4px solid var(--primary-color-1);
+    border-bottom: 4px solid var(--primary-color-1);
+  }
+}
+.button-2 {
+  background: var(--secondary-color-2);
+  color: var(--heading-color);
+  &:hover {
+    background: var(--secondary-color-1);
+  }
+}
+.button-3 {
+  background: var(--secondary-color-1);
+  color: var(--heading-color);
+  border-color: var(--heading-color);
+  &:hover {
+    background: var(--color-1);
+    color: var(--text-white);
+    border-color: var(--primary-color-1);
+  }
+}
+.button-4 {
+  background: var(--color-2);
+  color: var(--heading-color);
+  border-color: var(--heading-color);
+  &:hover {
+    background: var(--secondary-color-2);
+    color: var(--heading-color);
+  }
+}
+.button-5 {
+  background: var(--secondary-color-4);
+  color: var(--heading-color);
+  &:hover {
+    background: var(--color-1);
+    color: var(--text-white);
+    border-color: var(--primary-color-1);
+  }
+}
+.social__icon {
+  ul {
+    padding: 0;
+    margin: 0;
+    display: inline-flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    li {
+      list-style: none;
+      a i {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 50px;
+        height: 50px;
+        background: var(--color-4);
+        border-radius: 50%;
+        color: var(--text-white);
+        transition: 0.4s;
+        &:hover {
+          background: var(--secondary-color-2);
+          color: var(--heading-color);
+        }
+      }
+    }
+  }
+}
+
+/*==========================================================================
+* Scroll Top CSS
+==========================================================================*/
+.scroll-up {
+  cursor: pointer;
+  display: block;
+  border-radius: 50px;
+  box-shadow: inset 0 0 0 2px var(--color-3);
+  z-index: 10000;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(15px);
+  position: fixed;
+  inset-inline-end: 20px;
+  bottom: 20px;
+  height: 50px;
+  width: 50px;
+  transition: all 200ms linear;
+  &::after {
+    position: absolute;
+    font-family: "Font Awesome 5 Pro";
+    content: "\f176";
+    text-align: center;
+    line-height: 50px;
+    font-size: 24px;
+    color: var(--primary-color-1);
+    inset-inline-start: 0;
+    top: 0;
+    font-size: 20px;
+    height: 50px;
+    width: 50px;
+    cursor: pointer;
+    display: block;
+    z-index: 1;
+    transition: all 200ms linear;
+  }
+  &.active-scroll {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+  svg path {
+    fill: none;
+  }
+  svg.scroll-circle path {
+    stroke: var(--primary-color-1);
+    stroke-width: 4;
+    box-sizing: border-box;
+    transition: all 200ms linear;
+  }
+}
+
+/*==========================================================================
+* Preloader CSS
+==========================================================================*/
+.container-preloader {
+  align-items: center;
+  cursor: none;
+  display: flex;
+  height: 100%;
+  justify-content: center;
+  position: fixed;
+  inset-inline-start: 0;
+  top: 0;
+  width: 100%;
+  z-index: 900;
+  .animation-preloader {
+    position: absolute;
+    z-index: 100;
+    .spinner {
+      animation: spinner 1s infinite linear;
+      border-radius: 50%;
+      height: 9em;
+      width: 9em;
+      border: 10px solid var(--color-2);
+      border-top-color: var(--primary-color-1);
+      margin: 0 auto 3.5em auto;
+    }
+  }
+  .loader-section {
+    background-color: var(--color-3);
+    height: 100%;
+    position: fixed;
+    top: 0;
+    width: calc(50% + 1px);
+    &.section-left {
+      inset-inline-start: 0;
+    }
+    &.section-right {
+      inset-inline-end: 0;
+    }
+  }
+}
+.loaded {
+  .animation-preloader {
+    opacity: 0;
+    transition: 0.3s ease-out;
+  }
+  .loader-section {
+    &.section-left {
+      transform: translateX(-101%);
+      transition: 0.7s 0.3s all cubic-bezier(0.1, 0.1, 0.1, 1);
+    }
+    &.section-right {
+      transform: translateX(101%);
+      transition: 0.7s 0.3s all cubic-bezier(0.1, 0.1, 0.1, 1);
+    }
+  }
+}
+@keyframes spinner {
+  to {
+    transform: rotateZ(360deg);
+  }
+}
+.grid_two_column,
+.grid_three_column,
+.grid_four_column,
+.grid_five_column,
+.grid_six_column {
+  display: grid;
+  gap: 25px;
+  grid-template-columns: repeat(2, 1fr);
+}
+.grid_three_column {
+  grid-template-columns: repeat(3, 1fr);
+}
+.grid_four_column {
+  grid-template-columns: repeat(4, 1fr);
+}
+.grid_five_column {
+  grid-template-columns: repeat(5, 1fr);
+}
+.grid_six_column {
+  grid-template-columns: repeat(6, 1fr);
+}
+@media (max-width: 1299px) {
+  .grid_two_column {
+    grid-template-columns: repeat(1, 1fr);
+  }
+  .grid_three_column {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .grid_four_column {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+@media (max-width: 767px) {
+  .grid_four_column,
+  .grid_three_column {
+    grid-template-columns: repeat(1, 1fr);
+  }
+}
+.swiper-button-next::after,
+.swiper-button-prev::after {
+  display: none;
+}
+
+/*==========================================================================
+* Shape & Image Animation CSS
+==========================================================================*/
+@keyframes bounceRight {
+  0%,
+  20%,
+  50%,
+  80%,
+  100% {
+    transform: translateX(0);
+  }
+  30% {
+    transform: translateX(-95px);
+  }
+  10% {
+    transform: translateX(-5px);
+  }
+}
+@keyframes rollIn {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(359deg);
+  }
+}
+@keyframes rotation {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(-359deg);
+  }
+}
+@keyframes circle {
+  0% {
+    opacity: 1;
+  }
+  40% {
+    opacity: 1;
+  }
+  100% {
+    width: 200%;
+    height: 200%;
+    opacity: 0;
+  }
+}
+@keyframes upDown {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(50px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+.left-right-animate {
+  animation-name: left-right;
+  animation-duration: 4s;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+}
+@keyframes left-right {
+  0% {
+    transform: translateX(30px);
+  }
+  50% {
+    transform: translateX(5px);
+  }
+  100% {
+    transform: translateX(30px);
+  }
+}
+.bounce_y {
+  animation: bounce-y 10s infinite linear;
+}
+.bounce_x {
+  animation: bounce-x 10s infinite linear;
+}
+.zoom-one {
+  animation: zoom-one 10s infinite linear;
+}
+.zoom-two {
+  animation: zoom-two 5s infinite linear;
+}
+@keyframes bounce-y {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-30px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+@keyframes bounce-x {
+  0% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(30px);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+@keyframes zoom-one {
+  0% {
+    transform: scale(0.95);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(0.95);
+  }
+}
+@keyframes zoom-two {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(0.95);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/*==========================================================================
+* Icon Animation CSS
+==========================================================================*/
+.icon-animation {
+  animation: icon-animation 1.5s ease-in-out infinite;
+}
+@keyframes animation {
+  100% {
+    inset-inline-start: 125%;
+  }
+}
+@keyframes rotateY {
+  100% {
+    transform: rotateY(360deg);
+  }
+}
+@keyframes rotate {
+  100% {
+    transform: rotate(90deg);
+  }
+}
+.scroll {
+  animation: scroll 20s linear infinite;
+}
+.slide__area {
+  --gap: 0.1px;
+  display: flex;
+  .sliders {
+    flex-shrink: 0;
+  }
+  .scroll {
+    animation: scroll 70s linear infinite reverse;
+  }
+}
+@keyframes scroll {
+  from {
+    transform: translateX(calc(-100% - var(--gap)));
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+/*==========================================================================
+* custom cursor css
+==========================================================================*/
+.mouse-cursor {
+  position: fixed;
+  inset-inline-start: 0;
+  top: 0;
+  pointer-events: none;
+  border-radius: 50%;
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+  visibility: visible;
+}
+.cursor-inner {
+  width: 6px;
+  height: 6px;
+  z-index: 10000001;
+  background-color: var(--primary-color-1);
+  -webkit-transition: width 0.3s ease-in-out, height 0.3s ease-in-out,
+    margin 0.3s ease-in-out, opacity 0.3s ease-in-out;
+  -o-transition: width 0.3s ease-in-out, height 0.3s ease-in-out,
+    margin 0.3s ease-in-out, opacity 0.3s ease-in-out;
+  transition: width 0.3s ease-in-out, height 0.3s ease-in-out,
+    margin 0.3s ease-in-out, opacity 0.3s ease-in-out;
+}
+.cursor-inner.cursor-hover {
+  margin-inline-start: -35px;
+  margin-top: -35px;
+  width: 70px;
+  height: 70px;
+  background-color: var(--primary-color-1);
+  opacity: 0.3;
+}
+.cursor-outer {
+  margin-inline-start: -12px;
+  margin-top: -12px;
+  width: 30px;
+  height: 30px;
+  border: 1px solid var(--primary-color-1);
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  z-index: 10000000;
+  opacity: 0.5;
+  -webkit-transition: all 0.08s ease-out;
+  -o-transition: all 0.08s ease-out;
+  transition: all 0.08s ease-out;
+}
+.cursor-outer.cursor-hover {
+  opacity: 0;
+}
+
+/*==========================================================================
+* scroll to top with progress
+==========================================================================*/
+.progress-wrap {
+  position: fixed;
+  inset-inline-end: 30px;
+  bottom: 30px;
+  height: 50px;
+  width: 50px;
+  cursor: pointer;
+  display: block;
+  border-radius: 50px;
+  background-color: #1f1f1f;
+  box-shadow: inset 0 0 0 8px #1f1f1f;
+  z-index: 10000;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(15px);
+  transition: all 200ms linear;
+  z-index: 999;
+  overflow: hidden;
+  padding: 0px;
+
+  span {
+    position: absolute;
+    top: 50%;
+    inset-inline-start: 50%;
+    transform: translate(-50%, -50%);
+    width: 34px;
+    height: 34px;
+    background-color: white;
+    border-radius: 50%;
+    overflow: hidden;
+    &::after {
+      content: "\f176";
+      font-family: "Font Awesome 5 Pro";
+      font-weight: 900;
+      position: absolute;
+      text-align: center;
+      line-height: 34px;
+      font-size: 16px;
+      border-radius: 50%;
+      color: black;
+      inset-inline-start: 50%;
+      top: 50%;
+      transform: translate(-50%, 200%);
+      height: 34px;
+      width: 34px;
+      cursor: pointer;
+      display: block;
+      z-index: 1;
+      transition: all 200ms linear;
+    }
+
+    &::before {
+      content: "\f176";
+      font-family: "Font Awesome 5 Pro";
+      font-weight: 900;
+      text-align: center;
+      line-height: 34px;
+      position: absolute;
+      font-size: 16px;
+      border-radius: 50%;
+      color: black;
+      inset-inline-start: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      height: 34px;
+      width: 34px;
+      cursor: pointer;
+      display: block;
+      z-index: 2;
+      transition: all 200ms linear;
+    }
+  }
+
+  &:hover {
+    span {
+      &::before {
+        transform: translate(-50%, -200%);
+      }
+      &::after {
+        transform: translate(-50%, -50%);
+      }
+    }
+  }
+
+  path {
+    fill: none;
+  }
+
+  .progress-circle {
+    path {
+      stroke: var(--secondary-color-2);
+      stroke-width: 4;
+      box-sizing: content-box;
+    }
+  }
+}
+
+.active-progress {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+@media only screen and (max-width: 991.98px) {
+  .progress-wrap {
+    bottom: 10px;
+    inset-inline-end: 15px;
+    width: 40px;
+    height: 40px;
+
+    span {
+      width: 30px;
+      height: 30px;
+    }
+  }
+}
+
+@media only screen and (max-width: 767.98px) {
+  .header-one__right-search-box form {
+    width: 90% !important;
+  }
+}
+
+@media only screen and (min-width: 992px) {
+  .title-anim {
+    text-transform: lowercase !important;
+    opacity: 0;
+    .word {
+      .char {
+        &:nth-of-type(1) {
+          text-transform: uppercase !important;
+        }
+      }
+    }
+  }
+
+  .title-anim-active {
+    opacity: 1;
+  }
+}

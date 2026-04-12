@@ -1,0 +1,36 @@
+{
+  "type": "location_service",
+  "slug": "boiler-service-camden",
+  "serviceKey": "boiler-service",
+  "parentServiceSlug": "boiler-service",
+  "location": "Camden",
+  "linkTitle": "boiler service in Camden",
+  "metaTitle": "Boiler Service Camden | Annual Boiler Checks",
+  "metaDescription": "Need a boiler service in Camden? Book an annual boiler service with a local Gas Safe engineer for homes and rental properties.",
+  "h1": "Boiler Service in Camden",
+  "intro": "We provide boiler service visits in Camden for homeowners, landlords and managed properties that need annual servicing carried out clearly and properly by a local Gas Safe engineer.",
+  "localProof": "Annual service bookings across Camden Town, Kentish Town and Primrose Hill where customers want a local engineer and clear written follow-up.",
+  "areasCovered": ["Camden Town", "Kentish Town", "Primrose Hill", "King's Cross"],
+  "nearbyAreas": ["Islington", "Kentish Town", "Hampstead", "King's Cross"],
+  "sections": [
+    {
+      "heading": "Annual boiler servicing across Camden",
+      "body": "We carry out boiler services across Camden to help spot wear, pressure issues and general boiler deterioration before they become full breakdowns."
+    },
+    {
+      "heading": "Why Camden customers book routine servicing",
+      "body": "Regular servicing is especially useful for rental properties and heavily used heating systems where a small fault can quickly turn into a call-out during colder weather."
+    },
+    {
+      "heading": "What local customers expect from a service visit",
+      "body": "Customers usually want practical advice, clear notes on the appliance condition and straightforward next steps if the service highlights any follow-up work."
+    }
+  ],
+  "relatedProblemSlugs": [
+    "boiler-pressure-dropping",
+    "boiler-making-noise",
+    "boiler-not-heating-water"
+  ],
+  "relatedLocationSlugs": ["boiler-repair-camden", "boiler-service-islington"]
+}
+

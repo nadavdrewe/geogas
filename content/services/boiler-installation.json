@@ -1,0 +1,52 @@
+{
+  "type": "service",
+  "slug": "boiler-installation",
+  "serviceKey": "boiler-installation",
+  "primaryLocation": "London",
+  "linkTitle": "boiler installation in London",
+  "metaTitle": "Boiler Installation in London | Local Gas Engineer",
+  "metaDescription": "Need boiler installation in London? Get clear advice on replacement boilers, system suitability and installation visits from a Gas Safe engineer.",
+  "h1": "Boiler Installation in London",
+  "intro": "If your current boiler is unreliable, uneconomical or beyond sensible repair, we provide boiler installation support across London with practical advice on the right replacement setup.",
+  "pricingGuidance": "Boiler installation pricing depends on the boiler model, system changes and flue or controls work, with quotes built around the property and heating demand.",
+  "localProof": "We help London homeowners and landlords plan boiler replacements that suit the property rather than pushing a one-size-fits-all option.",
+  "areasCovered": ["Camden", "Islington", "Hackney", "Barnet", "South London"],
+  "sections": [
+    {
+      "heading": "When replacement is usually worth considering",
+      "body": "Replacement makes more sense when repair costs are stacking up, the boiler is repeatedly failing or the system is no longer suitable for the property.",
+      "bullets": [
+        "Recurring breakdowns and expensive parts",
+        "Poor hot water performance",
+        "Older boiler with low efficiency",
+        "System changes during renovation"
+      ]
+    },
+    {
+      "heading": "What an installation plan should cover",
+      "body": "A proper installation plan looks at output, controls, flue position, condensate routing and any system upgrades needed for safe, reliable operation."
+    },
+    {
+      "heading": "Why customers ask us before replacing a boiler",
+      "body": "We explain repair-versus-replacement tradeoffs clearly, so you can decide whether a new boiler is justified or whether the existing appliance still has a sensible repair route."
+    }
+  ],
+  "internalLinks": [
+    {
+      "label": "boiler repair in London",
+      "href": "/boiler-repair",
+      "intent": "service"
+    },
+    {
+      "label": "boiler service in London",
+      "href": "/boiler-service",
+      "intent": "service"
+    },
+    {
+      "label": "gas engineer in London",
+      "href": "/gas-engineer",
+      "intent": "service"
+    }
+  ]
+}
+

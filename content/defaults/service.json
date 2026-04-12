@@ -1,0 +1,34 @@
+{
+  "type": "service",
+  "heroEyebrow": "Geo Gas Services London Ltd",
+  "trustSignals": [
+    "Gas Safe registered",
+    "Fast London response",
+    "Clear pricing before major work",
+    "Support for homeowners and landlords"
+  ],
+  "cta": {
+    "eyebrow": "Book a local engineer",
+    "heading": "Need help from a local gas engineer?",
+    "text": "Call now or book online for boiler, gas and heating support across London.",
+    "primaryLabel": "Book online",
+    "primaryHref": "/contact",
+    "secondaryLabel": "View pricing",
+    "secondaryHref": "/pricing"
+  },
+  "faq": [
+    {
+      "question": "Do you cover homes, landlords and letting agents?",
+      "answer": "Yes. We work with homeowners, landlords, tenants and property managers across London."
+    },
+    {
+      "question": "How do I book an appointment?",
+      "answer": "Call the office, use the contact form or send a WhatsApp message and we will confirm the next available visit."
+    },
+    {
+      "question": "Do you explain costs before major work starts?",
+      "answer": "Yes. We diagnose the issue, explain the work involved and talk through likely costs before larger repairs or replacements are approved."
+    }
+  ]
+}
+

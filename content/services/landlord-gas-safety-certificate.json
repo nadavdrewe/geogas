@@ -1,0 +1,44 @@
+{
+  "type": "service",
+  "slug": "landlord-gas-safety-certificate",
+  "serviceKey": "landlord-gas-safety-certificate",
+  "primaryLocation": "London",
+  "linkTitle": "landlord gas safety certificate in London",
+  "metaTitle": "Landlord Gas Safety Certificate in London | CP12 Checks",
+  "metaDescription": "Book a landlord gas safety certificate in London with a Gas Safe engineer. CP12 checks for rental properties with clear documentation and follow-up advice.",
+  "h1": "Landlord Gas Safety Certificate in London",
+  "intro": "We provide landlord gas safety certificate visits across London for rental homes, managed blocks and portfolio properties that need clear inspection records and practical follow-up advice.",
+  "pricingGuidance": "Landlord gas safety pricing depends on appliance count, property access and whether there are additional issues that need follow-up after inspection.",
+  "localProof": "Used by private landlords, letting agents and portfolio managers who need reliable booking, access coordination and straightforward reporting.",
+  "areasCovered": ["Camden", "Islington", "Hackney", "Holloway", "Kensington"],
+  "sections": [
+    {
+      "heading": "What landlords need from a gas safety visit",
+      "body": "Rental inspections need to be documented properly, with appliance checks, outcomes and any remedial work clearly explained so there are no gaps after the visit."
+    },
+    {
+      "heading": "Working with agents and managed properties",
+      "body": "We understand access windows, tenant communication and the extra coordination needed when a letting agent or property manager is involved."
+    },
+    {
+      "heading": "When follow-up work may be needed",
+      "body": "If defects or safety issues are identified, we explain what they mean, what needs remedial work and how quickly that work should be arranged."
+    }
+  ],
+  "internalLinks": [
+    {
+      "label": "gas safety certificate in London",
+      "href": "/gas-safety-certificate",
+      "intent": "service"
+    },
+    {
+      "label": "gas engineer in London",
+      "href": "/gas-engineer",
+      "intent": "service"
+    }
+  ],
+  "relatedLocationSlugs": [
+    "landlord-gas-safety-certificate-camden",
+    "landlord-gas-safety-certificate-islington"
+  ]
+}

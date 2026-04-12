@@ -1,0 +1,51 @@
+{
+  "type": "problem",
+  "slug": "boiler-keeps-losing-pressure",
+  "problemKey": "boiler-keeps-losing-pressure",
+  "parentServiceSlug": "boiler-repair",
+  "linkTitle": "boiler keeps losing pressure",
+  "metaTitle": "Boiler Keeps Losing Pressure | Repeated Pressure Loss Guide",
+  "metaDescription": "Boiler keeps losing pressure? Learn why repeated pressure loss happens, what you can check safely and when to book a repair visit.",
+  "h1": "Why Does My Boiler Keep Losing Pressure?",
+  "intro": "If your boiler keeps losing pressure even after you top it back up, there is almost always an underlying fault that has not been fixed. Repeated repressurising is a symptom, not the solution.",
+  "safetyWarning": "If the boiler needs topping up regularly, the system should be diagnosed rather than repeatedly repressurised.",
+  "urgency": "medium",
+  "symptoms": [
+    "You have to top the boiler up again and again",
+    "The pressure drops after the heating runs",
+    "The boiler locks out after pressure falls"
+  ],
+  "safeChecks": [
+    "Check whether the pressure falls after the heating cycle rather than when the boiler is cold",
+    "Look for visible drips around radiators, valves and exposed joints",
+    "Check whether a discharge pipe outside is dripping"
+  ],
+  "doNotDiy": [
+    "Do not keep topping the pressure up as the long-term answer",
+    "Do not open the casing to inspect internal pressure parts",
+    "Do not replace sealed-system components yourself"
+  ],
+  "typicalFixes": [
+    "Finding and repairing a hidden system leak",
+    "Replacing a failed expansion vessel",
+    "Replacing a faulty pressure relief component"
+  ],
+  "sections": [
+    {
+      "heading": "Why repeated pressure loss matters",
+      "body": "A one-off pressure drop after bleeding radiators can happen, but repeated loss points to water escaping from the system or a component failing to manage pressure correctly."
+    },
+    {
+      "heading": "How this differs from a simple low-pressure warning",
+      "body": "If the pressure drops once and then stays stable, the fix may be straightforward. If it keeps falling every few days or every time the heating runs, the fault needs tracing properly."
+    },
+    {
+      "heading": "When to book a repair visit",
+      "body": "If the system needs regular top-ups, the boiler is locking out or the discharge pipe is dripping, it is time to book diagnosis rather than keep repressurising it."
+    }
+  ],
+  "relatedPartSlugs": ["boiler-expansion-vessel", "pressure-relief-valve"],
+  "relatedLocationSlugs": ["boiler-repair-islington"],
+  "relatedBrandSlugs": ["vaillant-boiler-repair", "worcester-bosch-boiler-repair"]
+}
+

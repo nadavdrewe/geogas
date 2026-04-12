@@ -1,0 +1,26 @@
+{
+  "type": "problem",
+  "heroEyebrow": "Boiler fault guide",
+  "cta": {
+    "eyebrow": "Need the fault diagnosed?",
+    "heading": "Book a boiler repair visit",
+    "text": "If the problem keeps returning or your heating has stopped, book a proper diagnosis from a Gas Safe engineer.",
+    "primaryLabel": "Book boiler repair",
+    "primaryHref": "/contact"
+  },
+  "faq": [
+    {
+      "question": "Is this something I should ignore for now?",
+      "answer": "No. Boiler and heating faults usually get worse if the underlying cause is left unresolved, especially if the boiler is shutting down or leaking."
+    },
+    {
+      "question": "Can I safely diagnose the internal fault myself?",
+      "answer": "No. You can carry out basic visual checks, but internal boiler parts and gas-related work should be left to a qualified engineer."
+    },
+    {
+      "question": "Will this automatically mean I need a new boiler?",
+      "answer": "Not always. Many common faults can be repaired once the real cause has been identified."
+    }
+  ]
+}
+

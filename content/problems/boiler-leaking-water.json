@@ -1,0 +1,51 @@
+{
+  "type": "problem",
+  "slug": "boiler-leaking-water",
+  "problemKey": "boiler-leaking-water",
+  "parentServiceSlug": "boiler-repair",
+  "linkTitle": "boiler leaking water",
+  "metaTitle": "Boiler Leaking Water | Common Causes and Next Steps",
+  "metaDescription": "Boiler leaking water? Learn what it may mean, what you can safely check and when to book an urgent repair.",
+  "h1": "Why Is My Boiler Leaking Water?",
+  "intro": "If water is leaking from your boiler or from pipework directly around it, the leak should be taken seriously. The source may be small at first, but it usually points to a fault that needs repair.",
+  "safetyWarning": "Leaks around a boiler should be treated as urgent, especially if the pressure is dropping or electrics are nearby.",
+  "urgency": "high",
+  "symptoms": [
+    "Visible dripping from the boiler or discharge pipe",
+    "Water pooling below the appliance",
+    "Pressure dropping alongside the leak"
+  ],
+  "safeChecks": [
+    "Check where the leak appears to be coming from without opening the casing",
+    "Look at the pressure gauge if it is safe to access",
+    "Move valuables away from any active dripping"
+  ],
+  "doNotDiy": [
+    "Do not open the casing or tighten internal components",
+    "Do not ignore water around electrical parts or controls",
+    "Do not keep using the system if the leak is active and worsening"
+  ],
+  "typicalFixes": [
+    "Repairing a failed seal or valve",
+    "Replacing a pressure-related component",
+    "Resolving internal component leaks after diagnosis"
+  ],
+  "sections": [
+    {
+      "heading": "What a boiler leak can mean",
+      "body": "Leaks can come from pressure-related parts, worn seals, damaged components or pipework connections near the appliance. The visible drip is often only the symptom."
+    },
+    {
+      "heading": "Why leaking boilers should be prioritised",
+      "body": "A leak can lead to pressure loss, repeated shutdowns and damage around the appliance, and it may get worse quickly once the boiler heats up."
+    },
+    {
+      "heading": "When to book an urgent repair",
+      "body": "If the boiler is actively leaking, pressure is falling or the leak is near electrics, book an urgent repair visit rather than waiting to see if it settles down."
+    }
+  ],
+  "relatedPartSlugs": ["boiler-expansion-vessel"],
+  "relatedLocationSlugs": ["boiler-repair-camden"],
+  "relatedBrandSlugs": ["vaillant-boiler-repair"]
+}
+

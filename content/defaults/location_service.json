@@ -1,0 +1,34 @@
+{
+  "type": "location_service",
+  "heroEyebrow": "Local London coverage",
+  "trustSignals": [
+    "Local call-out coverage",
+    "Gas Safe registered",
+    "Clear appointment windows",
+    "Support for managed properties"
+  ],
+  "cta": {
+    "eyebrow": "Need a local engineer?",
+    "heading": "Book a local visit today",
+    "text": "Call, message or book online for fast boiler and gas support in your area.",
+    "primaryLabel": "Book online",
+    "primaryHref": "/contact",
+    "secondaryLabel": "View pricing",
+    "secondaryHref": "/pricing"
+  },
+  "faq": [
+    {
+      "question": "How quickly can you attend?",
+      "answer": "Attendance depends on demand and the type of fault, but urgent heating and hot water issues are prioritised where possible."
+    },
+    {
+      "question": "Do you offer emergency call-outs?",
+      "answer": "Yes. Emergency appointments are available for urgent faults and unsafe situations."
+    },
+    {
+      "question": "Do you work with landlords and agents?",
+      "answer": "Yes. We regularly help landlords, letting agents and property managers with breakdowns, safety checks and access coordination."
+    }
+  ]
+}
+

@@ -1,0 +1,42 @@
+{
+  "type": "location_service",
+  "slug": "landlord-gas-safety-certificate-islington",
+  "serviceKey": "landlord-gas-safety-certificate",
+  "parentServiceSlug": "landlord-gas-safety-certificate",
+  "location": "Islington",
+  "linkTitle": "landlord gas safety certificate in Islington",
+  "metaTitle": "Landlord Gas Safety Certificate Islington | Local CP12 Checks",
+  "metaDescription": "Need a landlord gas safety certificate in Islington? Local CP12 checks for rental properties, landlords and letting agents.",
+  "h1": "Landlord Gas Safety Certificate in Islington",
+  "intro": "We provide landlord gas safety certificate visits in Islington for rental properties, letting agents and portfolio landlords who need clear inspection records and practical next-step advice.",
+  "localProof": "Landlord inspection bookings around Angel, Highbury and Barnsbury where rentals and managed properties need a dependable local CP12 visit.",
+  "areasCovered": ["Angel", "Highbury", "Barnsbury", "Canonbury"],
+  "nearbyAreas": ["Camden", "Highbury", "Holloway", "Clerkenwell"],
+  "sections": [
+    {
+      "heading": "Landlord gas safety checks across Islington",
+      "body": "We carry out landlord gas safety visits across Islington for rentals that need proper certification, clear reporting and sensible follow-up where faults are found."
+    },
+    {
+      "heading": "Working with landlords and agents",
+      "body": "Islington bookings often involve tenant access, agent communication and clear written notes so any remedial work can be managed efficiently."
+    },
+    {
+      "heading": "Why local coverage matters",
+      "body": "Local attendance makes inspection scheduling easier and helps keep follow-up work moving where access windows or changeovers are tight."
+    }
+  ],
+  "internalLinks": [
+    {
+      "label": "gas safety certificate in Islington",
+      "href": "/gas-safety-certificate-islington",
+      "intent": "location"
+    },
+    {
+      "label": "gas engineer in Islington",
+      "href": "/gas-engineer-islington",
+      "intent": "location"
+    }
+  ],
+  "relatedLocationSlugs": ["landlord-gas-safety-certificate-camden"]
+}

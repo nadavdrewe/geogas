@@ -1,0 +1,32 @@
+{
+  "type": "location_service",
+  "slug": "gas-engineer-hackney",
+  "serviceKey": "gas-engineer",
+  "parentServiceSlug": "gas-engineer",
+  "location": "Hackney",
+  "linkTitle": "gas engineer in Hackney",
+  "metaTitle": "Gas Engineer Hackney | Local Gas Safe Engineer",
+  "metaDescription": "Need a gas engineer in Hackney? Local Gas Safe support for boiler diagnostics, gas safety checks and landlord work.",
+  "h1": "Gas Engineer in Hackney",
+  "intro": "We provide gas engineering support in Hackney for boiler diagnostics, gas safety checks, landlord work and general appliance fault finding that needs a local Gas Safe engineer.",
+  "localProof": "Gas engineer bookings in Hackney Central, Dalston and London Fields where managed properties and busy households need a practical local service.",
+  "areasCovered": ["Hackney Central", "Dalston", "London Fields", "Stoke Newington"],
+  "nearbyAreas": ["Islington", "Dalston", "Bethnal Green", "Stoke Newington"],
+  "sections": [
+    {
+      "heading": "Gas engineering support across Hackney",
+      "body": "We help Hackney customers with gas safety visits, boiler issues and general gas-related support that needs the right qualification and a clear local response."
+    },
+    {
+      "heading": "Local support for rentals and homes",
+      "body": "Hackney call-outs often involve flats, shared access arrangements and landlord-managed properties where reporting and communication need to be straightforward."
+    },
+    {
+      "heading": "Why Hackney customers book local",
+      "body": "Local coverage makes follow-up easier and helps avoid delays when an appliance issue or gas safety concern needs timely attention."
+    }
+  ],
+  "relatedProblemSlugs": ["boiler-not-igniting", "boiler-keeps-losing-pressure"],
+  "relatedLocationSlugs": ["gas-engineer-islington", "gas-safety-certificate-hackney"]
+}
+

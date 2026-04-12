@@ -1,0 +1,50 @@
+{
+  "type": "problem",
+  "slug": "radiators-not-heating-up",
+  "problemKey": "radiators-not-heating-up",
+  "parentServiceSlug": "boiler-repair",
+  "linkTitle": "radiators not heating up",
+  "metaTitle": "Radiators Not Heating Up | Common Causes and Fixes",
+  "metaDescription": "Radiators not heating up? Learn the common causes, safe checks and when to book a heating engineer for repair.",
+  "h1": "Why Are My Radiators Not Heating Up?",
+  "intro": "If your boiler seems to be running but the radiators are staying cold, the issue may be with system pressure, circulation, controls or individual radiator valves rather than the boiler alone.",
+  "safetyWarning": "If multiple radiators stay cold or the heating is uneven throughout the property, the system needs checking before it worsens.",
+  "urgency": "medium",
+  "symptoms": [
+    "Radiators are cold while the boiler is on",
+    "Some radiators are hot and others stay cold",
+    "Heating is slow and uneven around the property"
+  ],
+  "safeChecks": [
+    "Check that the heating is actually set to come on at the controls",
+    "Check the boiler pressure if your system uses a sealed circuit",
+    "Check whether individual radiator valves are turned on"
+  ],
+  "doNotDiy": [
+    "Do not open the boiler to inspect pumps or internal parts",
+    "Do not force stuck valves with tools if they will not move cleanly",
+    "Do not assume the boiler is the only possible cause"
+  ],
+  "typicalFixes": [
+    "Restoring correct system pressure",
+    "Repairing circulation or control faults",
+    "Replacing a faulty thermostatic radiator valve"
+  ],
+  "sections": [
+    {
+      "heading": "What cold radiators can indicate",
+      "body": "Radiators that are not heating up can point to poor circulation, a control issue, pressure loss or local valve problems, depending on whether one radiator is affected or the whole property."
+    },
+    {
+      "heading": "Why some systems show mixed symptoms",
+      "body": "You may see one warm radiator and several cold ones, or heat upstairs but not downstairs. That pattern helps narrow down whether the problem is local to a valve or broader within the system."
+    },
+    {
+      "heading": "When to book heating diagnosis",
+      "body": "If the controls are set correctly and the radiators are still cold, it is worth booking diagnosis so the system problem can be identified rather than guessed at."
+    }
+  ],
+  "relatedPartSlugs": ["thermostatic-radiator-valve", "boiler-thermostat"],
+  "relatedLocationSlugs": ["boiler-repair-hackney"]
+}
+

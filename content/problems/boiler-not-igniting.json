@@ -1,0 +1,51 @@
+{
+  "type": "problem",
+  "slug": "boiler-not-igniting",
+  "problemKey": "boiler-not-igniting",
+  "parentServiceSlug": "boiler-repair",
+  "linkTitle": "boiler not igniting",
+  "metaTitle": "Boiler Not Igniting | Common Causes and Fixes",
+  "metaDescription": "Boiler not igniting? Find out what the fault may mean, what you can check safely and when to call an engineer.",
+  "h1": "Why Is My Boiler Not Igniting?",
+  "intro": "If your boiler is not igniting, the appliance is failing to light and start the heating cycle properly. The cause may be simple, but repeated failure to ignite needs proper diagnosis.",
+  "safetyWarning": "Do not keep forcing resets if the boiler repeatedly fails to ignite.",
+  "urgency": "high",
+  "symptoms": [
+    "Boiler tries to start but does not fire",
+    "Repeated lockouts or fault codes",
+    "No heating and no hot water"
+  ],
+  "safeChecks": [
+    "Check whether there is power to the boiler and controls",
+    "Check the room thermostat or programmer settings",
+    "Look for obvious low-pressure warnings on the display"
+  ],
+  "doNotDiy": [
+    "Do not interfere with ignition parts or gas components",
+    "Do not dismantle the boiler casing",
+    "Do not keep resetting the boiler over and over"
+  ],
+  "typicalFixes": [
+    "Repairing ignition or detection faults",
+    "Restoring correct pressure and controls operation",
+    "Resolving component or electrical issues affecting start-up"
+  ],
+  "sections": [
+    {
+      "heading": "What ignition failure means",
+      "body": "Ignition failure means the boiler is not completing the normal firing sequence. That can be caused by pressure issues, electrical faults, failed components or brand-specific lockout behaviour."
+    },
+    {
+      "heading": "Why the boiler may stop firing",
+      "body": "Low system pressure, faulty ignition parts, sensor issues and controls faults are all common reasons a boiler will not light when called for heat."
+    },
+    {
+      "heading": "When this becomes urgent",
+      "body": "If you have no heating or hot water and the boiler repeatedly locks out, book a repair visit rather than continuing to reset it and hope it recovers."
+    }
+  ],
+  "relatedPartSlugs": ["boiler-thermostat"],
+  "relatedLocationSlugs": ["boiler-repair-camden"],
+  "relatedBrandSlugs": ["vaillant-boiler-repair"]
+}
+

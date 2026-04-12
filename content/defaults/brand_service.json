@@ -1,0 +1,32 @@
+{
+  "type": "brand_service",
+  "heroEyebrow": "Brand-specific boiler support",
+  "trustSignals": [
+    "Gas Safe registered",
+    "Fast diagnosis for common brand faults",
+    "Support across London",
+    "Clear repair advice"
+  ],
+  "cta": {
+    "eyebrow": "Need a brand-specific repair?",
+    "heading": "Book a local boiler repair visit",
+    "text": "Call now or book online for help with leaks, fault codes, ignition faults and heating problems.",
+    "primaryLabel": "Book online",
+    "primaryHref": "/contact"
+  },
+  "faq": [
+    {
+      "question": "Do you work on older boilers as well as newer models?",
+      "answer": "We help with many common domestic boilers, but availability of parts and the condition of the appliance will affect the repair options."
+    },
+    {
+      "question": "Can you help if the boiler is showing a fault code?",
+      "answer": "Yes. Fault codes are useful clues, but they still need proper diagnosis because the same code can have more than one cause."
+    },
+    {
+      "question": "How do I know if repair is better than replacement?",
+      "answer": "That depends on the age of the boiler, the cost of parts and whether the appliance has a history of repeat failures."
+    }
+  ]
+}
+

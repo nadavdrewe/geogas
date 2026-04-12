@@ -1,0 +1,50 @@
+{
+  "type": "service",
+  "slug": "gas-engineer",
+  "serviceKey": "gas-engineer",
+  "primaryLocation": "London",
+  "linkTitle": "gas engineer in London",
+  "metaTitle": "Gas Engineer in London | Local Gas Safe Support",
+  "metaDescription": "Need a gas engineer in London? Book a Gas Safe engineer for boiler work, gas safety checks, fault finding and landlord support.",
+  "h1": "Gas Engineer in London",
+  "intro": "We provide Gas Safe engineering support across London for boiler repairs, gas safety checks, landlord work and general fault finding where safe diagnosis and clear advice matter.",
+  "pricingGuidance": "Gas engineer visits are quoted around the type of work needed, whether that is diagnosis, servicing, safety inspection or follow-up repair.",
+  "localProof": "Booked by homeowners and landlords who need one point of contact for gas safety, heating faults and day-to-day boiler issues.",
+  "areasCovered": ["Camden", "Islington", "Hackney", "Westminster", "Croydon"],
+  "sections": [
+    {
+      "heading": "What a local gas engineer can help with",
+      "body": "The work ranges from boiler diagnostics and servicing through to landlord gas safety certification and general gas appliance issues."
+    },
+    {
+      "heading": "Why Gas Safe registration matters",
+      "body": "Gas work should be carried out by someone who is properly qualified and working within the right registration scope for the appliance or task involved."
+    },
+    {
+      "heading": "Practical support for homes and rentals",
+      "body": "We work with owner-occupied homes, rental properties and managed buildings where access, communication and timing often matter as much as the repair itself."
+    }
+  ],
+  "internalLinks": [
+    {
+      "label": "boiler repair in London",
+      "href": "/boiler-repair",
+      "intent": "service"
+    },
+    {
+      "label": "gas safety certificate in London",
+      "href": "/gas-safety-certificate",
+      "intent": "service"
+    },
+    {
+      "label": "guides hub",
+      "href": "/guides",
+      "intent": "guide"
+    }
+  ],
+  "relatedLocationSlugs": [
+    "gas-engineer-camden",
+    "gas-engineer-islington",
+    "gas-engineer-hackney"
+  ]
+}

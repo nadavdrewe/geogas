@@ -1,0 +1,43 @@
+{
+  "type": "brand_service",
+  "slug": "glow-worm-boiler-repair",
+  "brand": "Glow-worm",
+  "serviceKey": "boiler-repair",
+  "parentServiceSlug": "boiler-repair",
+  "primaryLocation": "London",
+  "linkTitle": "Glow-worm boiler repair in London",
+  "metaTitle": "Glow-worm Boiler Repair in London | Local Gas Engineer",
+  "metaDescription": "Need Glow-worm boiler repair in London? Local engineer for pressure loss, leaks, ignition faults and hot water problems.",
+  "h1": "Glow-worm Boiler Repair in London",
+  "intro": "We repair Glow-worm boilers across London for common issues such as pressure loss, ignition problems, leaks, poor hot water and repeated shutdowns.",
+  "pricingGuidance": "Glow-worm repair pricing depends on the confirmed fault, the boiler model and whether parts are required.",
+  "localProof": "Helping London customers with Glow-worm faults where recurring shutdowns and pressure problems need proper diagnosis.",
+  "areasCovered": ["Camden", "Islington", "Hackney", "East London"],
+  "commonFaults": [
+    "Pressure loss and lockouts",
+    "Ignition problems",
+    "Leaks and water discharge",
+    "Poor hot water response"
+  ],
+  "sections": [
+    {
+      "heading": "Common Glow-worm issues",
+      "body": "Glow-worm repair calls often involve pressure loss, ignition faults, water leaks and hot water performance complaints."
+    },
+    {
+      "heading": "Why repeated shutdowns matter",
+      "body": "If the boiler is repeatedly shutting down, the underlying cause should be diagnosed properly rather than simply reset and monitored."
+    },
+    {
+      "heading": "Repair advice with context",
+      "body": "We explain whether the fault is straightforward, whether repeat history changes the decision and whether replacement is worth considering."
+    }
+  ],
+  "relatedProblemSlugs": [
+    "boiler-keeps-losing-pressure",
+    "boiler-not-igniting",
+    "boiler-leaking-water"
+  ],
+  "relatedLocationSlugs": ["boiler-repair-hackney", "boiler-repair-islington"],
+  "relatedPartSlugs": ["boiler-expansion-vessel"]
+}

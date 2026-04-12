@@ -1,0 +1,43 @@
+import type { MetadataRoute } from "next";
+import { SEO_COMPANY } from "@/lib/seo/company";
+import { getAllSeoPages } from "@/lib/seo/content";
+
+const STATIC_ROUTES = [
+  "",
+  "/about",
+  "/services",
+  "/contracts",
+  "/pricing",
+  "/faq",
+  "/contact",
+  "/help-and-advice",
+  "/guides",
+];
+
+const sitemap = async (): Promise<MetadataRoute.Sitemap> => {
+  const seoPages = await getAllSeoPages();
+  const now = new Date();
+
+  const staticEntries: MetadataRoute.Sitemap = STATIC_ROUTES.map((route) => ({
+    url: `${SEO_COMPANY.siteUrl}${route}`,
+    lastModified: now,
+    changeFrequency: route === "" ? "weekly" : "monthly",
+    priority: route === "" ? 1 : 0.7,
+  }));
+
+  const seoEntries: MetadataRoute.Sitemap = seoPages.map((page) => ({
+    url: `${SEO_COMPANY.siteUrl}/${page.slug}`,
+    lastModified: now,
+    changeFrequency: page.type === "service" ? "weekly" : "monthly",
+    priority:
+      page.type === "service"
+        ? 0.9
+        : page.type === "location_service"
+          ? 0.8
+          : 0.7,
+  }));
+
+  return [...staticEntries, ...seoEntries];
+};
+
+export default sitemap;

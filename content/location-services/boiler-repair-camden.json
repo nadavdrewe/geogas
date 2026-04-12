@@ -1,0 +1,43 @@
+{
+  "type": "location_service",
+  "slug": "boiler-repair-camden",
+  "serviceKey": "boiler-repair",
+  "parentServiceSlug": "boiler-repair",
+  "location": "Camden",
+  "linkTitle": "boiler repair in Camden",
+  "metaTitle": "Boiler Repair Camden | Local Gas Engineer",
+  "metaDescription": "Looking for boiler repair in Camden? Fast local boiler engineer for breakdowns, leaks, pressure loss, no hot water and emergency call-outs.",
+  "h1": "Boiler Repair in Camden",
+  "intro": "We provide boiler repair in Camden for homeowners, landlords, tenants and local property managers. If your boiler has broken down, lost pressure or stopped heating water, we offer a fast local service.",
+  "localProof": "Regular call-outs around Camden Town, Kentish Town and King's Cross for flats, terraced homes and managed rental properties.",
+  "areasCovered": ["Camden Town", "Kentish Town", "King's Cross", "Primrose Hill"],
+  "nearbyAreas": ["Islington", "Kentish Town", "Hampstead", "King's Cross"],
+  "sections": [
+    {
+      "heading": "Local boiler repairs across Camden",
+      "body": "We attend boiler faults throughout Camden and nearby streets, helping customers with leaks, no heating, no hot water and recurring pressure problems."
+    },
+    {
+      "heading": "Common boiler issues we see in Camden",
+      "body": "Pressure loss, ignition faults and hot water complaints come up regularly in Camden homes, especially where the boiler has had repeat top-ups or inconsistent servicing."
+    },
+    {
+      "heading": "Why customers choose a local Camden engineer",
+      "body": "Local coverage means easier scheduling, faster route planning and a service that fits managed properties as well as owner-occupied homes."
+    }
+  ],
+  "reviews": [
+    {
+      "name": "Priya T.",
+      "quote": "Quick attendance and they traced the leak instead of just topping the system up again.",
+      "location": "Camden"
+    }
+  ],
+  "relatedProblemSlugs": [
+    "boiler-pressure-dropping",
+    "boiler-not-igniting",
+    "boiler-making-noise"
+  ],
+  "relatedLocationSlugs": ["boiler-repair-islington", "boiler-repair-hackney"]
+}
+

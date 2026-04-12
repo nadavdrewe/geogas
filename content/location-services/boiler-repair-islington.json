@@ -1,0 +1,36 @@
+{
+  "type": "location_service",
+  "slug": "boiler-repair-islington",
+  "serviceKey": "boiler-repair",
+  "parentServiceSlug": "boiler-repair",
+  "location": "Islington",
+  "linkTitle": "boiler repair in Islington",
+  "metaTitle": "Boiler Repair Islington | Local Gas Engineer",
+  "metaDescription": "Need boiler repair in Islington? Local boiler engineer for no heating, no hot water, leaks, fault codes and emergency appointments.",
+  "h1": "Boiler Repair in Islington",
+  "intro": "We provide boiler repair in Islington for owner-occupied homes, rentals and managed properties. If your boiler is leaking, losing pressure or has stopped firing, we offer local call-out support.",
+  "localProof": "Frequent visits around Angel, Highbury and Holloway for apartment blocks, family homes and landlord-managed flats.",
+  "areasCovered": ["Angel", "Highbury", "Holloway", "Barnsbury"],
+  "nearbyAreas": ["Camden", "Hackney", "Highbury", "Holloway"],
+  "sections": [
+    {
+      "heading": "Boiler repair support across Islington",
+      "body": "We help with breakdowns, water leaks, pressure faults, ignition problems and poor hot water performance across Islington."
+    },
+    {
+      "heading": "Problems we regularly diagnose in Islington",
+      "body": "A lot of local call-outs involve pressure dropping, boilers that refuse to ignite and systems that are running but not heating water properly."
+    },
+    {
+      "heading": "Why local attendance matters in Islington",
+      "body": "A local engineer is often easier to schedule around tenant access, parking constraints and the tighter appointment windows common in North London properties."
+    }
+  ],
+  "relatedProblemSlugs": [
+    "boiler-pressure-dropping",
+    "boiler-not-heating-water",
+    "boiler-not-igniting"
+  ],
+  "relatedLocationSlugs": ["boiler-repair-camden", "boiler-repair-hackney"]
+}
+

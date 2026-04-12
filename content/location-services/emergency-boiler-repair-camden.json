@@ -1,0 +1,36 @@
+{
+  "type": "location_service",
+  "slug": "emergency-boiler-repair-camden",
+  "serviceKey": "emergency-boiler-repair",
+  "parentServiceSlug": "emergency-boiler-repair",
+  "location": "Camden",
+  "linkTitle": "emergency boiler repair in Camden",
+  "metaTitle": "Emergency Boiler Repair Camden | Fast Local Call-Outs",
+  "metaDescription": "Need emergency boiler repair in Camden? Local support for no heating, no hot water, leaks and urgent boiler breakdowns.",
+  "h1": "Emergency Boiler Repair in Camden",
+  "intro": "We provide emergency boiler repair in Camden for urgent heating failures, no hot water, active leaks and breakdowns that need a local engineer to attend quickly and diagnose the fault properly.",
+  "localProof": "Urgent call-outs around Camden Town, Regent's Park and King's Cross where heating failures and boiler leaks need a practical same-day response.",
+  "areasCovered": ["Camden Town", "King's Cross", "Regent's Park", "Kentish Town"],
+  "nearbyAreas": ["Islington", "Kentish Town", "Hampstead", "King's Cross"],
+  "sections": [
+    {
+      "heading": "Urgent boiler help across Camden",
+      "body": "We help with urgent breakdowns in Camden where the boiler has stopped working, hot water has failed or water is leaking from the appliance."
+    },
+    {
+      "heading": "What counts as an emergency",
+      "body": "The highest-priority faults are total loss of heating or hot water, active leaks and repeated lockouts that leave the property without service."
+    },
+    {
+      "heading": "Why a local Camden response matters",
+      "body": "Local coverage helps with quicker attendance, better scheduling and a clearer plan when the fault needs immediate diagnosis followed by parts or follow-up work."
+    }
+  ],
+  "relatedProblemSlugs": [
+    "boiler-leaking-water",
+    "boiler-not-igniting",
+    "boiler-reset-button-not-working"
+  ],
+  "relatedLocationSlugs": ["boiler-repair-camden", "emergency-boiler-repair-islington"]
+}
+

@@ -1,0 +1,36 @@
+{
+  "type": "part_guide",
+  "slug": "thermostatic-radiator-valve",
+  "partKey": "thermostatic-radiator-valve",
+  "parentServiceSlug": "boiler-repair",
+  "linkTitle": "thermostatic radiator valve",
+  "metaTitle": "Thermostatic Radiator Valve | Fault Signs and Replacement",
+  "metaDescription": "Learn what a thermostatic radiator valve does, signs it has failed and when it may need replacing.",
+  "h1": "Thermostatic Radiator Valve",
+  "intro": "A thermostatic radiator valve helps control how much hot water flows through an individual radiator. When it sticks or fails, one radiator may stay cold or behave unpredictably.",
+  "replacementCost": "Replacement cost usually depends on valve type, access and whether the wider system also has circulation or pressure issues.",
+  "diyAllowed": false,
+  "safetyWarning": "A stuck radiator valve may be one part of a bigger system issue, so diagnosis still matters.",
+  "symptoms": [
+    "One radiator stays cold while others work",
+    "A radiator heats intermittently",
+    "The valve head does not seem to affect radiator output"
+  ],
+  "sections": [
+    {
+      "heading": "What the valve does",
+      "body": "A thermostatic radiator valve adjusts water flow through a single radiator based on the local temperature setting."
+    },
+    {
+      "heading": "How failure usually appears",
+      "body": "If the valve sticks shut or stops responding, the radiator may remain cold even though the rest of the heating system is running."
+    },
+    {
+      "heading": "When replacement makes sense",
+      "body": "If the valve is confirmed faulty, replacement is usually more sensible than repeated attempts to work around the issue."
+    }
+  ],
+  "relatedProblemSlugs": ["radiators-not-heating-up"],
+  "relatedLocationSlugs": ["boiler-repair-hackney"]
+}
+
