@@ -25,7 +25,7 @@ const SiteContentContext = createContext<SiteContentContextValue>({
 });
 
 const fetchSiteContent = async (): Promise<SiteContent> => {
-  const response = await fetch("/api/admin/content", { cache: "no-store" });
+  const response = await fetch("/api/content/site", { cache: "no-store" });
   if (!response.ok) {
     throw new Error("Unable to load editable site content.");
   }
@@ -36,14 +36,21 @@ const fetchSiteContent = async (): Promise<SiteContent> => {
 
 export const SiteContentProvider = ({
   children,
+  initialContent = defaultSiteContent,
 }: {
   children: React.ReactNode;
+  initialContent?: SiteContent;
 }) => {
-  const [content, setContent] = useState<SiteContent>(defaultSiteContent);
-  const [isLoading, setIsLoading] = useState(true);
+  const [content, setContent] = useState<SiteContent>(initialContent);
+  const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
+  useEffect(() => {
+    setContent(initialContent);
+  }, [initialContent]);
+
   const refreshContent = useCallback(async () => {
+    setIsLoading(true);
     try {
       const nextContent = await fetchSiteContent();
       setContent(nextContent);
@@ -60,12 +67,8 @@ export const SiteContentProvider = ({
   }, []);
 
   useEffect(() => {
-    refreshContent();
-  }, [refreshContent]);
-
-  useEffect(() => {
     const handleContentUpdate = () => {
-      refreshContent();
+      void refreshContent();
     };
 
     window.addEventListener("site-content-updated", handleContentUpdate);

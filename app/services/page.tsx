@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import HeaderTwo from "@/components/layout/header/HeaderTwo";
 import BreadCrumb from "@/components/layout/banner/BreadCrumb";
 import ServiceArea from "@/components/containers/service/ServiceArea";
@@ -8,21 +9,44 @@ import FooterTwo from "@/components/layout/footer/FooterTwo";
 import InitAnimations from "@/components/layout/InitAnimations";
 import CustomCursor from "@/components/layout/CustomCursor";
 import ScrollProgressButton from "@/components/layout/ScrollProgressButton";
+import { getSiteContent } from "@/lib/siteContent";
+import { buildPageMetadata } from "@/lib/seo/metadata";
 
-const page = () => {
+export async function generateMetadata(): Promise<Metadata> {
+  const content = await getSiteContent();
+  const pageContent = content.pages.services;
+
+  return buildPageMetadata({
+    title: pageContent.metaTitle,
+    description: pageContent.metaDescription,
+    path: "/services",
+    siteUrl: content.global.siteUrl,
+    siteName: content.global.companyName,
+  });
+}
+
+const page = async () => {
+  const content = await getSiteContent();
+  const pageContent = content.pages.services;
+  const heroSpot = pageContent.heroSpot;
+
   return (
     <>
       <HeaderTwo />
-      <BreadCrumb title="Our Services" />
+      <BreadCrumb title={pageContent.breadcrumbTitle} />
       <InnerPageEngineerSpot
-        name="James"
-        imageSrc="/cartoons/james_hero.jpg"
-        imageAlt="Superhero-style illustration of James from GEO Gas"
-        heading="James Is On The Service Response Team"
-        description="Gas, boiler, plumbing and drain call-outs are backed by experienced engineers and clear pricing. Check current service rates before you book."
-        ctaHref="/pricing"
-        ctaLabel="View Current Pricing"
-        accent="teal"
+        eyebrow={heroSpot.eyebrow}
+        name={heroSpot.name}
+        role={heroSpot.role}
+        imageSrc={heroSpot.imageSrc}
+        imageAlt={heroSpot.imageAlt}
+        heading={heroSpot.heading}
+        description={heroSpot.description}
+        ctaHref={heroSpot.ctaHref}
+        ctaLabel={heroSpot.ctaLabel}
+        secondaryCtaHref={heroSpot.secondaryCtaHref}
+        secondaryCtaLabel={heroSpot.secondaryCtaLabel}
+        accent={heroSpot.accent}
       />
       <ServiceArea />
       <Contact addClass={true} />

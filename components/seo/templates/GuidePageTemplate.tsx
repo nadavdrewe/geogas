@@ -1,3 +1,4 @@
+import { SeoCompanyInfo } from "@/lib/seo/company";
 import SeoCtaStrip from "@/components/seo/SeoCtaStrip";
 import SeoFaqBlock from "@/components/seo/SeoFaqBlock";
 import SeoInternalLinks from "@/components/seo/SeoInternalLinks";
@@ -6,12 +7,14 @@ import SeoSectionList from "@/components/seo/SeoSectionList";
 import { GuidePage } from "@/lib/seo/types";
 
 type GuidePageTemplateProps = {
+  company: SeoCompanyInfo;
   page: GuidePage;
 };
 
-const GuidePageTemplate = ({ page }: GuidePageTemplateProps) => {
+const GuidePageTemplate = ({ company, page }: GuidePageTemplateProps) => {
   return (
     <SeoPageScaffold
+      company={company}
       page={page}
       summaryTitle="Guide overview"
       summaryItems={[
@@ -23,7 +26,7 @@ const GuidePageTemplate = ({ page }: GuidePageTemplateProps) => {
       <SeoSectionList sections={page.sections} />
       <SeoFaqBlock faq={page.faq} />
       <SeoInternalLinks links={page.internalLinks || []} />
-      <SeoCtaStrip cta={page.cta} />
+      <SeoCtaStrip company={company} cta={page.cta} />
     </SeoPageScaffold>
   );
 };

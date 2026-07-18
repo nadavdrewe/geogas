@@ -30,6 +30,8 @@ export type BrochurePreview = {
 export type ReputationPlatform = {
   name: string;
   note: string;
+  href?: string;
+  ctaLabel?: string;
 };
 
 export const contractsIntro = {
@@ -120,8 +122,9 @@ export const contractPackages: ContractPackage[] = [
 ];
 
 export const contractsContact = {
-  phonePrimary: "0207 7232221",
-  phoneSecondary: "07854 451941",
+  phonePrimary: "0207 723 2221",
+  phoneSecondary: "01444 212 395",
+  phoneEmergency: "07854 451 941",
   email: "info@geogasservices.uk",
   website: "www.geogasservices.uk",
 };
@@ -308,21 +311,34 @@ export const contractsFaq: ContractFAQ[] = [
 export const reputationSources: string[] = [
   "Checkatrade",
   "Trustpilot",
+  "HaMuch",
   "Google Reviews",
 ];
 
 export const reputationPlatforms: ReputationPlatform[] = [
   {
     name: "Checkatrade",
-    note: "5-star reputation highlighted in brochure.",
+    note: "Verified customer feedback and trade profile.",
+    href: "https://www.checkatrade.com/trades/geogasserviceslondon",
+    ctaLabel: "Open Checkatrade",
   },
   {
     name: "Trustpilot",
-    note: "Customer review platform referenced in brochure.",
+    note: "Public customer reviews on Trustpilot.",
+    href: "https://uk.trustpilot.com/review/www.geogasservices.uk",
+    ctaLabel: "Open Trustpilot",
+  },
+  {
+    name: "HaMuch",
+    note: "Geo Gas Services trade listing and ratings.",
+    href: "https://www.hamuch.com/69508/geo-gas-services-london-ltd",
+    ctaLabel: "Open HaMuch",
   },
   {
     name: "Google Reviews",
-    note: "Public customer ratings shown in brochure.",
+    note: "Google rating and customer comments.",
+    href: "https://www.google.com/search?q=Geo+Gas+Services+London+Ltd+google+reviews",
+    ctaLabel: "Open Google Reviews",
   },
 ];
 

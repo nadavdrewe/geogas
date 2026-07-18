@@ -48,7 +48,7 @@ const ContractsOverview = () => {
               <div className="contracts__overview-right-brand">
                 <Image
                   src={logo}
-                  alt="Geo Gas Services London Ltd logo"
+                  alt="Geo Gas Services logo"
                   width={360}
                   height={120}
                   priority

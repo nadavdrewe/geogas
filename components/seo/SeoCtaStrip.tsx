@@ -1,12 +1,13 @@
-import { SEO_COMPANY } from "@/lib/seo/company";
+import { SeoCompanyInfo } from "@/lib/seo/company";
 import { SeoCtaBlock } from "@/lib/seo/types";
 import SeoActionLink from "@/components/seo/SeoActionLink";
 
 type SeoCtaStripProps = {
+  company: SeoCompanyInfo;
   cta: SeoCtaBlock;
 };
 
-const SeoCtaStrip = ({ cta }: SeoCtaStripProps) => {
+const SeoCtaStrip = ({ company, cta }: SeoCtaStripProps) => {
   return (
     <section className="seo-page__cta">
       <div className="seo-page__cta-copy">
@@ -17,8 +18,8 @@ const SeoCtaStrip = ({ cta }: SeoCtaStripProps) => {
       <div className="seo-page__cta-actions">
         <SeoActionLink
           className="button-1"
-          href={SEO_COMPANY.primaryPhoneHref}
-          label={`Call ${SEO_COMPANY.primaryPhoneDisplay}`}
+          href={company.primaryPhoneHref}
+          label={`Call ${company.primaryPhoneDisplay}`}
         />
         {cta.primaryHref && cta.primaryLabel ? (
           <SeoActionLink className="button-2" href={cta.primaryHref} label={cta.primaryLabel} />

@@ -4,6 +4,7 @@ import Link from "next/link";
 type Accent = "red" | "teal" | "green";
 
 interface InnerPageEngineerSpotProps {
+  eyebrow?: string;
   name: string;
   role?: string;
   imageSrc: string;
@@ -12,10 +13,13 @@ interface InnerPageEngineerSpotProps {
   description: string;
   ctaHref: string;
   ctaLabel: string;
+  secondaryCtaHref?: string;
+  secondaryCtaLabel?: string;
   accent?: Accent;
 }
 
 const InnerPageEngineerSpot = ({
+  eyebrow = "GEO Hero Team",
   name,
   role = "GEO Gas Engineer",
   imageSrc,
@@ -24,6 +28,8 @@ const InnerPageEngineerSpot = ({
   description,
   ctaHref,
   ctaLabel,
+  secondaryCtaHref = "/contracts",
+  secondaryCtaLabel = "Plans From £19 / Month",
   accent = "red",
 }: InnerPageEngineerSpotProps) => {
   return (
@@ -33,7 +39,7 @@ const InnerPageEngineerSpot = ({
           <div className="row ai-center">
             <div className="col-lg-7">
               <div className="inner-engineer-spot__content">
-                <span className="inner-engineer-spot__eyebrow">GEO Hero Team</span>
+                <span className="inner-engineer-spot__eyebrow">{eyebrow}</span>
                 <h3>{heading}</h3>
                 <p>{description}</p>
                 <div className="inner-engineer-spot__meta">
@@ -45,8 +51,8 @@ const InnerPageEngineerSpot = ({
                     {ctaLabel}
                     <i className="fa-regular fa-angle-right"></i>
                   </Link>
-                  <Link className="button-2" href="/contracts">
-                    Plans From £19 / Month
+                  <Link className="button-2" href={secondaryCtaHref}>
+                    {secondaryCtaLabel}
                     <i className="fa-regular fa-angle-right"></i>
                   </Link>
                 </div>

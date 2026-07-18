@@ -3,11 +3,16 @@ node_modules/
 
 # next.js build output
 .next/
+.next-dev/
+.next-prod/
+.next-*/
 out/
 
 # production
 build/
 dist/
+certs/
+acme/
 
 # coverage
 coverage/
@@ -31,8 +36,13 @@ pnpm-debug.log*
 # misc cache/temp
 .cache/
 .tmp/
+.npm-cache/
+.codex-video-deps/
 *.tmp
 *.tsbuildinfo
+content/*.sqlite
+__pycache__/
+*.py[cod]
 
 # editor / IDE
 .vscode/

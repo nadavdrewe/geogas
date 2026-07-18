@@ -116,10 +116,14 @@ const Footer = () => {
                 <p>
                   <strong>Contact Hours:</strong> {footer.contactHours.regularDays}
                 </p>
-                <p>{footer.contactHours.regularHours}</p>
-                <p>
-                  <strong>{footer.contactHours.emergency}</strong>
-                </p>
+                {footer.contactHours.regularHours ? (
+                  <p>{footer.contactHours.regularHours}</p>
+                ) : null}
+                {footer.contactHours.emergency ? (
+                  <p>
+                    <strong>{footer.contactHours.emergency}</strong>
+                  </p>
+                ) : null}
               </div>
             </div>
           </div>

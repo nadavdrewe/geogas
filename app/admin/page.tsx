@@ -20,6 +20,21 @@ type BlogVideoPost = {
   poster?: string;
 };
 
+type ContentDocumentSummary = {
+  id: string;
+  collection: "site" | "seo_default" | "seo_page";
+  documentType: string | null;
+  slug: string;
+  title: string | null;
+  sourcePath: string | null;
+  updatedAt: string;
+};
+
+type ContentDocument = ContentDocumentSummary & {
+  content: unknown;
+};
+
+const SITE_DOCUMENT_ID = "site:published";
 const prettyDefault = JSON.stringify(defaultSiteContent, null, 2);
 
 const isRecord = (value: unknown): value is Record<string, unknown> => {
@@ -131,6 +146,8 @@ const AdminPage = () => {
   const [editorMode, setEditorMode] = useState<"visual" | "raw">("visual");
   const [fieldFilter, setFieldFilter] = useState("");
   const [editorValue, setEditorValue] = useState(prettyDefault);
+  const [documents, setDocuments] = useState<ContentDocumentSummary[]>([]);
+  const [selectedDocumentId, setSelectedDocumentId] = useState(SITE_DOCUMENT_ID);
   const [isLoading, setIsLoading] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
   const [status, setStatus] = useState<string | null>(null);
@@ -176,22 +193,74 @@ const AdminPage = () => {
     });
   }, [fieldFilter, leafFields]);
 
+  const selectedDocument = useMemo(() => {
+    return documents.find((document) => document.id === selectedDocumentId) ?? null;
+  }, [documents, selectedDocumentId]);
+
+  const isSiteDocument = selectedDocumentId === SITE_DOCUMENT_ID;
+
+  const loadDocuments = useCallback(async () => {
+    try {
+      const keyValue = adminKey.trim();
+      const response = await fetch("/api/admin/documents", {
+        cache: "no-store",
+        headers: {
+          ...(keyValue ? { "x-admin-key": keyValue } : {}),
+        },
+      });
+
+      if (!response.ok) {
+        const payload = (await response.json().catch(() => null)) as
+          | { error?: string }
+          | null;
+        throw new Error(payload?.error ?? "Could not load DB documents.");
+      }
+
+      const payload = (await response.json()) as {
+        documents?: ContentDocumentSummary[];
+      };
+      setDocuments(payload.documents ?? []);
+    } catch (documentsError) {
+      const message =
+        documentsError instanceof Error
+          ? documentsError.message
+          : "Could not load DB documents.";
+      setError(message);
+    }
+  }, [adminKey]);
+
   const loadContent = useCallback(async () => {
     setIsLoading(true);
     setError(null);
 
     try {
-      const response = await fetch("/api/admin/content", { cache: "no-store" });
+      const keyValue = adminKey.trim();
+      const response = await fetch(
+        `/api/admin/documents?id=${encodeURIComponent(selectedDocumentId)}`,
+        {
+          cache: "no-store",
+          headers: {
+            ...(keyValue ? { "x-admin-key": keyValue } : {}),
+          },
+        }
+      );
       if (!response.ok) {
         const payload = (await response.json().catch(() => null)) as
           | { error?: string }
           | null;
-        throw new Error(payload?.error ?? "Could not load editable content.");
+        throw new Error(
+          payload?.error === "Unauthorized."
+            ? "Enter the admin key to load content."
+            : payload?.error ?? "Could not load editable content."
+        );
       }
 
-      const payload = (await response.json()) as { content?: unknown };
+      const payload = (await response.json()) as {
+        document?: ContentDocument;
+      };
       const nextValue = JSON.stringify(
-        payload.content ?? defaultSiteContent,
+        payload.document?.content ??
+          (selectedDocumentId === SITE_DOCUMENT_ID ? defaultSiteContent : {}),
         null,
         2
       );
@@ -205,7 +274,7 @@ const AdminPage = () => {
     } finally {
       setIsLoading(false);
     }
-  }, []);
+  }, [adminKey, selectedDocumentId]);
 
   const loadUploads = useCallback(async () => {
     setUploadError(null);
@@ -236,6 +305,10 @@ const AdminPage = () => {
       setUploadError(message);
     }
   }, [adminKey]);
+
+  useEffect(() => {
+    loadDocuments();
+  }, [loadDocuments]);
 
   useEffect(() => {
     loadContent();
@@ -273,12 +346,12 @@ const AdminPage = () => {
 
   const handleFormat = () => {
     if (!parsedJson) {
-      setError("Cannot format invalid JSON.");
+      setError("Cannot format invalid content data.");
       return;
     }
 
     setEditorValue(JSON.stringify(parsedJson, null, 2));
-    setStatus("JSON formatted.");
+    setStatus("Content data formatted.");
     setError(null);
   };
 
@@ -295,13 +368,13 @@ const AdminPage = () => {
 
     try {
       const parsed = JSON.parse(editorValue);
-      const response = await fetch("/api/admin/content", {
+      const response = await fetch("/api/admin/documents", {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
           ...(adminKey ? { "x-admin-key": adminKey } : {}),
         },
-        body: JSON.stringify({ content: parsed }),
+        body: JSON.stringify({ id: selectedDocumentId, content: parsed }),
       });
 
       if (!response.ok) {
@@ -311,10 +384,17 @@ const AdminPage = () => {
         throw new Error(payload?.error ?? "Save failed.");
       }
 
-      const payload = (await response.json()) as { content?: unknown };
-      setEditorValue(JSON.stringify(payload.content ?? parsed, null, 2));
-      setStatus("Content saved and published.");
-      window.dispatchEvent(new Event("site-content-updated"));
+      const payload = (await response.json()) as {
+        document?: ContentDocument;
+      };
+      setEditorValue(
+        JSON.stringify(payload.document?.content ?? parsed, null, 2)
+      );
+      setStatus("Content saved to database.");
+      await loadDocuments();
+      if (selectedDocumentId === SITE_DOCUMENT_ID) {
+        window.dispatchEvent(new Event("site-content-updated"));
+      }
     } catch (saveError) {
       const message =
         saveError instanceof Error ? saveError.message : "Save failed.";
@@ -326,7 +406,7 @@ const AdminPage = () => {
 
   const handleDownload = () => {
     if (!parsedJson) {
-      setError("Cannot download invalid JSON.");
+      setError("Cannot export invalid content data.");
       return;
     }
 
@@ -336,14 +416,14 @@ const AdminPage = () => {
     const url = URL.createObjectURL(blob);
     const anchor = document.createElement("a");
     anchor.href = url;
-    anchor.download = "site-content.json";
+    anchor.download = "site-content-export.json";
     anchor.click();
     URL.revokeObjectURL(url);
   };
 
   const setVideoPosts = (nextPosts: BlogVideoPost[]) => {
     if (!parsedJson) {
-      setError("JSON is invalid. Fix JSON before editing video posts.");
+      setError("Content data is invalid. Fix Raw Data before editing video posts.");
       return;
     }
 
@@ -365,7 +445,7 @@ const AdminPage = () => {
   const removeVideoPost = (index: number) => {
     const nextPosts = blogVideos.filter((_, postIndex) => postIndex !== index);
     setVideoPosts(nextPosts);
-    setStatus("Video post removed. Save content to publish.");
+    setStatus("Video post removed. Save To Database to publish.");
     setError(null);
   };
 
@@ -386,7 +466,7 @@ const AdminPage = () => {
 
     setVideoPosts([...blogVideos, nextPost]);
     setNewVideoPost({ title: "", summary: "", file: "", poster: "" });
-    setStatus("Video post added. Save content to publish.");
+    setStatus("Video post added. Save To Database to publish.");
     setError(null);
   };
 
@@ -446,10 +526,11 @@ const AdminPage = () => {
       <div className="container">
         <div className="row mb-30">
           <div className="col-xl-12">
-            <h1>Admin Content Editor</h1>
+            <h1>Admin Database Content Editor</h1>
             <p>
-              Edit text and media paths for the website. Use <code>/admin</code>{" "}
-              for visual field editing and raw JSON editing.
+              Edit website content stored in the SQLite content database. Visual
+              mode is for quick field edits; raw mode edits the structured data
+              representation saved back to the database.
             </p>
           </div>
         </div>
@@ -468,6 +549,36 @@ const AdminPage = () => {
         </div>
 
         <div className="row mb-20">
+          <div className="col-xl-8 col-lg-10">
+            <label htmlFor="content-document">Database document</label>
+            <select
+              id="content-document"
+              value={selectedDocumentId}
+              onChange={(event) => setSelectedDocumentId(event.target.value)}
+              style={{ width: "100%" }}
+            >
+              {documents.length === 0 ? (
+                <option value={SITE_DOCUMENT_ID}>Published Site Content</option>
+              ) : null}
+              {documents.map((document) => (
+                <option key={document.id} value={document.id}>
+                  {document.collection} / {document.documentType ?? "site"} /{" "}
+                  {document.title ?? document.slug}
+                </option>
+              ))}
+            </select>
+            {selectedDocument ? (
+              <p style={{ marginTop: 8 }}>
+                <code>{selectedDocument.id}</code>
+                {selectedDocument.sourcePath ? (
+                  <> imported from <code>{selectedDocument.sourcePath}</code></>
+                ) : null}
+              </p>
+            ) : null}
+          </div>
+        </div>
+
+        <div className="row mb-20">
           <div className="col-xl-12">
             <div className="d-flex flex-wrap gap-2">
               <button
@@ -476,7 +587,7 @@ const AdminPage = () => {
                 onClick={handleSave}
                 disabled={isSaving || isLoading}
               >
-                {isSaving ? "Saving..." : "Save Content"}
+                {isSaving ? "Saving..." : "Save To Database"}
               </button>
               <button
                 className="button-2"
@@ -484,15 +595,15 @@ const AdminPage = () => {
                 onClick={handleFormat}
                 disabled={isSaving || isLoading}
               >
-                Format JSON
+                Format Data
               </button>
               <button
                 className="button-2"
                 type="button"
                 onClick={handleReset}
-                disabled={isSaving || isLoading}
+                disabled={isSaving || isLoading || !isSiteDocument}
               >
-                Reset To Defaults
+                Reset To Code Defaults
               </button>
               <button
                 className="button-2"
@@ -508,7 +619,7 @@ const AdminPage = () => {
                 onClick={handleDownload}
                 disabled={isSaving || isLoading}
               >
-                Download JSON
+                Export JSON
               </button>
               <button
                 className="button-2"
@@ -517,6 +628,14 @@ const AdminPage = () => {
                 disabled={isUploading}
               >
                 Reload Uploads
+              </button>
+              <button
+                className="button-2"
+                type="button"
+                onClick={loadDocuments}
+                disabled={isLoading}
+              >
+                Reload Documents
               </button>
               <button
                 className={editorMode === "visual" ? "button-1" : "button-2"}
@@ -530,7 +649,7 @@ const AdminPage = () => {
                 type="button"
                 onClick={() => setEditorMode("raw")}
               >
-                Raw JSON
+                Raw Data
               </button>
             </div>
           </div>
@@ -541,10 +660,12 @@ const AdminPage = () => {
             {isLoading ? <p>Loading content...</p> : null}
             {status ? <p>{status}</p> : null}
             {error ? <p>{error}</p> : null}
-            <p>JSON status: {parsedPreview}</p>
+            <p>Content data status: {parsedPreview}</p>
           </div>
         </div>
 
+        {isSiteDocument ? (
+          <>
         <div className="row mb-30">
           <div className="col-xl-12">
             <h4>Media Uploads</h4>
@@ -632,7 +753,7 @@ const AdminPage = () => {
             <h4>Video Posts</h4>
             <p>
               Manage homepage video cards here. Upload a file above, then set the
-              video path and optional poster path. Click Save Content to publish.
+              video path and optional poster path. Click Save To Database to publish.
             </p>
 
             {blogVideos.map((post, index) => (
@@ -766,12 +887,15 @@ const AdminPage = () => {
           </div>
         </div>
 
+          </>
+        ) : null}
+
         {editorMode === "visual" ? (
           <div className="row">
             <div className="col-xl-12">
               <h4>Visual Field Editor</h4>
               <p>
-                Edit existing values quickly. Use Raw JSON mode if you need to
+                Edit existing values quickly. Use Raw Data mode if you need to
                 add/remove entire objects or array items.
               </p>
               <input
@@ -784,7 +908,7 @@ const AdminPage = () => {
                 Showing {filteredLeafFields.length} of {leafFields.length} fields
               </p>
               {parsedJson === null ? (
-                <p>JSON is invalid. Switch to Raw JSON mode and fix it first.</p>
+                <p>Content data is invalid. Switch to Raw Data mode and fix it first.</p>
               ) : (
                 <div style={{ maxHeight: 620, overflow: "auto", paddingRight: 8 }}>
                   {filteredLeafFields.map((field) => {
@@ -844,7 +968,7 @@ const AdminPage = () => {
                         ) : null}
                         {field.type === "null" ? (
                           <p>
-                            <code>null</code> value. Edit in Raw JSON mode if
+                            <code>null</code> value. Edit in Raw Data mode if
                             needed.
                           </p>
                         ) : null}
@@ -858,7 +982,7 @@ const AdminPage = () => {
         ) : (
           <div className="row">
             <div className="col-xl-12">
-              <h4>Raw JSON Editor</h4>
+              <h4>Raw Data Editor</h4>
               <textarea
                 value={editorValue}
                 onChange={(event) => setEditorValue(event.target.value)}

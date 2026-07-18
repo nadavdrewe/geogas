@@ -33,8 +33,12 @@ const OffcanvasMenu = ({
                   </Link>
                 </div>
                 <div className="offcanvas__close">
-                  <button onClick={() => handleToggleMenu(false)}>
-                    <i className="fas fa-times"></i>
+                  <button
+                    type="button"
+                    aria-label="Close menu"
+                    onClick={() => handleToggleMenu(false)}
+                  >
+                    <span aria-hidden="true">&times;</span>
                   </button>
                 </div>
               </div>

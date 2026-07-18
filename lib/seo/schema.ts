@@ -1,12 +1,12 @@
-import { SEO_COMPANY } from "@/lib/seo/company";
+import { SeoCompanyInfo } from "@/lib/seo/company";
 import { SeoFaqItem, SeoPage } from "@/lib/seo/types";
 
-const absoluteUrl = (href: string) => {
+const absoluteUrl = (href: string, company: SeoCompanyInfo) => {
   if (href.startsWith("http://") || href.startsWith("https://")) {
     return href;
   }
 
-  return `${SEO_COMPANY.siteUrl}${href}`;
+  return `${company.siteUrl}${href}`;
 };
 
 const buildFaqSchema = (faq: SeoFaqItem[]) => ({
@@ -22,7 +22,7 @@ const buildFaqSchema = (faq: SeoFaqItem[]) => ({
   })),
 });
 
-const buildBreadcrumbSchema = (page: SeoPage) => ({
+const buildBreadcrumbSchema = (page: SeoPage, company: SeoCompanyInfo) => ({
   "@context": "https://schema.org",
   "@type": "BreadcrumbList",
   itemListElement: [
@@ -30,25 +30,25 @@ const buildBreadcrumbSchema = (page: SeoPage) => ({
       "@type": "ListItem",
       position: 1,
       name: "Home",
-      item: SEO_COMPANY.siteUrl,
+      item: company.siteUrl,
     },
     {
       "@type": "ListItem",
       position: 2,
       name: page.h1,
-      item: `${SEO_COMPANY.siteUrl}/${page.slug}`,
+      item: `${company.siteUrl}/${page.slug}`,
     },
   ],
 });
 
-const buildBusinessSchema = (page: SeoPage) => ({
+const buildBusinessSchema = (page: SeoPage, company: SeoCompanyInfo) => ({
   "@context": "https://schema.org",
   "@type": "HVACBusiness",
-  name: SEO_COMPANY.name,
-  url: SEO_COMPANY.siteUrl,
-  telephone: SEO_COMPANY.primaryPhoneDisplay,
-  email: SEO_COMPANY.email,
-  areaServed: SEO_COMPANY.serviceAreas,
+  name: company.name,
+  url: company.siteUrl,
+  telephone: company.primaryPhoneDisplay,
+  email: company.email,
+  areaServed: company.serviceAreas,
   description: page.metaDescription,
   hasOfferCatalog: {
     "@type": "OfferCatalog",
@@ -60,15 +60,15 @@ const buildBusinessSchema = (page: SeoPage) => ({
           "@type": "Service",
           name: page.h1,
           description: page.intro,
-          areaServed: SEO_COMPANY.serviceAreas,
-          url: `${SEO_COMPANY.siteUrl}/${page.slug}`,
+          areaServed: company.serviceAreas,
+          url: `${company.siteUrl}/${page.slug}`,
         },
       },
     ],
   },
 });
 
-const buildPageSchema = (page: SeoPage) => ({
+const buildPageSchema = (page: SeoPage, company: SeoCompanyInfo) => ({
   "@context": "https://schema.org",
   "@type":
     page.type === "problem" || page.type === "part_guide" || page.type === "guide"
@@ -77,13 +77,13 @@ const buildPageSchema = (page: SeoPage) => ({
   name: page.h1,
   headline: page.h1,
   description: page.metaDescription,
-  url: `${SEO_COMPANY.siteUrl}/${page.slug}`,
+  url: `${company.siteUrl}/${page.slug}`,
   about: page.linkTitle,
   provider: {
     "@type": "Organization",
-    name: SEO_COMPANY.name,
-    url: SEO_COMPANY.siteUrl,
-    telephone: SEO_COMPANY.primaryPhoneDisplay,
+    name: company.name,
+    url: company.siteUrl,
+    telephone: company.primaryPhoneDisplay,
   },
   offers: page.pricingGuidance
     ? {
@@ -93,24 +93,24 @@ const buildPageSchema = (page: SeoPage) => ({
     : undefined,
 });
 
-export const buildSeoSchemas = (page: SeoPage) => {
+export const buildSeoSchemas = (page: SeoPage, company: SeoCompanyInfo) => {
   return [
-    buildBusinessSchema(page),
-    buildPageSchema(page),
-    buildBreadcrumbSchema(page),
+    buildBusinessSchema(page, company),
+    buildPageSchema(page, company),
+    buildBreadcrumbSchema(page, company),
     buildFaqSchema(page.faq),
   ];
 };
 
-export const buildGuidesHubSchemas = () => {
+export const buildGuidesHubSchemas = (company: SeoCompanyInfo) => {
   return [
     {
       "@context": "https://schema.org",
       "@type": "CollectionPage",
       name: "Geo Gas Guides",
       description:
-        "Guides, problem pages and parts pages for boiler repair, gas safety and local call-outs across London.",
-      url: absoluteUrl("/guides"),
+        "Guides, problem pages and parts pages for boiler repair, gas safety and local call-outs across London and Sussex.",
+      url: absoluteUrl("/guides", company),
     },
     {
       "@context": "https://schema.org",
@@ -120,13 +120,13 @@ export const buildGuidesHubSchemas = () => {
           "@type": "ListItem",
           position: 1,
           name: "Home",
-          item: SEO_COMPANY.siteUrl,
+          item: company.siteUrl,
         },
         {
           "@type": "ListItem",
           position: 2,
           name: "Guides",
-          item: absoluteUrl("/guides"),
+          item: absoluteUrl("/guides", company),
         },
       ],
     },

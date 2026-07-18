@@ -1,6 +1,8 @@
 import { cache } from "react";
-import { readdir, readFile } from "fs/promises";
-import path from "path";
+import {
+  getSeoContentRecords,
+  getSeoDefaultsByType,
+} from "@/lib/contentDatabase";
 import { SEO_COMPANY } from "@/lib/seo/company";
 import {
   BrandServicePage,
@@ -17,19 +19,6 @@ import {
 } from "@/lib/seo/types";
 
 type PlainObject = Record<string, unknown>;
-
-const CONTENT_ROOT = path.join(process.cwd(), "content");
-
-const DIRECTORY_BY_TYPE: Record<SeoPageType, string> = {
-  service: "services",
-  location_service: "location-services",
-  problem: "problems",
-  part_guide: "parts",
-  brand_service: "brands",
-  guide: "guides",
-};
-
-const PAGE_TYPES = Object.keys(DIRECTORY_BY_TYPE) as SeoPageType[];
 
 const isPlainObject = (value: unknown): value is PlainObject => {
   return typeof value === "object" && value !== null && !Array.isArray(value);
@@ -62,23 +51,6 @@ const mergeDeep = <T>(base: T, incoming: unknown): T => {
   }
 
   return next as T;
-};
-
-const readJsonFile = async (filePath: string): Promise<unknown> => {
-  const raw = await readFile(filePath, "utf8");
-  return JSON.parse(raw) as unknown;
-};
-
-const listJsonFiles = async (directory: string): Promise<string[]> => {
-  try {
-    const entries = await readdir(directory, { withFileTypes: true });
-    return entries
-      .filter((entry) => entry.isFile() && entry.name.endsWith(".json"))
-      .map((entry) => path.join(directory, entry.name))
-      .sort((left, right) => left.localeCompare(right));
-  } catch {
-    return [];
-  }
 };
 
 function assert(condition: unknown, message: string): asserts condition {
@@ -319,43 +291,21 @@ const validateInternalLinks = (page: SeoPage) => {
   });
 };
 
-const loadDefaultsForType = async (type: SeoPageType): Promise<unknown> => {
-  const filePath = path.join(CONTENT_ROOT, "defaults", `${type}.json`);
-
-  try {
-    return await readJsonFile(filePath);
-  } catch {
-    return {};
-  }
-};
-
 const loadRawPages = async (): Promise<SeoPage[]> => {
-  const defaultsByType = new Map<SeoPageType, unknown>();
+  const [defaultsByType, records] = await Promise.all([
+    getSeoDefaultsByType(),
+    getSeoContentRecords(),
+  ]);
 
-  await Promise.all(
-    PAGE_TYPES.map(async (type) => {
-      defaultsByType.set(type, await loadDefaultsForType(type));
-    })
-  );
-
-  const pageGroups = await Promise.all(
-    PAGE_TYPES.map(async (type) => {
-      const directory = path.join(CONTENT_ROOT, DIRECTORY_BY_TYPE[type]);
-      const files = await listJsonFiles(directory);
-
-      return Promise.all(
-        files.map(async (filePath) => {
-          const rawPage = await readJsonFile(filePath);
-          const merged = mergeDeep(defaultsByType.get(type) ?? {}, rawPage) as SeoPage;
-          validateCommonPageFields(merged);
-          validateTypedPageFields(merged);
-          return merged;
-        })
-      );
-    })
-  );
-
-  return pageGroups.flat();
+  return records.map((record) => {
+    const merged = mergeDeep(
+      defaultsByType.get(record.type) ?? {},
+      record.content
+    ) as SeoPage;
+    validateCommonPageFields(merged);
+    validateTypedPageFields(merged);
+    return merged;
+  });
 };
 
 const buildSeoIndex = async (): Promise<SeoPageIndex> => {

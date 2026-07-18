@@ -6,7 +6,7 @@
   "guideCategory": "general",
   "targetKeyword": "how often should a boiler be serviced",
   "linkTitle": "how often should a boiler be serviced",
-  "metaTitle": "How Often Should a Boiler Be Serviced? | London Guide",
+  "metaTitle": "How Often Should a Boiler Be Serviced? | London and Sussex Guide",
   "metaDescription": "How often should a boiler be serviced? Learn the usual service interval, why annual servicing matters and when to book sooner.",
   "h1": "How Often Should a Boiler Be Serviced?",
   "intro": "Most boilers should be serviced every year. An annual service helps catch wear, safety issues and efficiency problems before they turn into a breakdown or a bigger repair bill.",
@@ -28,7 +28,7 @@
   "relatedLocationSlugs": ["boiler-repair-camden"],
   "internalLinks": [
     {
-      "label": "boiler service in London",
+      "label": "boiler service in London and Sussex",
       "href": "/boiler-service",
       "intent": "service"
     },

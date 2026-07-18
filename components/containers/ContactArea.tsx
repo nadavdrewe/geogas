@@ -4,7 +4,6 @@ import Link from "next/link";
 import Image from "next/image";
 import CalloutQuoteForm from "@/components/forms/CalloutQuoteForm";
 import { useSiteContent } from "@/components/providers/SiteContentProvider";
-import { contractsContact } from "@/data/contractsContent";
 
 const iconForLabel = (label: string) => {
   const lower = label.toLowerCase();
@@ -20,6 +19,7 @@ const iconForLabel = (label: string) => {
 const ContactArea = () => {
   const { content } = useSiteContent();
   const contactContent = content.home.contact;
+  const brochureContactItems = content.header.contactItems;
 
   return (
     <section className="contact__page section-padding">
@@ -29,7 +29,7 @@ const ContactArea = () => {
             <div className="contact__page-left">
               <div className="contact__page-image">
                 <Image
-                  src="/cartoons/van2.jpeg"
+                  src="/cartoons/van1.jpeg"
                   alt="Geo Gas Services branded van"
                   priority
                   width={1128}
@@ -77,8 +77,12 @@ const ContactArea = () => {
                   <div className="info-item-content">
                     <span>Contact Hours</span>
                     <h6>{contactContent.contactHours.regularDays}</h6>
-                    <h6>{contactContent.contactHours.regularHours}</h6>
-                    <p>{contactContent.contactHours.emergency}</p>
+                    {contactContent.contactHours.regularHours ? (
+                      <h6>{contactContent.contactHours.regularHours}</h6>
+                    ) : null}
+                    {contactContent.contactHours.emergency ? (
+                      <p>{contactContent.contactHours.emergency}</p>
+                    ) : null}
                   </div>
                 </div>
 
@@ -88,32 +92,20 @@ const ContactArea = () => {
                   </div>
                   <div className="info-item-content">
                     <span>Brochure Contract Helpline</span>
-                    <h6>
-                      <a href={`tel:${contractsContact.phonePrimary.replace(/\s/g, "")}`}>
-                        {contractsContact.phonePrimary}
-                      </a>
-                    </h6>
-                    <h6>
-                      <a
-                        href={`tel:${contractsContact.phoneSecondary.replace(/\s/g, "")}`}
-                      >
-                        {contractsContact.phoneSecondary}
-                      </a>
-                    </h6>
-                    <p>
-                      <a href={`mailto:${contractsContact.email}`}>
-                        {contractsContact.email}
-                      </a>
-                    </p>
-                    <p>
-                      <a
-                        href={`https://${contractsContact.website}`}
-                        target="_blank"
-                        rel="noreferrer"
-                      >
-                        {contractsContact.website}
-                      </a>
-                    </p>
+                    {brochureContactItems.map((item) => (
+                      <p key={`${item.label}-${item.href}`}>
+                        <a
+                          href={item.href}
+                          target={item.href.startsWith("http") ? "_blank" : undefined}
+                          rel={item.href.startsWith("http") ? "noreferrer" : undefined}
+                        >
+                          {item.value}
+                          {item.label === "Email" || item.label === "Website"
+                            ? ""
+                            : ` (${item.label})`}
+                        </a>
+                      </p>
+                    ))}
                   </div>
                 </div>
 
@@ -133,17 +125,13 @@ const ContactArea = () => {
 
           <div className="col-lg-6">
             <div className="contact__page-right">
-              <span className="contact__page-eyebrow">Geo Gas Services London Ltd</span>
+              <span className="contact__page-eyebrow">{contactContent.eyebrow}</span>
               <h2>{contactContent.title}</h2>
-              <p className="contact__page-intro">
-                Send us details of your boiler, gas, plumbing or drainage issue and
-                the team will come back with booking options, call-out guidance or a
-                quote. We also support landlord inspections and contract enquiries.
-              </p>
+              <p className="contact__page-intro">{contactContent.intro}</p>
               <div className="contact__page-badges">
-                <span>24/7 Emergency Support</span>
-                <span>Gas Safe Registered</span>
-                <span>Landlord Checks</span>
+                {contactContent.badges.map((badge) => (
+                  <span key={badge}>{badge}</span>
+                ))}
               </div>
               <div data-aos-duration="800" data-aos="fade-left" data-aos-delay="500">
                 <CalloutQuoteForm

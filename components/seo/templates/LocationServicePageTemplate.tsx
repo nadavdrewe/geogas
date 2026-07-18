@@ -1,3 +1,4 @@
+import { SeoCompanyInfo } from "@/lib/seo/company";
 import SeoBulletPanel from "@/components/seo/SeoBulletPanel";
 import SeoCtaStrip from "@/components/seo/SeoCtaStrip";
 import SeoFaqBlock from "@/components/seo/SeoFaqBlock";
@@ -8,12 +9,17 @@ import SeoSectionList from "@/components/seo/SeoSectionList";
 import { LocationServicePage } from "@/lib/seo/types";
 
 type LocationServicePageTemplateProps = {
+  company: SeoCompanyInfo;
   page: LocationServicePage;
 };
 
-const LocationServicePageTemplate = ({ page }: LocationServicePageTemplateProps) => {
+const LocationServicePageTemplate = ({
+  company,
+  page,
+}: LocationServicePageTemplateProps) => {
   return (
     <SeoPageScaffold
+      company={company}
       page={page}
       summaryTitle={`${page.location} coverage`}
       summaryItems={[
@@ -34,7 +40,7 @@ const LocationServicePageTemplate = ({ page }: LocationServicePageTemplateProps)
       <SeoReviewsBlock reviews={page.reviews || []} />
       <SeoFaqBlock faq={page.faq} />
       <SeoInternalLinks links={page.internalLinks || []} />
-      <SeoCtaStrip cta={page.cta} />
+      <SeoCtaStrip company={company} cta={page.cta} />
     </SeoPageScaffold>
   );
 };

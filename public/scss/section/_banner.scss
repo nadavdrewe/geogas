@@ -119,6 +119,57 @@ a {
         box-shadow: 0 9px 20px rgba(20, 30, 45, 0.14);
       }
     }
+    &-phone-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 0 0 12px;
+    }
+    &-phone-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      min-height: 34px;
+      padding: 7px 10px;
+      border-radius: 11px;
+      border: 1px solid rgba(51, 65, 85, 0.18);
+      background: rgba(255, 255, 255, 0.92);
+      box-shadow: 0 6px 14px rgba(20, 30, 45, 0.08);
+      text-decoration: none;
+      color: #1f2937;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+      i {
+        font-size: 12px;
+        color: #dc2626;
+      }
+      span {
+        font-size: 11px;
+        line-height: 15px;
+        font-weight: 700;
+        color: #334155;
+      }
+      em {
+        font-style: normal;
+        font-size: 12px;
+        line-height: 16px;
+        font-weight: 800;
+        color: #111827;
+      }
+      &:hover {
+        color: #111827;
+        border-color: rgba(220, 38, 38, 0.36);
+        box-shadow: 0 8px 16px rgba(20, 30, 45, 0.12);
+        transform: translateY(-1px);
+      }
+      &.is-emergency {
+        border-color: rgba(220, 38, 38, 0.34);
+        background: linear-gradient(130deg, #fff5f5 0%, #ffffff 100%);
+        i,
+        em {
+          color: #b91c1c;
+        }
+      }
+    }
     h1 {
       max-width: 670px;
       margin-bottom: 14px;
@@ -1735,6 +1786,22 @@ a {
     font-size: 11px;
     line-height: 17px;
   }
+  .banner__two-content-phone-list {
+    margin-bottom: 10px;
+    gap: 7px;
+  }
+  .banner__two-content-phone-pill {
+    min-height: 31px;
+    padding: 6px 9px;
+    span {
+      font-size: 10px;
+      line-height: 14px;
+    }
+    em {
+      font-size: 11px;
+      line-height: 15px;
+    }
+  }
   .banner__two-content p {
     margin-bottom: 14px;
     font-size: 16px;
@@ -1953,6 +2020,23 @@ a {
   .banner__two-content-kicker em {
     font-size: 10px;
     line-height: 16px;
+  }
+  .banner__two-content-phone-list {
+    margin-bottom: 9px;
+    gap: 6px;
+  }
+  .banner__two-content-phone-pill {
+    width: 100%;
+    justify-content: space-between;
+    padding: 6px 8px;
+    border-radius: 10px;
+    span {
+      font-size: 10px;
+    }
+    em {
+      font-size: 10px;
+      line-height: 14px;
+    }
   }
   .banner__two-content p {
     font-size: 15px;
@@ -2752,19 +2836,15 @@ a {
   width: 100%;
   margin-inline-start: auto;
   &__slider {
-    overflow: visible;
+    overflow: hidden;
+    border-radius: 18px;
     .swiper-wrapper {
       align-items: stretch;
     }
     .swiper-slide {
       height: auto;
-      opacity: 0.5;
-      transform: scale(0.93);
-      transition: opacity 0.4s ease, transform 0.4s ease;
-      &-active {
-        opacity: 1;
-        transform: scale(1);
-      }
+      opacity: 1;
+      transform: none;
     }
   }
   &__slide {
@@ -2819,6 +2899,7 @@ a {
     margin-inline-start: 0;
     .staff-hero-carousel__slider {
       overflow: hidden;
+      border-radius: 14px;
     }
     .staff-hero-carousel__slider .swiper-slide {
       opacity: 1;

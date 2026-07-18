@@ -1,8 +1,8 @@
-import { mkdir, readFile, writeFile } from "fs/promises";
-import path from "path";
 import { defaultSiteContent, SiteContent } from "@/data/siteContent";
-
-const CONTENT_FILE_PATH = path.join(process.cwd(), "content/site-content.json");
+import {
+  getDatabaseSiteContent,
+  saveDatabaseSiteContent,
+} from "@/lib/contentDatabase";
 
 const isRecord = (value: unknown): value is Record<string, unknown> => {
   return typeof value === "object" && value !== null && !Array.isArray(value);
@@ -38,9 +38,8 @@ export const getSiteContent = async (): Promise<SiteContent> => {
   const fallback = cloneDefaultContent();
 
   try {
-    const raw = await readFile(CONTENT_FILE_PATH, "utf8");
-    const parsed = JSON.parse(raw) as unknown;
-    return mergeContent(fallback, parsed);
+    const content = await getDatabaseSiteContent();
+    return mergeContent(fallback, content);
   } catch {
     return fallback;
   }
@@ -50,7 +49,6 @@ export const saveSiteContent = async (
   nextContent: unknown
 ): Promise<SiteContent> => {
   const merged = mergeContent(cloneDefaultContent(), nextContent);
-  await mkdir(path.dirname(CONTENT_FILE_PATH), { recursive: true });
-  await writeFile(CONTENT_FILE_PATH, JSON.stringify(merged, null, 2), "utf8");
+  await saveDatabaseSiteContent(merged);
   return merged;
 };

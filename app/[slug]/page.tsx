@@ -2,8 +2,9 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import SeoPageRenderer from "@/components/seo/SeoPageRenderer";
 import SeoSiteShell from "@/components/seo/SeoSiteShell";
-import { SEO_COMPANY } from "@/lib/seo/company";
+import { buildSeoCompanyInfo } from "@/lib/seo/company";
 import { getAllSeoPages, getSeoPageBySlug } from "@/lib/seo/content";
+import { getSiteContent } from "@/lib/siteContent";
 
 type SeoPageRouteProps = {
   params: Promise<{
@@ -28,36 +29,45 @@ export async function generateMetadata({
     return {};
   }
 
-  const url = `${SEO_COMPANY.siteUrl}/${page.slug}`;
+  const content = await getSiteContent();
+  const company = buildSeoCompanyInfo(content);
+  const canonical = `${company.siteUrl}/${page.slug}`;
 
   return {
     title: page.metaTitle,
     description: page.metaDescription,
     alternates: {
-      canonical: url,
+      canonical,
     },
-    robots: page.noindex ? { index: false, follow: false } : undefined,
+    robots: page.noindex ? { index: false, follow: false } : { index: true, follow: true },
     openGraph: {
       title: page.metaTitle,
       description: page.metaDescription,
-      url,
+      url: canonical,
       type: "website",
-      siteName: SEO_COMPANY.name,
+      siteName: company.name,
+    },
+    twitter: {
+      card: "summary",
+      title: page.metaTitle,
+      description: page.metaDescription,
     },
   };
 }
 
 const SeoPageRoute = async ({ params }: SeoPageRouteProps) => {
   const { slug } = await params;
-  const page = await getSeoPageBySlug(slug);
+  const [page, content] = await Promise.all([getSeoPageBySlug(slug), getSiteContent()]);
 
   if (!page) {
     notFound();
   }
 
+  const company = buildSeoCompanyInfo(content);
+
   return (
     <SeoSiteShell>
-      <SeoPageRenderer page={page} />
+      <SeoPageRenderer company={company} page={page} />
     </SeoSiteShell>
   );
 };

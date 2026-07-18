@@ -2,15 +2,15 @@
   "type": "service",
   "slug": "emergency-boiler-repair",
   "serviceKey": "emergency-boiler-repair",
-  "primaryLocation": "London",
-  "linkTitle": "emergency boiler repair in London",
-  "metaTitle": "Emergency Boiler Repair in London | Fast Call-Outs",
-  "metaDescription": "Need emergency boiler repair in London? Call for urgent help with no heating, no hot water, leaks and boiler faults from a local Gas Safe engineer.",
-  "h1": "Emergency Boiler Repair in London",
-  "intro": "If your boiler has failed without warning, you have no heating or hot water, or water is leaking from the appliance, we provide emergency boiler repair support across London.",
+  "primaryLocation": "London and Sussex",
+  "linkTitle": "emergency boiler repair in London and Sussex",
+  "metaTitle": "Emergency Boiler Repair in London and Sussex | Fast Call-Outs",
+  "metaDescription": "Need emergency boiler repair in London and Sussex? Call for urgent help with no heating, no hot water, leaks and boiler faults from a local Gas Safe engineer.",
+  "h1": "Emergency Boiler Repair in London and Sussex",
+  "intro": "If your boiler has failed without warning, you have no heating or hot water, or water is leaking from the appliance, we provide emergency boiler repair support across London and Sussex.",
   "pricingGuidance": "Emergency boiler repair is priced from an urgent diagnostic call-out, with any major parts or follow-up work explained before approval.",
-  "localProof": "Called for urgent breakdowns across London when heating failure or water leaks need a fast response and a sensible repair plan.",
-  "areasCovered": ["Camden", "Islington", "Hackney", "West London", "South London"],
+  "localProof": "Called for urgent breakdowns across London and Sussex when heating failure or water leaks need a fast response and a sensible repair plan.",
+  "areasCovered": ["Camden", "Islington", "Brighton", "Hove", "Haywards Heath"],
   "sections": [
     {
       "heading": "When a boiler fault is an emergency",
@@ -27,7 +27,7 @@
   ],
   "internalLinks": [
     {
-      "label": "boiler repair in London",
+      "label": "boiler repair in London and Sussex",
       "href": "/boiler-repair",
       "intent": "service"
     }

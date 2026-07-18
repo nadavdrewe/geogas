@@ -4,7 +4,13 @@ import Link from "next/link";
 import Image from "next/image";
 import { useSiteContent } from "@/components/providers/SiteContentProvider";
 
-const getHeroImagePath = (normalImagePath: string): string => {
+const getHeroImagePath = (
+  normalImagePath: string,
+  explicitHeroImagePath?: string
+): string => {
+  if (explicitHeroImagePath) {
+    return explicitHeroImagePath;
+  }
   if (normalImagePath.includes("_normal.")) {
     return normalImagePath.replace("_normal.", "_hero.");
   }
@@ -35,7 +41,10 @@ const Team = () => {
         </div>
         <div className="row">
           {staffProfiles.map((member, index) => {
-            const heroImagePath = getHeroImagePath(member.imagePath);
+            const heroImagePath = getHeroImagePath(
+              member.imagePath,
+              member.heroImagePath
+            );
             return (
               <div
                 key={member.id}
@@ -108,7 +117,10 @@ const Team = () => {
         </div>
         <div className="row">
           {staffProfiles.map((member, index) => {
-            const heroImagePath = getHeroImagePath(member.imagePath);
+            const heroImagePath = getHeroImagePath(
+              member.imagePath,
+              member.heroImagePath
+            );
             return (
               <div
                 key={`${member.id}-profile`}

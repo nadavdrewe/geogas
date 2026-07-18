@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import HeaderTwo from "@/components/layout/header/HeaderTwo";
 import BreadCrumb from "@/components/layout/banner/BreadCrumb";
@@ -10,6 +11,21 @@ import ScrollProgressButton from "@/components/layout/ScrollProgressButton";
 import { getSiteContent } from "@/lib/siteContent";
 import { searchSiteContent } from "@/lib/siteSearch";
 import type { SearchResult } from "@/lib/siteSearch";
+import { buildPageMetadata } from "@/lib/seo/metadata";
+
+export async function generateMetadata(): Promise<Metadata> {
+  const content = await getSiteContent();
+  const searchContent = content.searchPage;
+
+  return buildPageMetadata({
+    title: searchContent.metaTitle,
+    description: searchContent.metaDescription,
+    path: "/search",
+    noindex: true,
+    siteUrl: content.global.siteUrl,
+    siteName: content.global.companyName,
+  });
+}
 
 type SearchParams = Promise<{
   q?: string | string[];
@@ -68,7 +84,8 @@ const page = async ({ searchParams }: { searchParams?: SearchParams }) => {
   const { query: rawQuery, category: rawCategory } = await readSearchInputs(searchParams);
   const query = rawQuery.trim();
   const siteContent = await getSiteContent();
-  const allResults = query ? searchSiteContent(query, siteContent) : [];
+  const searchContent = siteContent.searchPage;
+  const allResults = query ? await searchSiteContent(query, siteContent) : [];
   const categoryCounts = buildCategoryCounts(allResults);
   const selectedCategory = rawCategory.trim();
   const results =
@@ -79,23 +96,20 @@ const page = async ({ searchParams }: { searchParams?: SearchParams }) => {
   return (
     <>
       <HeaderTwo />
-      <BreadCrumb title="Search" />
+      <BreadCrumb title={searchContent.breadcrumbTitle} />
       <section className="site-search section-padding">
         <div className="container">
           <div className="row jc-center">
             <div className="col-xl-10">
               <div className="site-search__panel">
-                <h2>Search The Geo Gas Site</h2>
-                <p>
-                  Find services, pricing information, contracts, FAQs, help &
-                  advice, and contact details.
-                </p>
+                <h2>{searchContent.title}</h2>
+                <p>{searchContent.description}</p>
                 <form className="site-search__form" action="/search" method="get">
                   <input
                     type="search"
                     name="q"
                     defaultValue={query}
-                    placeholder="Search service, topic or keyword..."
+                    placeholder={searchContent.inputPlaceholder}
                     aria-label="Search the Geo Gas site"
                   />
                   {selectedCategory ? (
@@ -110,14 +124,13 @@ const page = async ({ searchParams }: { searchParams?: SearchParams }) => {
 
               {!query ? (
                 <div className="site-search__empty">
-                  <h3>Try searching for:</h3>
+                  <h3>{searchContent.emptyStateTitle}</h3>
                   <div className="site-search__chips">
-                    <Link href="/search?q=boiler+repair">Boiler repair</Link>
-                    <Link href="/search?q=landlord+gas+safety">Landlord gas safety</Link>
-                    <Link href="/search?q=opening+hours">Opening hours</Link>
-                    <Link href="/search?q=surrey">Surrey coverage</Link>
-                    <Link href="/search?q=contract+cover">Contract cover</Link>
-                    <Link href="/search?q=cold+radiator">Cold radiator</Link>
+                    {searchContent.emptySuggestions.map((term) => (
+                      <Link key={term} href={`/search?q=${encodeURIComponent(term)}`}>
+                        {term}
+                      </Link>
+                    ))}
                   </div>
                 </div>
               ) : (
@@ -128,9 +141,7 @@ const page = async ({ searchParams }: { searchParams?: SearchParams }) => {
                       {" "}
                       <span>{query}</span>
                     </h3>
-                    <p>
-                      Internal results from Geo Gas pages and key content sections.
-                    </p>
+                    <p>{searchContent.resultsDescription}</p>
                   </div>
 
                   {allResults.length ? (
@@ -177,16 +188,14 @@ const page = async ({ searchParams }: { searchParams?: SearchParams }) => {
                     </div>
                   ) : (
                     <div className="site-search__no-results">
-                      <h4>No matching results found</h4>
-                      <p>
-                        Try broader terms like <strong>boiler</strong>,{" "}
-                        <strong>contract</strong>, <strong>pricing</strong>,{" "}
-                        <strong>landlord</strong>, or <strong>contact</strong>.
-                      </p>
+                      <h4>{searchContent.noResultsTitle}</h4>
+                      <p>{searchContent.noResultsDescription}</p>
                       <div className="site-search__chips">
-                        <Link href="/search?q=boiler+service">Boiler service</Link>
-                        <Link href="/search?q=contact+hours">Contact hours</Link>
-                        <Link href="/search?q=sussex">Sussex coverage</Link>
+                        {searchContent.noResultsSuggestions.map((term) => (
+                          <Link key={term} href={`/search?q=${encodeURIComponent(term)}`}>
+                            {term}
+                          </Link>
+                        ))}
                       </div>
                     </div>
                   )}

@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { getContentDocumentById, SITE_DOCUMENT_ID } from "@/lib/contentDatabase";
 import { getSiteContent, saveSiteContent } from "@/lib/siteContent";
 
 export const runtime = "nodejs";
@@ -12,8 +13,14 @@ const isAuthorized = (request: Request): boolean => {
   return providedKey === key;
 };
 
-export async function GET() {
-  const content = await getSiteContent();
+export async function GET(request: Request) {
+  if (!isAuthorized(request)) {
+    return NextResponse.json({ error: "Unauthorized." }, { status: 401 });
+  }
+
+  const document = await getContentDocumentById(SITE_DOCUMENT_ID);
+  const content = document?.content ?? (await getSiteContent());
+
   return NextResponse.json(
     { content },
     {
@@ -31,12 +38,6 @@ export async function PUT(request: Request) {
 
   try {
     const body = (await request.json()) as { content?: unknown };
-    if (!body || typeof body !== "object") {
-      return NextResponse.json(
-        { error: "Request body must be an object." },
-        { status: 400 }
-      );
-    }
     if (
       !body.content ||
       typeof body.content !== "object" ||

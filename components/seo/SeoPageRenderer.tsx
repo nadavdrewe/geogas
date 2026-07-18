@@ -6,22 +6,30 @@ import PartGuidePageTemplate from "@/components/seo/templates/PartGuidePageTempl
 import ProblemPageTemplate from "@/components/seo/templates/ProblemPageTemplate";
 import ServicePageTemplate from "@/components/seo/templates/ServicePageTemplate";
 import { buildSeoSchemas } from "@/lib/seo/schema";
+import { SeoCompanyInfo } from "@/lib/seo/company";
 import { SeoPage } from "@/lib/seo/types";
 
 type SeoPageRendererProps = {
+  company: SeoCompanyInfo;
   page: SeoPage;
 };
 
-const SeoPageRenderer = ({ page }: SeoPageRendererProps) => {
+const SeoPageRenderer = ({ company, page }: SeoPageRendererProps) => {
   return (
     <>
-      <SeoStructuredData items={buildSeoSchemas(page)} />
-      {page.type === "service" ? <ServicePageTemplate page={page} /> : null}
-      {page.type === "location_service" ? <LocationServicePageTemplate page={page} /> : null}
-      {page.type === "problem" ? <ProblemPageTemplate page={page} /> : null}
-      {page.type === "part_guide" ? <PartGuidePageTemplate page={page} /> : null}
-      {page.type === "brand_service" ? <BrandServicePageTemplate page={page} /> : null}
-      {page.type === "guide" ? <GuidePageTemplate page={page} /> : null}
+      <SeoStructuredData items={buildSeoSchemas(page, company)} />
+      {page.type === "service" ? <ServicePageTemplate company={company} page={page} /> : null}
+      {page.type === "location_service" ? (
+        <LocationServicePageTemplate company={company} page={page} />
+      ) : null}
+      {page.type === "problem" ? <ProblemPageTemplate company={company} page={page} /> : null}
+      {page.type === "part_guide" ? (
+        <PartGuidePageTemplate company={company} page={page} />
+      ) : null}
+      {page.type === "brand_service" ? (
+        <BrandServicePageTemplate company={company} page={page} />
+      ) : null}
+      {page.type === "guide" ? <GuidePageTemplate company={company} page={page} /> : null}
     </>
   );
 };

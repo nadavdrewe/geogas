@@ -2,15 +2,15 @@
   "type": "service",
   "slug": "boiler-service",
   "serviceKey": "boiler-service",
-  "primaryLocation": "London",
-  "linkTitle": "boiler service in London",
-  "metaTitle": "Boiler Service in London | Annual Boiler Checks",
-  "metaDescription": "Book a boiler service in London with a Gas Safe engineer. Annual servicing helps spot wear, safety issues and efficiency problems before they become breakdowns.",
-  "h1": "Boiler Service in London",
-  "intro": "Regular boiler servicing helps keep your heating system safer, more efficient and less likely to fail without warning. We provide boiler service visits across London for homes and rental properties.",
+  "primaryLocation": "London and Sussex",
+  "linkTitle": "boiler service in London and Sussex",
+  "metaTitle": "Boiler Service in London and Sussex | Annual Boiler Checks",
+  "metaDescription": "Book a boiler service in London and Sussex with a Gas Safe engineer. Annual servicing helps spot wear, safety issues and efficiency problems before they become breakdowns.",
+  "h1": "Boiler Service in London and Sussex",
+  "intro": "Regular boiler servicing helps keep your heating system safer, more efficient and less likely to fail without warning. We provide boiler service visits across London and Sussex for homes and rental properties.",
   "pricingGuidance": "Boiler service pricing starts from a standard annual service visit, with any repair work or additional parts quoted separately if faults are found.",
   "localProof": "Booked by homeowners, landlords and managing agents who want annual servicing recorded properly and explained clearly.",
-  "areasCovered": ["Camden", "Islington", "Hackney", "Haringey", "West London"],
+  "areasCovered": ["Camden", "Islington", "Brighton", "Hove", "Haywards Heath"],
   "sections": [
     {
       "heading": "What a boiler service is for",
@@ -33,12 +33,12 @@
   ],
   "internalLinks": [
     {
-      "label": "boiler repair in London",
+      "label": "boiler repair in London and Sussex",
       "href": "/boiler-repair",
       "intent": "service"
     },
     {
-      "label": "gas safety certificate in London",
+      "label": "gas safety certificate in London and Sussex",
       "href": "/gas-safety-certificate",
       "intent": "service"
     },
