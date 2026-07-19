@@ -48,7 +48,7 @@ const ComicStripSection = () => {
             <span>24/7 Emergency Response</span>
             <span>Local Repair Team</span>
             <span>Boiler, Gas & Plumbing</span>
-            <span>London Call-Out Coverage</span>
+            <span>London & Sussex Call-Out Coverage</span>
           </div>
         </div>
       </div>

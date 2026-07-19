@@ -1,33 +1,23 @@
+"use client";
+
 import Link from "next/link";
 import Image from "next/image";
-import {
-  annualServiceChecks,
-  brochurePreviews,
-  contractAtAGlance,
-  contractPackages,
-  contractsContact,
-  contractsFaq,
-  contractsIntro,
-  currentPricingNotice,
-  landlordPackageHighlights,
-  packageBenefits,
-  reputationPlatforms,
-  reputationSources,
-  termsClauseIndex,
-  sharedExclusions,
-  termsSections,
-  termsHighlights,
-} from "@/data/contractsContent";
+import { useSiteContent } from "@/components/providers/SiteContentProvider";
 
 const ContractsContent = () => {
+  const { content } = useSiteContent();
+  const contractsContent = content.contractsPage;
+  const globalContent = content.global;
+  const headerContact = content.header.contactItems;
+
   return (
     <section className="contracts__page section-padding">
       <div className="container">
         <div className="row">
           <div className="col-xl-12">
             <div className="contracts__page-title">
-              <h2>{contractsIntro.heading}</h2>
-              <p>{contractsIntro.subheading}</p>
+              <h2>{contractsContent.introHeading}</h2>
+              <p>{contractsContent.introSubheading}</p>
             </div>
           </div>
         </div>
@@ -36,13 +26,11 @@ const ContractsContent = () => {
           <div className="col-xl-12">
             <div className="contracts__page-reference">
               <i className="fa-solid fa-circle-info"></i>
-              <p>{currentPricingNotice}</p>
-                <div className="contracts__page-reference-links">
-                  <Link href="/pricing">View Current Pricing</Link>
-                  <Link href="/info/price.txt" target="_blank" rel="noreferrer">
-                    Open Live Price File
-                  </Link>
-                </div>
+              <p>{contractsContent.currentPricingNotice}</p>
+              <div className="contracts__page-reference-links">
+                <Link href="/pricing">View Current Pricing</Link>
+                <Link href="/pricing">Open Pricing Page</Link>
+              </div>
             </div>
           </div>
         </div>
@@ -51,48 +39,33 @@ const ContractsContent = () => {
           <div className="col-xl-7 lg-mb-30">
             <div className="contracts__page-intro-card">
               <h3>Peace Of Mind Home Contracts</h3>
-              <p>{contractsIntro.founderNote}</p>
-              <span>{contractsIntro.founderName}</span>
+              <p>{contractsContent.founderNote}</p>
+              <span>{contractsContent.founderName}</span>
             </div>
           </div>
           <div className="col-xl-5">
             <div className="contracts__page-contact-card">
-              <h3>Contract Helpline 24/7</h3>
+              <h3>{contractsContent.contactCardTitle}</h3>
               <ul>
-                <li>
-                  <i className="fa-solid fa-phone"></i>
-                  <a href={`tel:${contractsContact.phonePrimary.replace(/\s/g, "")}`}>
-                    {contractsContact.phonePrimary}
-                  </a>
-                </li>
-                <li>
-                  <i className="fa-solid fa-phone"></i>
-                  <a
-                    href={`tel:${contractsContact.phoneSecondary.replace(/\s/g, "")}`}
-                  >
-                    {contractsContact.phoneSecondary}
-                  </a>
-                </li>
-                <li>
-                  <i className="fa-solid fa-envelope"></i>
-                  <a href={`mailto:${contractsContact.email}`}>
-                    {contractsContact.email}
-                  </a>
-                </li>
-                <li>
-                  <i className="fa-solid fa-globe"></i>
-                  <a
-                    href={`https://${contractsContact.website}`}
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    {contractsContact.website}
-                  </a>
-                </li>
+                {headerContact.map((item) => (
+                  <li key={`${item.label}-${item.href}`}>
+                    <i className={item.icon || "fa-solid fa-circle-info"}></i>
+                    <a
+                      href={item.href}
+                      target={item.href.startsWith("http") ? "_blank" : undefined}
+                      rel={item.href.startsWith("http") ? "noreferrer" : undefined}
+                    >
+                      {item.value}
+                      {item.label === "Email" || item.label === "Website"
+                        ? ""
+                        : ` (${item.label})`}
+                    </a>
+                  </li>
+                ))}
               </ul>
               <div className="contracts__page-price-tag">
-                <span>Contracts from</span>
-                <h4>£19 / month</h4>
+                <span>{contractsContent.priceTagLabel}</span>
+                <h4>{contractsContent.priceTagValue}</h4>
               </div>
             </div>
           </div>
@@ -101,9 +74,9 @@ const ContractsContent = () => {
         <div className="row mt-60">
           <div className="col-xl-12">
             <div className="contracts__page-benefits">
-              <h3>Package Benefits</h3>
+              <h3>{contractsContent.packageBenefitsTitle}</h3>
               <div className="contracts__page-benefits-grid">
-                {packageBenefits.map((benefit) => (
+                {contractsContent.packageBenefits.map((benefit) => (
                   <div className="contracts__page-benefits-item" key={benefit}>
                     <i className="fa-solid fa-check"></i>
                     <span>{benefit}</span>
@@ -115,7 +88,7 @@ const ContractsContent = () => {
         </div>
 
         <div className="row mt-60">
-          {contractPackages.map((pkg) => (
+          {contractsContent.packages.map((pkg) => (
             <div className="col-xl-6 mt-30" key={pkg.name}>
               <article className="contracts__page-package">
                 <div className="contracts__page-package-head">
@@ -134,7 +107,7 @@ const ContractsContent = () => {
                     </li>
                   ))}
                 </ul>
-                {pkg.extraCover && (
+                {pkg.extraCover ? (
                   <>
                     <h5>Extra Cover In This Package</h5>
                     <ul>
@@ -146,7 +119,7 @@ const ContractsContent = () => {
                       ))}
                     </ul>
                   </>
-                )}
+                ) : null}
               </article>
             </div>
           ))}
@@ -155,30 +128,24 @@ const ContractsContent = () => {
         <div className="row mt-60">
           <div className="col-xl-6 lg-mb-30">
             <div className="contracts__page-block">
-              <h3>Landlord Packages & Safety Certificates</h3>
-              <p>
-                The brochure confirms landlord packages are available, including
-                inspection on gas appliances and pipework with certificates.
-              </p>
+              <h3>{contractsContent.landlordTitle}</h3>
+              <p>{contractsContent.landlordBody}</p>
               <ul>
-                {landlordPackageHighlights.map((item) => (
+                {contractsContent.landlordHighlights.map((item) => (
                   <li key={item}>
                     <i className="fa-solid fa-house-user"></i>
                     <span>{item}</span>
                   </li>
                 ))}
               </ul>
-              <p className="contracts__page-note">
-                Use the Pricing and Contact pages to request current landlord check
-                rates and booking availability.
-              </p>
+              <p className="contracts__page-note">{contractsContent.landlordNote}</p>
             </div>
           </div>
           <div className="col-xl-6">
             <div className="contracts__page-block">
-              <h3>Contract At A Glance (Brochure Terms)</h3>
+              <h3>{contractsContent.atAGlanceTitle}</h3>
               <ul>
-                {contractAtAGlance.map((item) => (
+                {contractsContent.atAGlance.map((item) => (
                   <li key={item}>
                     <i className="fa-solid fa-scale-balanced"></i>
                     <span>{item}</span>
@@ -192,9 +159,9 @@ const ContractsContent = () => {
         <div className="row mt-60">
           <div className="col-xl-7 lg-mb-30">
             <div className="contracts__page-block">
-              <h3>Annual Boiler Service Checks</h3>
+              <h3>{contractsContent.annualServiceChecksTitle}</h3>
               <ul>
-                {annualServiceChecks.map((item) => (
+                {contractsContent.annualServiceChecks.map((item) => (
                   <li key={item}>
                     <i className="fa-solid fa-check"></i>
                     <span>{item}</span>
@@ -202,16 +169,15 @@ const ContractsContent = () => {
                 ))}
               </ul>
               <p className="contracts__page-note">
-                The annual boiler service itself does not form part of the
-                contract cover.
+                {contractsContent.annualServiceChecksNote}
               </p>
             </div>
           </div>
           <div className="col-xl-5">
             <div className="contracts__page-block contracts__page-block--warning">
-              <h3>Things We Don&apos;t Cover</h3>
+              <h3>{contractsContent.exclusionsTitle}</h3>
               <ul>
-                {sharedExclusions.map((item) => (
+                {contractsContent.sharedExclusions.map((item) => (
                   <li key={item}>
                     <i className="fa-solid fa-xmark"></i>
                     <span>{item}</span>
@@ -225,9 +191,9 @@ const ContractsContent = () => {
         <div className="row mt-60">
           <div className="col-xl-12">
             <div className="contracts__page-terms">
-              <h3>Terms & Conditions Highlights</h3>
+              <h3>{contractsContent.termsHighlightsTitle}</h3>
               <div className="contracts__page-terms-grid">
-                {termsHighlights.map((item) => (
+                {contractsContent.termsHighlights.map((item) => (
                   <div key={item} className="contracts__page-terms-item">
                     <i className="fa-solid fa-file-circle-check"></i>
                     <p>{item}</p>
@@ -235,22 +201,22 @@ const ContractsContent = () => {
                 ))}
               </div>
               <div className="contracts__page-terms-cta">
-                <p>
-                  Read the full legal wording in the brochure Terms & Conditions
-                  pages.
-                </p>
+                <p>{contractsContent.termsCtaText}</p>
                 <div className="contracts__page-terms-cta-buttons">
-                  <Link className="button-1" href="/contact">
-                    Ask About Contracts
+                  <Link
+                    className="button-1"
+                    href={contractsContent.termsPrimaryAction.href}
+                  >
+                    {contractsContent.termsPrimaryAction.label}
                     <i className="fa-regular fa-angle-right"></i>
                   </Link>
                   <Link
                     className="button-2"
-                    href="/info/geo-gas-brochure-2026.pdf"
+                    href={contractsContent.termsSecondaryAction.href}
                     target="_blank"
                     rel="noreferrer"
                   >
-                    Open Full Brochure
+                    {contractsContent.termsSecondaryAction.label}
                     <i className="fa-regular fa-angle-right"></i>
                   </Link>
                 </div>
@@ -262,9 +228,9 @@ const ContractsContent = () => {
         <div className="row mt-60">
           <div className="col-xl-12">
             <div className="contracts__page-docs">
-              <h3>Contract Terms Breakdown</h3>
+              <h3>{contractsContent.termsBreakdownTitle}</h3>
               <div className="contracts__page-docs-grid">
-                {termsSections.map((section) => (
+                {contractsContent.termsSections.map((section) => (
                   <article key={section.title} className="contracts__page-docs-item">
                     <h5>{section.title}</h5>
                     <ul>
@@ -285,9 +251,9 @@ const ContractsContent = () => {
         <div className="row mt-40">
           <div className="col-xl-12">
             <div className="contracts__page-clauses">
-              <h3>Terms Clause Index</h3>
+              <h3>{contractsContent.termsClauseIndexTitle}</h3>
               <div className="contracts__page-clauses-grid">
-                {termsClauseIndex.map((clause) => (
+                {contractsContent.termsClauseIndex.map((clause) => (
                   <article
                     key={clause.clause}
                     className="contracts__page-clauses-item"
@@ -306,9 +272,9 @@ const ContractsContent = () => {
         <div className="row mt-60">
           <div className="col-xl-12">
             <div className="contracts__page-faq">
-              <h3>Contracts FAQ</h3>
+              <h3>{contractsContent.faqTitle}</h3>
               <div className="contracts__page-faq-list">
-                {contractsFaq.map((faq) => (
+                {contractsContent.faq.map((faq) => (
                   <article key={faq.question} className="contracts__page-faq-item">
                     <h5>{faq.question}</h5>
                     <p>{faq.answer}</p>
@@ -322,16 +288,13 @@ const ContractsContent = () => {
         <div className="row mt-60">
           <div className="col-xl-12">
             <div className="contracts__page-brochure">
-              <h3>Brochure Pages Preview</h3>
-              <p>
-                Preview company brochure pages here, then open the full PDF for
-                complete wording.
-              </p>
+              <h3>{contractsContent.brochureTitle}</h3>
+              <p>{contractsContent.brochureDescription}</p>
               <div className="contracts__page-brochure-grid">
-                {brochurePreviews.map((preview) => (
+                {contractsContent.brochurePreviews.map((preview) => (
                   <a
                     key={preview.src}
-                    href="/info/geo-gas-brochure-2026.pdf"
+                    href={contractsContent.brochureLinkHref}
                     target="_blank"
                     rel="noreferrer"
                     className="contracts__page-brochure-item"
@@ -362,18 +325,18 @@ const ContractsContent = () => {
               </p>
               <div className="contracts__page-viewer-frame">
                 <iframe
-                  src="/info/geo-gas-brochure-2026.pdf"
-                  title="GEO Gas Brochure 2026"
+                  src={globalContent.brochurePdfPath}
+                  title={globalContent.brochureViewerTitle}
                   loading="lazy"
                 />
               </div>
               <a
                 className="contracts__page-viewer-link"
-                href="/info/geo-gas-brochure-2026.pdf"
+                href={contractsContent.brochureLinkHref}
                 target="_blank"
                 rel="noreferrer"
               >
-                Open PDF In New Tab
+                {contractsContent.brochureLinkLabel}
                 <i className="fa-regular fa-angle-right"></i>
               </a>
             </div>
@@ -383,26 +346,40 @@ const ContractsContent = () => {
         <div className="row mt-40">
           <div className="col-xl-12">
             <div className="contracts__page-reputation">
-              <h3>Proud Of Our 5 Star Reputation</h3>
-              <p>
-                Checkatrade, Trustpilot and Google Reviews are highlighted in
-                the GEO Gas brochure.
-              </p>
+              <h3>{contractsContent.reputationTitle}</h3>
+              <p>{contractsContent.reputationDescription}</p>
               <div className="contracts__page-reputation-badges">
-                {reputationSources.map((source) => (
+                {contractsContent.reputationBadges.map((source) => (
                   <span key={source}>{source}</span>
                 ))}
               </div>
               <div className="contracts__page-reputation-grid">
-                {reputationPlatforms.map((platform) => (
-                  <article
-                    key={platform.name}
-                    className="contracts__page-reputation-item"
-                  >
-                    <h5>{platform.name}</h5>
-                    <p>{platform.note}</p>
-                  </article>
-                ))}
+                {globalContent.reviewPlatforms.map((platform) =>
+                  platform.href ? (
+                    <a
+                      key={platform.name}
+                      className="contracts__page-reputation-item"
+                      href={platform.href}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      <h5>{platform.name}</h5>
+                      <p>{platform.note}</p>
+                      <span>
+                        {platform.ctaLabel || `Open ${platform.name}`}
+                        <i className="fa-regular fa-arrow-up-right-from-square"></i>
+                      </span>
+                    </a>
+                  ) : (
+                    <article
+                      key={platform.name}
+                      className="contracts__page-reputation-item"
+                    >
+                      <h5>{platform.name}</h5>
+                      <p>{platform.note}</p>
+                    </article>
+                  )
+                )}
               </div>
             </div>
           </div>

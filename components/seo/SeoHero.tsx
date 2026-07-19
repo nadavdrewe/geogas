@@ -1,4 +1,4 @@
-import { SEO_COMPANY } from "@/lib/seo/company";
+import { SeoCompanyInfo } from "@/lib/seo/company";
 import { SeoPage } from "@/lib/seo/types";
 import SeoActionLink from "@/components/seo/SeoActionLink";
 
@@ -8,12 +8,13 @@ type SummaryItem = {
 };
 
 type SeoHeroProps = {
+  company: SeoCompanyInfo;
   page: SeoPage;
   summaryTitle: string;
   summaryItems: SummaryItem[];
 };
 
-const SeoHero = ({ page, summaryTitle, summaryItems }: SeoHeroProps) => {
+const SeoHero = ({ company, page, summaryTitle, summaryItems }: SeoHeroProps) => {
   return (
     <section className="seo-page__hero">
       <div className="seo-page__hero-card">
@@ -21,15 +22,19 @@ const SeoHero = ({ page, summaryTitle, summaryItems }: SeoHeroProps) => {
           <div className="col-lg-8">
             <div className="seo-page__hero-copy">
               <span className="seo-page__eyebrow">
-                {page.heroEyebrow || SEO_COMPANY.name}
+                {page.heroEyebrow || company.name}
               </span>
               <h1>{page.h1}</h1>
               <p>{page.intro}</p>
               <div className="seo-page__contact-meta">
-                <span>
+                <a href={company.londonOfficePhoneHref}>
                   <i className="fa-solid fa-phone-volume"></i>
-                  {SEO_COMPANY.primaryPhoneDisplay}
-                </span>
+                  London office {company.londonOfficePhoneDisplay}
+                </a>
+                <a href={company.sussexOfficePhoneHref}>
+                  <i className="fa-solid fa-phone-volume"></i>
+                  Sussex office {company.sussexOfficePhoneDisplay}
+                </a>
                 <span>
                   <i className="fa-brands fa-whatsapp"></i>
                   WhatsApp support available
@@ -49,8 +54,13 @@ const SeoHero = ({ page, summaryTitle, summaryItems }: SeoHeroProps) => {
               <div className="seo-page__actions">
                 <SeoActionLink
                   className="button-1"
-                  href={SEO_COMPANY.primaryPhoneHref}
-                  label={`Call ${SEO_COMPANY.primaryPhoneDisplay}`}
+                  href={company.londonOfficePhoneHref}
+                  label={`Call London office ${company.londonOfficePhoneDisplay}`}
+                />
+                <SeoActionLink
+                  className="button-2"
+                  href={company.sussexOfficePhoneHref}
+                  label={`Call Sussex office ${company.sussexOfficePhoneDisplay}`}
                 />
                 {page.cta.primaryHref && page.cta.primaryLabel ? (
                   <SeoActionLink
@@ -61,7 +71,7 @@ const SeoHero = ({ page, summaryTitle, summaryItems }: SeoHeroProps) => {
                 ) : null}
                 <SeoActionLink
                   className="button-2"
-                  href={SEO_COMPANY.whatsappHref}
+                  href={company.whatsappHref}
                   label="WhatsApp us"
                 />
               </div>
@@ -80,8 +90,8 @@ const SeoHero = ({ page, summaryTitle, summaryItems }: SeoHeroProps) => {
               </ul>
               <div className="seo-page__summary-note">
                 <span>Emergency line</span>
-                <a href={SEO_COMPANY.emergencyPhoneHref}>
-                  {SEO_COMPANY.emergencyPhoneDisplay}
+                <a href={company.emergencyPhoneHref}>
+                  {company.emergencyPhoneDisplay}
                 </a>
               </div>
             </aside>

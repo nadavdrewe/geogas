@@ -18,12 +18,12 @@ export const staffProfiles: StaffProfile[] = [
   {
     id: "geo",
     name: "Geo",
-    role: "Senior Gas Engineer",
+    role: "Gas Engineer",
     imagePath: "/cartoons/geo_normal.jpg",
     shortProfile:
       "Geo leads complex boiler fault diagnostics and rapid restore jobs, with a calm, methodical approach focused on safety, reliability and first-visit fixes.",
-    experience: "12+ years field diagnostics",
-    serviceArea: "South & Central London",
+    experience: "4 years gas engineering experience",
+    serviceArea: "London and Sussex",
     availability: "On-call emergency response",
     specialties: [
       "Boiler breakdown diagnostics",
@@ -39,17 +39,17 @@ export const staffProfiles: StaffProfile[] = [
   {
     id: "aaron",
     name: "Aaron",
-    role: "Team Leader",
+    role: "CEO & Founder",
     imagePath: "/cartoons/aaron_normal.jpg",
     shortProfile:
-      "Aaron manages engineer dispatch, technical escalations and final quality sign-off, keeping response times tight and workmanship standards high across the board.",
-    experience: "15+ years operations leadership",
-    serviceArea: "London-wide coordination",
-    availability: "Priority escalation lead",
+      "Aaron leads Geo Gas operations, service standards and escalations, combining hands-on engineering oversight with practical support for complex home service projects.",
+    experience: "25 years engineering experience",
+    serviceArea: "London and Sussex",
+    availability: "Founder oversight",
     specialties: [
-      "Complex call-out planning",
+      "Technical leadership",
       "Quality assurance",
-      "Multi-trade job coordination",
+      "Complex project planning",
     ],
     certifications: [
       "Gas Safe Registered",
@@ -64,8 +64,8 @@ export const staffProfiles: StaffProfile[] = [
     imagePath: "/cartoons/james_normal.jpg",
     shortProfile:
       "James focuses on appliance servicing and gas safety work, combining strong technical troubleshooting with clear customer communication before and after every repair.",
-    experience: "10+ years boiler & gas service",
-    serviceArea: "North & West London",
+    experience: "5 years boiler and gas service experience",
+    serviceArea: "London and Sussex",
     availability: "Daily scheduled attendance",
     specialties: [
       "Gas appliance servicing",
@@ -81,12 +81,12 @@ export const staffProfiles: StaffProfile[] = [
   {
     id: "matthew",
     name: "Matthew",
-    role: "Gas Engineer",
+    role: "Senior Engineer",
     imagePath: "/cartoons/matthew_normal.jpg",
     shortProfile:
       "Matthew handles emergency attendance and routine heating work with a practical, no-nonsense style that helps households get safely back up and running quickly.",
-    experience: "9+ years reactive maintenance",
-    serviceArea: "East & Greater London",
+    experience: "10 years reactive maintenance experience",
+    serviceArea: "London and Sussex",
     availability: "Rapid reactive call-outs",
     specialties: [
       "Emergency fault attendance",
@@ -100,15 +100,15 @@ export const staffProfiles: StaffProfile[] = [
     ],
   },
   {
-    id: "mia",
-    name: "Mia",
+    id: "maya",
+    name: "Maya",
     role: "Customer Care Lead",
     imagePath: "/cartoons/mia_normal.jpg",
-    heroImagePath: "/cartoons/mia_hero.jpg",
+    heroImagePath: "/cartoons/mia_normal.jpg",
     shortProfile:
-      "Mia oversees booking quality and customer updates, making sure each engineer arrives with the right brief, access notes and job history already in hand.",
+      "Maya oversees booking quality and customer updates, making sure each engineer arrives with the right brief, access notes and job history already in hand.",
     experience: "7+ years service coordination",
-    serviceArea: "Customer support desk",
+    serviceArea: "London and Sussex",
     availability: "Live booking & updates",
     specialties: [
       "Appointment planning",
@@ -126,11 +126,11 @@ export const staffProfiles: StaffProfile[] = [
     name: "Sophia",
     role: "Service Coordinator",
     imagePath: "/cartoons/sophia_normal.jpg",
-    heroImagePath: "/cartoons/sophia_hero.jpg",
+    heroImagePath: "/cartoons/sophia_normal.jpg",
     shortProfile:
       "Sophia supports day-to-day scheduling and post-visit follow-up, helping customers and landlords stay informed from first contact through final confirmation.",
     experience: "6+ years operations support",
-    serviceArea: "Admin & follow-up coordination",
+    serviceArea: "London and Sussex",
     availability: "Same-day schedule support",
     specialties: [
       "Landlord diary management",

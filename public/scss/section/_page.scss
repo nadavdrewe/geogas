@@ -131,7 +131,7 @@
     position: relative;
     z-index: 1;
     h3 {
-      color: var(--white);
+      color: var(--text-white);
       margin-bottom: 12px;
       max-width: 520px;
     }
@@ -151,7 +151,7 @@
     border-radius: 999px;
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    color: var(--white);
+    color: var(--text-white);
     background: rgba(255, 255, 255, 0.14);
   }
   &__meta {
@@ -162,7 +162,7 @@
     margin-bottom: 20px;
   }
   &__name {
-    color: var(--white);
+    color: var(--text-white);
     font-weight: 700;
   }
   &__role {
@@ -208,16 +208,33 @@
     background: linear-gradient(135deg, #122116 0%, #1f6330 56%, #46b34f 100%);
   }
 }
-@media (max-width: 575px) {
+@media (max-width: 767px) {
   .breadcrumb__area {
-    padding: 140px 0;
+    padding: 56px 0 34px;
     &-title h1 {
-      font-size: 42px;
-      line-height: 52px;
+      font-size: 22px;
+      line-height: 28px;
     }
     &-meta ul li {
-      font-size: 16px;
+      font-size: 14px;
+      line-height: 20px;
+      gap: 8px;
+    }
+  }
+  .breadcrumb__area .lg-mt-20 {
+    margin-top: 8px !important;
+  }
+}
+@media (max-width: 575px) {
+  .breadcrumb__area {
+    padding: 44px 0 26px;
+    &-title h1 {
+      font-size: 20px;
       line-height: 26px;
+    }
+    &-meta ul li {
+      font-size: 13px;
+      line-height: 18px;
     }
   }
   .error-page h1 {
@@ -247,9 +264,14 @@
   .breadcrumb__area {
     &-title {
       h1 {
-        font-size: 38px;
-        line-height: 48px;
+        font-size: 20px;
+        line-height: 25px;
       }
+    }
+    &-meta ul li {
+      font-size: 13px;
+      line-height: 18px;
+      gap: 8px;
     }
   }
   .inner-engineer-spot__actions .button-1,

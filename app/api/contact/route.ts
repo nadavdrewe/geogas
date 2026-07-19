@@ -58,23 +58,27 @@ export async function POST(request: Request) {
     const webhookUrl =
       process.env.CONTACT_WEBHOOK_URL || process.env.LEAD_WEBHOOK_URL;
 
-    if (webhookUrl) {
-      const webhookResponse = await fetch(webhookUrl, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(enquiry),
-      });
+    if (!webhookUrl) {
+      return NextResponse.json(
+        { error: "Enquiries are temporarily unavailable. Please call us instead." },
+        { status: 503 }
+      );
+    }
 
-      if (!webhookResponse.ok) {
-        return NextResponse.json(
-          { error: "Unable to deliver enquiry right now." },
-          { status: 502 }
-        );
-      }
-    } else {
-      console.log("GeoGas contact enquiry", JSON.stringify(enquiry));
+    const webhookResponse = await fetch(webhookUrl, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(enquiry),
+      signal: AbortSignal.timeout(10_000),
+    });
+
+    if (!webhookResponse.ok) {
+      return NextResponse.json(
+        { error: "Unable to deliver enquiry right now." },
+        { status: 502 }
+      );
     }
 
     return NextResponse.json({

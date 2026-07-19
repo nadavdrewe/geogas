@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import HeaderTwo from "@/components/layout/header/HeaderTwo";
 import BreadCrumb from "@/components/layout/banner/BreadCrumb";
 import ContactArea from "@/components/containers/ContactArea";
@@ -7,21 +8,44 @@ import FooterTwo from "@/components/layout/footer/FooterTwo";
 import InitAnimations from "@/components/layout/InitAnimations";
 import CustomCursor from "@/components/layout/CustomCursor";
 import ScrollProgressButton from "@/components/layout/ScrollProgressButton";
+import { getSiteContent } from "@/lib/siteContent";
+import { buildPageMetadata } from "@/lib/seo/metadata";
 
-const page = () => {
+export async function generateMetadata(): Promise<Metadata> {
+  const content = await getSiteContent();
+  const pageContent = content.pages.contact;
+
+  return buildPageMetadata({
+    title: pageContent.metaTitle,
+    description: pageContent.metaDescription,
+    path: "/contact",
+    siteUrl: content.global.siteUrl,
+    siteName: content.global.companyName,
+  });
+}
+
+const page = async () => {
+  const content = await getSiteContent();
+  const pageContent = content.pages.contact;
+  const heroSpot = pageContent.heroSpot;
+
   return (
     <>
       <HeaderTwo />
-      <BreadCrumb title="Contact Us" />
+      <BreadCrumb title={pageContent.breadcrumbTitle} />
       <InnerPageEngineerSpot
-        name="Sophia"
-        imageSrc="/cartoons/sophia_hero.jpg"
-        imageAlt="Superhero-style illustration of Sophia from GEO Gas"
-        heading="Sophia Can Help You Book The Right Engineer"
-        description="Tell us what you need and we will route your enquiry to the right engineer for contracts, servicing, landlord checks, installations or emergency support."
-        ctaHref="/pricing"
-        ctaLabel="Check Prices First"
-        accent="teal"
+        eyebrow={heroSpot.eyebrow}
+        name={heroSpot.name}
+        role={heroSpot.role}
+        imageSrc={heroSpot.imageSrc}
+        imageAlt={heroSpot.imageAlt}
+        heading={heroSpot.heading}
+        description={heroSpot.description}
+        ctaHref={heroSpot.ctaHref}
+        ctaLabel={heroSpot.ctaLabel}
+        secondaryCtaHref={heroSpot.secondaryCtaHref}
+        secondaryCtaLabel={heroSpot.secondaryCtaLabel}
+        accent={heroSpot.accent}
       />
       <ContactArea />
       <SubscribeArea />

@@ -36,6 +36,7 @@ const FooterTwo = () => {
                             <Link
                               href={item.href}
                               target={item.href.startsWith("http") ? "_blank" : undefined}
+                              rel={item.href.startsWith("http") ? "noreferrer" : undefined}
                             >
                               <i className={item.icon}></i>
                             </Link>
@@ -103,10 +104,14 @@ const FooterTwo = () => {
                       <p>
                         <strong>Contact Hours:</strong> {footer.contactHours.regularDays}
                       </p>
-                      <p>{footer.contactHours.regularHours}</p>
-                      <p>
-                        <strong>{footer.contactHours.emergency}</strong>
-                      </p>
+                      {footer.contactHours.regularHours ? (
+                        <p>{footer.contactHours.regularHours}</p>
+                      ) : null}
+                      {footer.contactHours.emergency ? (
+                        <p>
+                          <strong>{footer.contactHours.emergency}</strong>
+                        </p>
+                      ) : null}
                     </div>
                   </div>
                 </div>

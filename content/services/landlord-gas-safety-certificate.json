@@ -2,15 +2,15 @@
   "type": "service",
   "slug": "landlord-gas-safety-certificate",
   "serviceKey": "landlord-gas-safety-certificate",
-  "primaryLocation": "London",
-  "linkTitle": "landlord gas safety certificate in London",
-  "metaTitle": "Landlord Gas Safety Certificate in London | CP12 Checks",
-  "metaDescription": "Book a landlord gas safety certificate in London with a Gas Safe engineer. CP12 checks for rental properties with clear documentation and follow-up advice.",
-  "h1": "Landlord Gas Safety Certificate in London",
-  "intro": "We provide landlord gas safety certificate visits across London for rental homes, managed blocks and portfolio properties that need clear inspection records and practical follow-up advice.",
+  "primaryLocation": "London and Sussex",
+  "linkTitle": "landlord gas safety certificate in London and Sussex",
+  "metaTitle": "Landlord Gas Safety Certificate in London and Sussex | CP12 Checks",
+  "metaDescription": "Book a landlord gas safety certificate in London and Sussex with a Gas Safe engineer. CP12 checks for rental properties with clear documentation and follow-up advice.",
+  "h1": "Landlord Gas Safety Certificate in London and Sussex",
+  "intro": "We provide landlord gas safety certificate visits across London and Sussex for rental homes, managed blocks and portfolio properties that need clear inspection records and practical follow-up advice.",
   "pricingGuidance": "Landlord gas safety pricing depends on appliance count, property access and whether there are additional issues that need follow-up after inspection.",
   "localProof": "Used by private landlords, letting agents and portfolio managers who need reliable booking, access coordination and straightforward reporting.",
-  "areasCovered": ["Camden", "Islington", "Hackney", "Holloway", "Kensington"],
+  "areasCovered": ["Camden", "Islington", "Brighton", "Hove", "Haywards Heath"],
   "sections": [
     {
       "heading": "What landlords need from a gas safety visit",
@@ -27,12 +27,12 @@
   ],
   "internalLinks": [
     {
-      "label": "gas safety certificate in London",
+      "label": "gas safety certificate in London and Sussex",
       "href": "/gas-safety-certificate",
       "intent": "service"
     },
     {
-      "label": "gas engineer in London",
+      "label": "gas engineer in London and Sussex",
       "href": "/gas-engineer",
       "intent": "service"
     }

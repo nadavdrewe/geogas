@@ -105,33 +105,45 @@ const Header = () => {
               <div className="header-one__right">
                 <div className="header-one__right-search">
                   <div className="search">
-                    <span
+                    <button
+                      type="button"
                       className="header-one__right-search-icon open"
                       onClick={handleSearch}
+                      aria-label="Open site search"
+                      aria-expanded={search}
+                      aria-controls="site-search-panel"
                     >
                       <i className="fal fa-search"></i>
-                    </span>
+                    </button>
                   </div>
                 </div>
                 <div className="header-one__right-sidebar">
-                  <div
+                  <button
+                    type="button"
                     className="header-one__right-sidebar-popup-icon"
                     onClick={handleHamburger}
+                    aria-label="Open contact details"
+                    aria-expanded={hamburger}
+                    aria-controls="site-sidebar"
                   >
                     <i className="fa-regular fa-bars-sort"></i>
-                  </div>
+                  </button>
                 </div>
                 <div className="header-one__right-button">
                   <Link className="button-1" href="/contact">
                     Get A Quote<i className="fa-regular fa-angle-right"></i>
                   </Link>
                 </div>
-                <div
+                <button
+                  type="button"
                   className="header-one__right-responsive-menu menu__bar"
                   onClick={() => handleToggleMenu()}
+                  aria-label="Open navigation menu"
+                  aria-expanded={toggleMenu}
+                  aria-controls="mobile-navigation"
                 >
                   <i className="fa-regular fa-bars"></i>
-                </div>
+                </button>
               </div>
             </div>
           </div>

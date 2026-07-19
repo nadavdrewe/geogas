@@ -3,21 +3,16 @@
 import { useState } from "react";
 import Link from "next/link";
 import { useSiteContent } from "@/components/providers/SiteContentProvider";
-import {
-  annualServiceChecks,
-  contractsContact,
-  packageBenefits,
-  sharedExclusions,
-} from "@/data/contractsContent";
 
 const ServiceArea = () => {
   const [active, setActive] = useState(0);
   const { content } = useSiteContent();
   const servicesContent = content.home.services;
-
-  const brochureBenefits = packageBenefits.slice(0, 8);
-  const boilerServiceChecks = annualServiceChecks.slice(0, 6);
-  const keyLimits = sharedExclusions.slice(0, 6);
+  const contractsContent = content.contractsPage;
+  const brochureBenefits = contractsContent.packageBenefits.slice(0, 8);
+  const boilerServiceChecks = contractsContent.annualServiceChecks.slice(0, 6);
+  const keyLimits = contractsContent.sharedExclusions.slice(0, 6);
+  const serviceContactItems = content.header.contactItems;
 
   return (
     <section className="services__two section-padding-three">
@@ -116,32 +111,18 @@ const ServiceArea = () => {
                 checks? Contact GEO Gas or compare current cover options.
               </p>
               <ul className="services__page-contact-list">
-                <li>
-                  <i className="fa-solid fa-phone"></i>
-                  <a href={`tel:${contractsContact.phonePrimary.replace(/\s/g, "")}`}>
-                    {contractsContact.phonePrimary}
-                  </a>
-                </li>
-                <li>
-                  <i className="fa-solid fa-phone"></i>
-                  <a href={`tel:${contractsContact.phoneSecondary.replace(/\s/g, "")}`}>
-                    {contractsContact.phoneSecondary}
-                  </a>
-                </li>
-                <li>
-                  <i className="fa-solid fa-envelope"></i>
-                  <a href={`mailto:${contractsContact.email}`}>{contractsContact.email}</a>
-                </li>
-                <li>
-                  <i className="fa-solid fa-globe"></i>
-                  <a
-                    href={`https://${contractsContact.website}`}
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    {contractsContact.website}
-                  </a>
-                </li>
+                {serviceContactItems.map((item) => (
+                  <li key={`${item.label}-${item.href}`}>
+                    <i className={item.icon || "fa-solid fa-circle-info"}></i>
+                    <a
+                      href={item.href}
+                      target={item.href.startsWith("http") ? "_blank" : undefined}
+                      rel={item.href.startsWith("http") ? "noreferrer" : undefined}
+                    >
+                      {item.value}
+                    </a>
+                  </li>
+                ))}
               </ul>
               <div className="services__page-actions">
                 <Link className="button-1" href="/contracts">
@@ -154,7 +135,7 @@ const ServiceArea = () => {
                 </Link>
                 <Link
                   className="button-2"
-                  href="/info/geo-gas-brochure-2026.pdf"
+                  href={content.global.brochurePdfPath}
                   target="_blank"
                   rel="noreferrer"
                 >

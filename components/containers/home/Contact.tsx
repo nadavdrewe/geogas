@@ -44,10 +44,14 @@ const Contact = ({ addClass = false }) => {
                         <div className="info-meta-item">
                           <span>Contact Hours</span>
                           <p>{contactContent.contactHours.regularDays}</p>
-                          <p>{contactContent.contactHours.regularHours}</p>
-                          <p className="info-meta-item-emergency">
-                            {contactContent.contactHours.emergency}
-                          </p>
+                          {contactContent.contactHours.regularHours ? (
+                            <p>{contactContent.contactHours.regularHours}</p>
+                          ) : null}
+                          {contactContent.contactHours.emergency ? (
+                            <p className="info-meta-item-emergency">
+                              {contactContent.contactHours.emergency}
+                            </p>
+                          ) : null}
                         </div>
                       </div>
                     </div>

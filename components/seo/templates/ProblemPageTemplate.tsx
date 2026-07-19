@@ -1,3 +1,4 @@
+import { SeoCompanyInfo } from "@/lib/seo/company";
 import SeoBulletPanel from "@/components/seo/SeoBulletPanel";
 import SeoCtaStrip from "@/components/seo/SeoCtaStrip";
 import SeoFaqBlock from "@/components/seo/SeoFaqBlock";
@@ -7,12 +8,14 @@ import SeoSectionList from "@/components/seo/SeoSectionList";
 import { ProblemPage } from "@/lib/seo/types";
 
 type ProblemPageTemplateProps = {
+  company: SeoCompanyInfo;
   page: ProblemPage;
 };
 
-const ProblemPageTemplate = ({ page }: ProblemPageTemplateProps) => {
+const ProblemPageTemplate = ({ company, page }: ProblemPageTemplateProps) => {
   return (
     <SeoPageScaffold
+      company={company}
       page={page}
       summaryTitle="Fault snapshot"
       summaryItems={[
@@ -32,7 +35,7 @@ const ProblemPageTemplate = ({ page }: ProblemPageTemplateProps) => {
       <SeoBulletPanel items={page.typicalFixes} title="What usually fixes it" />
       <SeoFaqBlock faq={page.faq} />
       <SeoInternalLinks links={page.internalLinks || []} />
-      <SeoCtaStrip cta={page.cta} />
+      <SeoCtaStrip company={company} cta={page.cta} />
     </SeoPageScaffold>
   );
 };

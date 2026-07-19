@@ -2,15 +2,17 @@
 
 import Link from "next/link";
 import { ChangeEvent, FormEvent, useEffect, useMemo, useRef, useState } from "react";
+import { useSiteContent } from "@/components/providers/SiteContentProvider";
 
 type ChatRole = "user" | "assistant";
+type ChatSourceKind = "pricing" | "brochure" | "contracts" | "seo";
 
 type ChatMessage = {
   id: string;
   role: ChatRole;
   text: string;
   sources?: string[];
-  sourceKinds?: ("pricing" | "brochure")[];
+  sourceKinds?: ChatSourceKind[];
   confidence?: "low" | "medium" | "high";
   isTyping?: boolean;
   createdAt: number;
@@ -26,7 +28,7 @@ type ChatbotStreamFinalEvent = {
   sources: string[];
   suggestions: string[];
   confidence: "low" | "medium" | "high";
-  sourceKinds: ("pricing" | "brochure")[];
+  sourceKinds: ChatSourceKind[];
 };
 
 type ChatbotStreamErrorEvent = {
@@ -48,62 +50,7 @@ type LeadFormState = {
   note: string;
 };
 
-const quickPrompts = [
-  "What are your gas and boiler call-out rates?",
-  "How much is a landlord gas inspection?",
-  "What is included in your home care contracts?",
-  "What is the starting price for a combi boiler swap?",
-  "What areas do you cover and what are your opening hours?",
-];
-
-const faqShortcuts = [
-  {
-    label: "Emergency Help",
-    prompt: "What should I do in a gas emergency and who do I call?",
-  },
-  {
-    label: "Boiler Repair",
-    prompt: "What are your boiler repair call-out rates and next steps?",
-  },
-  {
-    label: "Landlord Safety",
-    prompt: "How much is a landlord gas safety inspection and what is included?",
-  },
-  {
-    label: "HomeCare Cover",
-    prompt: "What is included and excluded in HomeCare contracts?",
-  },
-  {
-    label: "Drainage",
-    prompt: "What are your drainage call-out and repair prices?",
-  },
-  {
-    label: "Boiler Install",
-    prompt: "What is the starting price and process for a new boiler installation?",
-  },
-  {
-    label: "Areas & Hours",
-    prompt: "What areas do you cover and what are your contact hours?",
-  },
-] as const;
-
-const initialMessage: ChatMessage = {
-  id: "initial-assistant",
-  role: "assistant",
-  text: "Hi, I am the Geo Gas assistant. Ask about pricing, contracts, operating locations, contact hours, or service support.",
-  createdAt: 0,
-};
-
 const THREAD_STORAGE_KEY = "geogas-chat-thread-v1";
-
-const defaultLeadForm: LeadFormState = {
-  name: "",
-  email: "",
-  phone: "",
-  postcode: "",
-  service: "Boiler repair quote",
-  note: "",
-};
 
 const formatMessage = (text: string): string[] => {
   return text
@@ -127,60 +74,90 @@ const sanitizeStoredMessages = (value: unknown): ChatMessage[] => {
   if (!Array.isArray(value)) return [];
 
   return value.reduce<ChatMessage[]>((acc, item) => {
-      const role: ChatRole = item?.role === "assistant" ? "assistant" : "user";
-      const text = typeof item?.text === "string" ? item.text : "";
-      if (!text.trim()) return acc;
+    const role: ChatRole = item?.role === "assistant" ? "assistant" : "user";
+    const text = typeof item?.text === "string" ? item.text : "";
+    if (!text.trim()) return acc;
 
-      const createdAt =
-        typeof item?.createdAt === "number" && Number.isFinite(item.createdAt)
-          ? item.createdAt
-          : Date.now();
+    const createdAt =
+      typeof item?.createdAt === "number" && Number.isFinite(item.createdAt)
+        ? item.createdAt
+        : Date.now();
 
-      const sources = Array.isArray(item?.sources)
-        ? item.sources.filter(
-            (source: unknown): source is string => typeof source === "string"
-          )
+    const sources = Array.isArray(item?.sources)
+      ? item.sources.filter(
+          (source: unknown): source is string => typeof source === "string"
+        )
+      : undefined;
+
+    const sourceKinds = Array.isArray(item?.sourceKinds)
+      ? item.sourceKinds.filter(
+          (kind: unknown): kind is ChatSourceKind =>
+            kind === "pricing" ||
+            kind === "brochure" ||
+            kind === "contracts" ||
+            kind === "seo"
+        )
+      : undefined;
+
+    const confidence =
+      item?.confidence === "high" ||
+      item?.confidence === "medium" ||
+      item?.confidence === "low"
+        ? item.confidence
         : undefined;
 
-      const sourceKinds = Array.isArray(item?.sourceKinds)
-        ? item.sourceKinds.filter(
-            (kind: unknown): kind is "pricing" | "brochure" =>
-              kind === "pricing" || kind === "brochure"
-          )
-        : undefined;
+    acc.push({
+      id:
+        typeof item?.id === "string" && item.id
+          ? item.id
+          : `${role}-${createdAt}`,
+      role,
+      text,
+      sources,
+      sourceKinds,
+      confidence,
+      createdAt,
+    });
 
-      const confidence =
-        item?.confidence === "high" ||
-        item?.confidence === "medium" ||
-        item?.confidence === "low"
-          ? item.confidence
-          : undefined;
-
-      acc.push({
-        id:
-          typeof item?.id === "string" && item.id
-            ? item.id
-            : `${role}-${createdAt}`,
-        role,
-        text,
-        sources,
-        sourceKinds,
-        confidence,
-        createdAt,
-      });
-
-      return acc;
-    }, []);
+    return acc;
+  }, []);
 };
 
 const GeoChatbotSection = () => {
-  const [messages, setMessages] = useState<ChatMessage[]>([initialMessage]);
+  const { content } = useSiteContent();
+  const chatbotContent = content.chatbot;
+
+  const initialMessage = useMemo<ChatMessage>(
+    () => ({
+      id: "initial-assistant",
+      role: "assistant",
+      text: chatbotContent.initialMessage,
+      createdAt: 0,
+    }),
+    [chatbotContent.initialMessage]
+  );
+
+  const defaultLeadForm = useMemo<LeadFormState>(
+    () => ({
+      name: "",
+      email: "",
+      phone: "",
+      postcode: "",
+      service: chatbotContent.defaultService,
+      note: "",
+    }),
+    [chatbotContent.defaultService]
+  );
+
+  const [messages, setMessages] = useState<ChatMessage[]>(() => [initialMessage]);
   const [inputValue, setInputValue] = useState("");
   const [isSending, setIsSending] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [suggestions, setSuggestions] = useState<string[]>(quickPrompts);
+  const [suggestions, setSuggestions] = useState<string[]>(
+    chatbotContent.quickPrompts
+  );
   const [selectedFaqPrompt, setSelectedFaqPrompt] = useState<string>(
-    faqShortcuts[0].prompt
+    chatbotContent.faqShortcuts[0]?.prompt ?? ""
   );
   const [copiedId, setCopiedId] = useState<string | null>(null);
   const [leadForm, setLeadForm] = useState<LeadFormState>(defaultLeadForm);
@@ -191,6 +168,22 @@ const GeoChatbotSection = () => {
   const [showQuickTools, setShowQuickTools] = useState(false);
   const messagesRef = useRef<HTMLDivElement | null>(null);
   const abortRef = useRef<AbortController | null>(null);
+
+  useEffect(() => {
+    if (
+      messages.length === 1 &&
+      messages[0]?.id === "initial-assistant" &&
+      messages[0]?.createdAt === 0
+    ) {
+      setMessages([initialMessage]);
+    }
+  }, [initialMessage, messages]);
+
+  useEffect(() => {
+    if (leadStatus === "idle") {
+      setLeadForm(defaultLeadForm);
+    }
+  }, [defaultLeadForm, leadStatus]);
 
   useEffect(() => {
     try {
@@ -435,7 +428,8 @@ const GeoChatbotSection = () => {
   const clearConversation = () => {
     if (isSending) return;
     setMessages([initialMessage]);
-    setSuggestions(quickPrompts);
+    setSuggestions(chatbotContent.quickPrompts);
+    setSelectedFaqPrompt(chatbotContent.faqShortcuts[0]?.prompt ?? "");
     setError(null);
     setCopiedId(null);
     setLeadForm(defaultLeadForm);
@@ -523,22 +517,21 @@ const GeoChatbotSection = () => {
       <div className="container">
         <div className="chatbot__shell">
           <div className="chatbot__heading">
-            <span>Geo Gas Customer Assistant</span>
-            <h2>Ask About Pricing, Contracts & Cover</h2>
-            <p>
-              This assistant answers directly from our live price file and brochure
-              terms.
-            </p>
+            <span>{chatbotContent.eyebrow}</span>
+            <h2>{chatbotContent.title}</h2>
+            <p>{chatbotContent.description}</p>
             <div className="chatbot__heading-actions">
               <button type="button" onClick={clearConversation} disabled={isSending}>
-                New chat
+                {chatbotContent.newChatLabel}
               </button>
               <button
                 type="button"
                 className="chatbot__toggle"
                 onClick={() => setShowQuickTools((prev) => !prev)}
               >
-                {showQuickTools ? "Hide quick topics" : "Quick topics"}
+                {showQuickTools
+                  ? chatbotContent.hideQuickToolsLabel
+                  : chatbotContent.showQuickToolsLabel}
               </button>
             </div>
           </div>
@@ -546,21 +539,22 @@ const GeoChatbotSection = () => {
           {showQuickTools ? (
             <div className="chatbot__tools">
               <div className="chatbot__faq">
-                <p>Popular quick topics</p>
+                <p>{chatbotContent.quickTopicsLabel}</p>
                 <div className="chatbot__faq-controls">
                   <select
                     value={selectedFaqPrompt}
                     onChange={(event) => setSelectedFaqPrompt(event.target.value)}
+                    aria-label="Choose a quick topic"
                     disabled={isSending}
                   >
-                    {faqShortcuts.map((shortcut) => (
+                    {chatbotContent.faqShortcuts.map((shortcut) => (
                       <option key={shortcut.label} value={shortcut.prompt}>
                         {shortcut.label}
                       </option>
                     ))}
                   </select>
                   <button type="button" onClick={askSelectedTopic} disabled={isSending}>
-                    Ask Topic
+                    {chatbotContent.askTopicLabel}
                   </button>
                 </div>
               </div>
@@ -582,8 +576,8 @@ const GeoChatbotSection = () => {
 
           <div className="chatbot__conversation">
             <div className="chatbot__conversation-head">
-              <h4>Chat window</h4>
-              <p>Type below to chat with the Geo Gas assistant.</p>
+              <h4>{chatbotContent.conversationTitle}</h4>
+              <p>{chatbotContent.conversationDescription}</p>
             </div>
 
             <div className="chatbot__messages" aria-live="polite" ref={messagesRef}>
@@ -598,15 +592,17 @@ const GeoChatbotSection = () => {
                   }
                 >
                   <div className="chatbot__message-role">
-                    {message.role === "assistant" ? "Geo Bot" : "You"} ·{" "}
+                    {message.role === "assistant" ? "Geo Bot" : "You"} |{" "}
                     {formatMessageTime(message.createdAt)}
                   </div>
                   <div className="chatbot__message-content">
-                    {message.text ?
+                    {message.text ? (
                       formatMessage(message.text).map((line, index) => (
                         <p key={`${message.id}-${index}`}>{line}</p>
-                      )) :
-                      <p>Thinking through your request...</p>}
+                      ))
+                    ) : (
+                      <p>Thinking through your request...</p>
+                    )}
                   </div>
                   {message.isTyping ? (
                     <div className="chatbot__typing" aria-hidden="true">
@@ -631,12 +627,14 @@ const GeoChatbotSection = () => {
                 type="text"
                 value={inputValue}
                 onChange={(event) => setInputValue(event.target.value)}
-                placeholder="Ask about call-out prices, servicing costs, or contract terms..."
+                placeholder={chatbotContent.inputPlaceholder}
                 aria-label="Ask the Geo Gas chatbot"
                 disabled={isSending}
               />
               <button type="submit" disabled={!canSend}>
-                {isSending ? "Streaming..." : "Ask Bot"}
+                {isSending
+                  ? chatbotContent.askButtonLoadingLabel
+                  : chatbotContent.askButtonLabel}
               </button>
               {isSending ? (
                 <button
@@ -644,17 +642,14 @@ const GeoChatbotSection = () => {
                   className="chatbot__stop"
                   onClick={stopStreaming}
                 >
-                  Stop
+                  {chatbotContent.stopButtonLabel}
                 </button>
               ) : null}
             </form>
 
             <div className="chatbot__status">
               <span />
-              <p>
-                Geo Gas service guidance, pricing help and contact information.
-                Conversation is saved in this browser.
-              </p>
+              <p>{chatbotContent.statusText}</p>
             </div>
             {error ? <p className="chatbot__error">{error}</p> : null}
           </div>
@@ -662,24 +657,17 @@ const GeoChatbotSection = () => {
           {showLeadCapture ? (
             <div className="chatbot__handoff">
               <div className="chatbot__handoff-head">
-                <h4>Want this priced and booked faster?</h4>
-                <p>
-                  Send your details and we will call you back with a confirmed quote
-                  and availability. Coverage includes London, Sussex and Surrey.
-                  Main contact hours are Monday - Saturday, 8AM - 7PM (Emergency
-                  24/7).
-                </p>
+                <h4>{chatbotContent.leadCaptureHeading}</h4>
+                <p>{chatbotContent.leadCaptureDescription}</p>
               </div>
               {leadStatus === "success" ? (
                 <div className="chatbot__handoff-success">
-                  <p>
-                    Request sent. A Geo Gas team member will call you shortly to
-                    confirm details. Main contact hours are Monday - Saturday,
-                    8AM - 7PM, with emergency support available 24/7.
-                  </p>
+                  <p>{chatbotContent.leadSuccessMessage}</p>
                   <div className="chatbot__handoff-actions">
-                    <a href="tel:+447854451941">Call 24/7 Emergency</a>
-                    <Link href="/contact">Open Contact Page</Link>
+                    <a href={content.global.emergencyPhoneHref}>
+                      {chatbotContent.leadEmergencyCtaLabel}
+                    </a>
+                    <Link href="/contact">{chatbotContent.leadContactCtaLabel}</Link>
                   </div>
                 </div>
               ) : (
@@ -688,51 +676,58 @@ const GeoChatbotSection = () => {
                     type="text"
                     value={leadForm.name}
                     onChange={updateLeadField("name")}
-                    placeholder="Full name"
+                    placeholder={chatbotContent.fieldPlaceholders.name}
+                    aria-label="Full name"
                     required
                   />
                   <input
                     type="email"
                     value={leadForm.email}
                     onChange={updateLeadField("email")}
-                    placeholder="Email address"
+                    placeholder={chatbotContent.fieldPlaceholders.email}
+                    aria-label="Email address"
                     required
                   />
                   <input
                     type="text"
                     value={leadForm.phone}
                     onChange={updateLeadField("phone")}
-                    placeholder="Phone number"
+                    placeholder={chatbotContent.fieldPlaceholders.phone}
+                    aria-label="Phone number"
                     required
                   />
                   <input
                     type="text"
                     value={leadForm.postcode}
                     onChange={updateLeadField("postcode")}
-                    placeholder="Postcode"
+                    placeholder={chatbotContent.fieldPlaceholders.postcode}
+                    aria-label="Postcode"
                     required
                   />
                   <input
                     type="text"
                     value={leadForm.service}
                     onChange={updateLeadField("service")}
-                    placeholder="Service needed"
+                    placeholder={chatbotContent.fieldPlaceholders.service}
+                    aria-label="Service required"
                     required
                   />
                   <textarea
                     value={leadForm.note}
                     onChange={updateLeadField("note")}
-                    placeholder="Extra details (optional)"
+                    placeholder={chatbotContent.fieldPlaceholders.note}
+                    aria-label="Additional details"
                   />
                   <button type="submit" disabled={leadStatus === "sending"}>
-                    {leadStatus === "sending" ? "Sending request..." : "Send Request"}
+                    {leadStatus === "sending"
+                      ? chatbotContent.submitLeadLoadingLabel
+                      : chatbotContent.submitLeadLabel}
                   </button>
                 </form>
               )}
               {leadError ? <p className="chatbot__lead-error">{leadError}</p> : null}
             </div>
           ) : null}
-
         </div>
       </div>
     </section>

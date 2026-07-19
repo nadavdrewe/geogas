@@ -2,18 +2,16 @@
 
 import Image from "next/image";
 import { useEffect, useMemo, useState } from "react";
-
-const WHATSAPP_PHONE = "447854451941";
+import { useSiteContent } from "@/components/providers/SiteContentProvider";
 
 const WhatsAppWidget = () => {
+  const { content } = useSiteContent();
   const [isOpen, setIsOpen] = useState(false);
   const [showTrigger, setShowTrigger] = useState(false);
   const whatsappUrl = useMemo(() => {
-    const message = encodeURIComponent(
-      "Hi Geo Gas, I would like help with a boiler / gas / plumbing issue."
-    );
-    return `https://wa.me/${WHATSAPP_PHONE}?text=${message}`;
-  }, []);
+    const message = encodeURIComponent(content.global.whatsappMessage);
+    return `https://wa.me/${content.global.whatsappPhone}?text=${message}`;
+  }, [content.global.whatsappMessage, content.global.whatsappPhone]);
 
   useEffect(() => {
     const evaluateVisibility = () => {
@@ -84,7 +82,9 @@ const WhatsAppWidget = () => {
                 <i className="fa-brands fa-whatsapp"></i>
                 Start WhatsApp Chat
               </button>
-              <small className="whatsapp-widget__number">+44 7854 451 941</small>
+              <small className="whatsapp-widget__number">
+                {content.global.emergencyPhoneDisplay}
+              </small>
             </div>
           ) : null}
 

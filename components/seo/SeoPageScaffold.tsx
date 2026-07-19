@@ -1,4 +1,5 @@
 import { ReactNode } from "react";
+import { SeoCompanyInfo } from "@/lib/seo/company";
 import { SeoPage } from "@/lib/seo/types";
 import SeoHero from "@/components/seo/SeoHero";
 import SeoContactCard from "@/components/seo/SeoContactCard";
@@ -9,6 +10,7 @@ type SummaryItem = {
 };
 
 type SeoPageScaffoldProps = {
+  company: SeoCompanyInfo;
   page: SeoPage;
   summaryTitle: string;
   summaryItems: SummaryItem[];
@@ -17,6 +19,7 @@ type SeoPageScaffoldProps = {
 };
 
 const SeoPageScaffold = ({
+  company,
   page,
   summaryTitle,
   summaryItems,
@@ -26,12 +29,17 @@ const SeoPageScaffold = ({
   return (
     <main className="seo-page section-padding-three">
       <div className="container">
-        <SeoHero page={page} summaryItems={summaryItems} summaryTitle={summaryTitle} />
+        <SeoHero
+          company={company}
+          page={page}
+          summaryItems={summaryItems}
+          summaryTitle={summaryTitle}
+        />
         <div className="row g-4">
           <div className="col-lg-8">{children}</div>
           <div className="col-lg-4">
             <div className="seo-page__sidebar">
-              <SeoContactCard cta={page.cta} />
+              <SeoContactCard company={company} cta={page.cta} />
               {sidebarExtra}
             </div>
           </div>

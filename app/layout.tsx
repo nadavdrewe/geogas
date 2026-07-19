@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { SiteContentProvider } from "@/components/providers/SiteContentProvider";
+import InternalLinkNavigationFix from "@/components/layout/InternalLinkNavigationFix";
 import WhatsAppWidget from "@/components/chatbot/WhatsAppWidget";
+import { getSiteContent } from "@/lib/siteContent";
 
 // bootstrap five
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -11,35 +13,66 @@ import "yet-another-react-lightbox/styles.css";
 // main styles
 import "@/public/scss/main.scss";
 
-export const metadata: Metadata = {
-  title: "Geo Gas Services London Ltd | Gas, Boiler & Plumbing Experts",
-  description:
-    "Geo Gas Services London Ltd provides gas, boiler, plumbing and drain call-outs, landlord gas safety checks, and emergency support.",
-  keywords: [
-    "Geo Gas Services",
-    "Gas engineer London",
-    "Boiler repair",
-    "Landlord gas safety certificate",
-    "Emergency plumbing",
-    "Drain services",
-  ],
-  authors: [
-    {
-      name: "Geo Gas Services London Ltd",
-      url: "https://www.geogasservices.uk",
-    },
-  ],
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const content = await getSiteContent();
+  const siteUrl = content.global.siteUrl;
+  const companyName = content.global.companyName;
+  const title = `${companyName} | Gas, Boiler & Plumbing Experts`;
+  const description =
+    `${companyName} provides gas, boiler, plumbing, drainage, building works and carpentry support, landlord gas safety checks, and emergency response.`;
 
-export default function RootLayout({
+  return {
+    metadataBase: new URL(siteUrl),
+    title,
+    description,
+    keywords: [
+      "Geo Gas Services",
+      "Gas engineer London and Sussex",
+      "Boiler repair",
+      "Landlord gas safety certificate",
+      "Emergency plumbing",
+      "Drain services",
+      "Building works",
+      "Carpentry services",
+    ],
+    authors: [
+      {
+        name: companyName,
+        url: siteUrl,
+      },
+    ],
+    robots: {
+      index: true,
+      follow: true,
+    },
+    openGraph: {
+      title,
+      description,
+      url: siteUrl,
+      type: "website",
+      siteName: companyName,
+    },
+    twitter: {
+      card: "summary",
+      title,
+      description:
+        "Gas, boiler, plumbing, drainage, building works and carpentry support across London and Sussex.",
+    },
+  };
+}
+
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const content = await getSiteContent();
+
   return (
     <html lang="en">
       <body>
-        <SiteContentProvider>
+        <SiteContentProvider initialContent={content}>
+          <InternalLinkNavigationFix />
           {children}
           <WhatsAppWidget />
         </SiteContentProvider>

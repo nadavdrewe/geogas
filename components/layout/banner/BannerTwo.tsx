@@ -4,21 +4,32 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import StaffHeroCarousel from "@/components/containers/home/StaffHeroCarousel";
+import { BRAND_VAN_IMAGE } from "@/lib/brandAssets";
 import { useSiteContent } from "@/components/providers/SiteContentProvider";
+import {
+  getPhoneItems,
+  isEmergencyPhoneItem,
+  resolvePrimaryAndEmergencyPhones,
+  toTelHref,
+} from "@/lib/contactPhones";
 
 const BannerTwo = () => {
   const { content } = useSiteContent();
   const hero = content.home.hero;
   const kickerLabel = hero.kicker.replace(/engineering/i, "Repair");
-  const emergencyContact =
-    content.header.contactItems.find((item) =>
-      /emergency|24\/7|call[- ]?out/i.test(`${item.label} ${item.value}`)
-    ) ?? content.header.contactItems.find((item) => item.href.startsWith("tel:"));
-  const emergencyNumber = emergencyContact?.value ?? "07854 451941";
-  const emergencyHref =
-    emergencyContact?.href && emergencyContact.href.startsWith("tel:")
-      ? emergencyContact.href
-      : `tel:${emergencyNumber.replace(/\s+/g, "")}`;
+  const phoneItems = getPhoneItems(content.header.contactItems);
+  const { primaryPhone } = resolvePrimaryAndEmergencyPhones(content.header.contactItems);
+  const orderedPhoneItems = [
+    primaryPhone,
+    ...phoneItems.filter((item) => item !== primaryPhone),
+  ].filter((item): item is NonNullable<typeof item> => Boolean(item));
+  const uniquePhoneItems = orderedPhoneItems.filter((item, index, all) => {
+    const href = toTelHref(item);
+    return all.findIndex((candidate) => toTelHref(candidate) === href) === index;
+  });
+  const visiblePhoneItems = uniquePhoneItems;
+  const mainNumber = primaryPhone?.value ?? "0207 723 2221";
+  const mainHref = toTelHref(primaryPhone, "+442077232221");
   const totalHighlights = hero.highlights.length;
   const heroMessageRotations = hero.rotations;
   const [headlineIndex, setHeadlineIndex] = useState(() => {
@@ -89,12 +100,43 @@ const BannerTwo = () => {
             <div className="banner__two-content">
               <a
                 className="banner__two-content-kicker banner__two-content-kicker--call"
-                href={emergencyHref}
-                aria-label={`Call ${emergencyNumber} for emergency call-out support`}
+                href={mainHref}
+                aria-label={`Call ${mainNumber} for main landline support`}
               >
                 <span>{kickerLabel}</span>
-                <em>{emergencyNumber}</em>
+                <em>{mainNumber}</em>
               </a>
+              {visiblePhoneItems.length > 0 ? (
+                <div className="banner__two-content-phone-list">
+                  {visiblePhoneItems.map((item) => {
+                    const phoneHref = toTelHref(item, "+442077232221");
+                    const phoneLabel = item.label ?? "Phone";
+                    const phoneValue = item.value ?? "";
+                    const isEmergency = isEmergencyPhoneItem(item);
+
+                    return (
+                      <a
+                        key={`${phoneLabel}-${phoneValue}`}
+                        className={
+                          "banner__two-content-phone-pill" +
+                          (isEmergency ? " is-emergency" : "")
+                        }
+                        href={phoneHref}
+                        aria-label={`Call ${phoneValue} ${phoneLabel}`}
+                      >
+                        <i
+                          className={
+                            isEmergency ? "fa-solid fa-phone-volume" : "fa-solid fa-phone"
+                          }
+                          aria-hidden="true"
+                        ></i>
+                        <span>{phoneLabel}</span>
+                        <em>{phoneValue}</em>
+                      </a>
+                    );
+                  })}
+                </div>
+              ) : null}
               <div className="banner__two-mobile-title-wrap">
                 <h1 data-aos-duration="800" data-aos="fade-up" data-aos-delay="400">
                   {hero.brandName}
@@ -122,7 +164,7 @@ const BannerTwo = () => {
                 </h1>
                 <div className="banner__two-mobile-van d-lg-none">
                   <Image
-                    src="/cartoons/van2.jpeg"
+                    src={BRAND_VAN_IMAGE}
                     alt="Geo Gas services van"
                     width={1280}
                     height={720}

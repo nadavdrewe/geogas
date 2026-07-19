@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import HeaderTwo from "@/components/layout/header/HeaderTwo";
 import BreadCrumb from "@/components/layout/banner/BreadCrumb";
 import About from "@/components/containers/home-two/About";
@@ -8,22 +9,44 @@ import FooterTwo from "@/components/layout/footer/FooterTwo";
 import InitAnimations from "@/components/layout/InitAnimations";
 import CustomCursor from "@/components/layout/CustomCursor";
 import ScrollProgressButton from "@/components/layout/ScrollProgressButton";
+import { getSiteContent } from "@/lib/siteContent";
+import { buildPageMetadata } from "@/lib/seo/metadata";
 
-const page = () => {
+export async function generateMetadata(): Promise<Metadata> {
+  const content = await getSiteContent();
+  const pageContent = content.pages.about;
+
+  return buildPageMetadata({
+    title: pageContent.metaTitle,
+    description: pageContent.metaDescription,
+    path: "/about",
+    siteUrl: content.global.siteUrl,
+    siteName: content.global.companyName,
+  });
+}
+
+const page = async () => {
+  const content = await getSiteContent();
+  const pageContent = content.pages.about;
+  const heroSpot = pageContent.heroSpot;
+
   return (
     <>
       <HeaderTwo />
-      <BreadCrumb title="About Us" />
+      <BreadCrumb title={pageContent.breadcrumbTitle} />
       <InnerPageEngineerSpot
-        name="Aaron"
-        role="Founder & GEO Gas Hero"
-        imageSrc="/cartoons/aaron_hero.jpg"
-        imageAlt="Superhero-style illustration of Aaron from GEO Gas"
-        heading="Meet The Engineers Behind GEO Gas Service Cover"
-        description="Our engineer team shows up fast, works safely and keeps contract support practical. Explore the cover options and pricing now starting from £19 per month."
-        ctaHref="/contracts"
-        ctaLabel="View Contract Cover"
-        accent="red"
+        eyebrow={heroSpot.eyebrow}
+        name={heroSpot.name}
+        role={heroSpot.role}
+        imageSrc={heroSpot.imageSrc}
+        imageAlt={heroSpot.imageAlt}
+        heading={heroSpot.heading}
+        description={heroSpot.description}
+        ctaHref={heroSpot.ctaHref}
+        ctaLabel={heroSpot.ctaLabel}
+        secondaryCtaHref={heroSpot.secondaryCtaHref}
+        secondaryCtaLabel={heroSpot.secondaryCtaLabel}
+        accent={heroSpot.accent}
       />
       <About />
       <Contact addClass={true} />

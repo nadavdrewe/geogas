@@ -2,45 +2,54 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import SeoSiteShell from "@/components/seo/SeoSiteShell";
 import SeoStructuredData from "@/components/seo/SeoStructuredData";
-import { SEO_COMPANY } from "@/lib/seo/company";
+import { buildSeoCompanyInfo } from "@/lib/seo/company";
 import { getSeoHubSections } from "@/lib/seo/content";
 import { buildGuidesHubSchemas } from "@/lib/seo/schema";
+import { getSiteContent } from "@/lib/siteContent";
 
-export const metadata: Metadata = {
-  title: "Boiler Repair Guides | Geo Gas Services London Ltd",
-  description:
-    "Problem guides, parts guides and supporting service pages for boiler repair, gas safety and local call-outs across London.",
-  alternates: {
-    canonical: `${SEO_COMPANY.siteUrl}/guides`,
-  },
-  openGraph: {
-    title: "Boiler Repair Guides | Geo Gas Services London Ltd",
-    description:
-      "Problem guides, parts guides and supporting service pages for boiler repair, gas safety and local call-outs across London.",
-    url: `${SEO_COMPANY.siteUrl}/guides`,
-    type: "website",
-    siteName: SEO_COMPANY.name,
-  },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const content = await getSiteContent();
+  const company = buildSeoCompanyInfo(content);
+  const guidesContent = content.guidesPage;
+  const canonical = `${company.siteUrl}/guides`;
+
+  return {
+    title: guidesContent.metaTitle,
+    description: guidesContent.metaDescription,
+    alternates: {
+      canonical,
+    },
+    openGraph: {
+      title: guidesContent.metaTitle,
+      description: guidesContent.metaDescription,
+      url: canonical,
+      type: "website",
+      siteName: company.name,
+    },
+    twitter: {
+      card: "summary",
+      title: guidesContent.metaTitle,
+      description: guidesContent.metaDescription,
+    },
+  };
+}
 
 const GuidesPage = async () => {
-  const sections = await getSeoHubSections();
+  const [sections, content] = await Promise.all([getSeoHubSections(), getSiteContent()]);
+  const company = buildSeoCompanyInfo(content);
+  const guidesContent = content.guidesPage;
 
   return (
     <SeoSiteShell>
       <main className="seo-page seo-page--hub section-padding-three">
-        <SeoStructuredData items={buildGuidesHubSchemas()} />
+        <SeoStructuredData items={buildGuidesHubSchemas(company)} />
         <div className="container">
           <section className="seo-page__hero">
             <div className="seo-page__hero-card">
               <div className="seo-page__hero-copy">
-                <span className="seo-page__eyebrow">Guides hub</span>
-                <h1>Boiler, heating and gas safety guides</h1>
-                <p>
-                  This hub groups the high-intent pages built to support boiler repair,
-                  gas safety and local service leads. Use it as the internal linking
-                  centre for problem pages, parts guides and supporting service pages.
-                </p>
+                <span className="seo-page__eyebrow">{guidesContent.eyebrow}</span>
+                <h1>{guidesContent.title}</h1>
+                <p>{guidesContent.description}</p>
               </div>
             </div>
           </section>
@@ -72,4 +81,3 @@ const GuidesPage = async () => {
 };
 
 export default GuidesPage;
-

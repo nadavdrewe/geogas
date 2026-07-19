@@ -51,8 +51,8 @@ const StaffHeroCarousel = ({ compact = false }: { compact?: boolean }) => {
         className="staff-hero-carousel__slider"
         loop={staffProfiles.length > 1}
         speed={prefersReducedMotion ? 0 : 900}
-        spaceBetween={compact ? 0 : 18}
-        centeredSlides={!compact}
+        spaceBetween={0}
+        centeredSlides={false}
         allowTouchMove={true}
         autoplay={
           prefersReducedMotion
@@ -75,14 +75,6 @@ const StaffHeroCarousel = ({ compact = false }: { compact?: boolean }) => {
                 0: {
                   slidesPerView: 1,
                   centeredSlides: false,
-                },
-                768: {
-                  slidesPerView: 1.05,
-                  centeredSlides: true,
-                },
-                1200: {
-                  slidesPerView: 1.12,
-                  centeredSlides: true,
                 },
               }
         }

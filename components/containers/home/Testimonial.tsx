@@ -19,23 +19,51 @@ const Testimonial = () => {
               <div className="row">
                 <div className="col-xl-12">
                   <div className="testimonial__two-area-brand">
+                    <div className="testimonial__two-area-brand-head">
+                      <h4>{testimonial.sectionTitle}</h4>
+                      <p>{testimonial.sectionDescription}</p>
+                    </div>
                     <div className="testimonial__two-area-brand-grid">
-                      {testimonial.platforms.map((platform) => (
-                        <div
-                          key={platform.name}
-                          className="testimonial__two-area-brand-item"
-                        >
-                          <h5>{platform.name}</h5>
-                          <p>{platform.note}</p>
-                          <div className="testimonial__two-area-brand-item-stars">
-                            <i className="fas fa-star"></i>
-                            <i className="fas fa-star"></i>
-                            <i className="fas fa-star"></i>
-                            <i className="fas fa-star"></i>
-                            <i className="fas fa-star"></i>
+                      {testimonial.platforms.map((platform) =>
+                        platform.href ? (
+                          <a
+                            key={platform.name}
+                            href={platform.href}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="testimonial__two-area-brand-item"
+                          >
+                            <h5>{platform.name}</h5>
+                            <p>{platform.note}</p>
+                            <div className="testimonial__two-area-brand-item-stars">
+                              <i className="fas fa-star"></i>
+                              <i className="fas fa-star"></i>
+                              <i className="fas fa-star"></i>
+                              <i className="fas fa-star"></i>
+                              <i className="fas fa-star"></i>
+                            </div>
+                            <span className="testimonial__two-area-brand-item-cta">
+                              {platform.ctaLabel || `Open ${platform.name}`}
+                              <i className="fa-regular fa-arrow-up-right-from-square"></i>
+                            </span>
+                          </a>
+                        ) : (
+                          <div
+                            key={platform.name}
+                            className="testimonial__two-area-brand-item"
+                          >
+                            <h5>{platform.name}</h5>
+                            <p>{platform.note}</p>
+                            <div className="testimonial__two-area-brand-item-stars">
+                              <i className="fas fa-star"></i>
+                              <i className="fas fa-star"></i>
+                              <i className="fas fa-star"></i>
+                              <i className="fas fa-star"></i>
+                              <i className="fas fa-star"></i>
+                            </div>
                           </div>
-                        </div>
-                      ))}
+                        )
+                      )}
                     </div>
                     <div className="testimonial__two-area-brand-line">
                       <span>{testimonial.brandLine}</span>

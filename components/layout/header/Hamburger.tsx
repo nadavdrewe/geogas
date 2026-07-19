@@ -21,13 +21,19 @@ const Hamburger = ({
   return (
     <>
       <div
+        id="site-sidebar"
         className={
           (hamburger ? " active" : " ") + " header-one__right-sidebar-popup"
         }
       >
-        <div className="sidebar-close-btn" onClick={() => setHamburger(false)}>
+        <button
+          type="button"
+          className="sidebar-close-btn"
+          onClick={() => setHamburger(false)}
+          aria-label="Close contact details"
+        >
           <i className="fal fa-times"></i>
-        </div>
+        </button>
         <div className="header-one__right-sidebar-popup-logo">
           <Link href="/">
             <Image src={logo} alt="Geo Gas Services logo" priority />
@@ -55,6 +61,7 @@ const Hamburger = ({
                       href={item.href}
                       className={isEmail ? "contact-value is-email" : "contact-value"}
                       target={item.href.startsWith("http") ? "_blank" : undefined}
+                      rel={item.href.startsWith("http") ? "noreferrer" : undefined}
                     >
                       {displayValue}
                     </Link>

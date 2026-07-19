@@ -2,15 +2,20 @@ import { readFile } from "fs/promises";
 import path from "path";
 import { NextResponse } from "next/server";
 import OpenAI from "openai";
+import type { SiteContent } from "@/data/siteContent";
+import { getSiteContent } from "@/lib/siteContent";
+import { getAllSeoPages } from "@/lib/seo/content";
+import type { SeoPage } from "@/lib/seo/types";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
-type SourceKind = "pricing" | "brochure";
+type SourceKind = "pricing" | "brochure" | "contracts" | "seo";
 
 type KnowledgeChunk = {
   id: string;
   source: SourceKind;
+  href: string;
   text: string;
   normalized: string;
 };
@@ -101,20 +106,7 @@ const STOP_WORDS = new Set([
   "any",
 ]);
 
-const BUSINESS_LOCATIONS = "London, Sussex and Surrey";
-const BUSINESS_CONTACT_HOURS = {
-  regularDays: "Monday - Saturday",
-  regularHours: "8AM - 7PM",
-  emergency: "Emergency 24/7",
-};
-
-const STATIC_BUSINESS_FACTS = [
-  `Operating locations: ${BUSINESS_LOCATIONS}.`,
-  `Contact hours: ${BUSINESS_CONTACT_HOURS.regularDays}, ${BUSINESS_CONTACT_HOURS.regularHours}.`,
-  `${BUSINESS_CONTACT_HOURS.emergency} emergency support is available.`,
-].join(" ");
-
-let knowledgePromise: Promise<KnowledgeBase> | null = null;
+let staticKnowledgePromise: Promise<KnowledgeChunk[]> | null = null;
 let openaiClient: OpenAI | null = null;
 
 const normalize = (value: string): string =>
@@ -132,6 +124,7 @@ const tokenize = (value: string): string[] => {
 
 const splitIntoChunks = (
   source: SourceKind,
+  href: string,
   text: string,
   maxChars = 360
 ): KnowledgeChunk[] => {
@@ -151,6 +144,7 @@ const splitIntoChunks = (
       chunks.push({
         id: `${source}-${index}`,
         source,
+        href,
         text: bucket,
         normalized: normalize(bucket),
       });
@@ -165,6 +159,7 @@ const splitIntoChunks = (
     chunks.push({
       id: `${source}-${index}`,
       source,
+      href,
       text: bucket,
       normalized: normalize(bucket),
     });
@@ -172,11 +167,6 @@ const splitIntoChunks = (
 
   return chunks;
 };
-
-const sourcePath = (source: SourceKind): string =>
-  source === "pricing"
-    ? "/info/price.txt"
-    : "/info/geo-gas-brochure-2026.pdf";
 
 const scoreToConfidence = (score: number): "low" | "medium" | "high" => {
   if (score >= 8) return "high";
@@ -192,8 +182,15 @@ const hasServiceKeywords = (question: string): boolean => {
   );
 };
 
-const getGuardrail = (question: string): GuardrailResult => {
+const getGuardrail = (
+  question: string,
+  globalContent: SiteContent["global"]
+): GuardrailResult => {
   const text = question.trim();
+  const emergencyPhone = globalContent.emergencyPhoneDisplay;
+  const regularHours = [globalContent.contactHours.regularDays, globalContent.contactHours.regularHours]
+    .filter(Boolean)
+    .join(", ");
 
   if (
     /(smell of gas|gas smell|gas leak|carbon monoxide|co alarm|boiler fumes|hissing gas|gas emergency)/i.test(
@@ -203,7 +200,7 @@ const getGuardrail = (question: string): GuardrailResult => {
     return {
       kind: "emergency",
       answer:
-        "If you can smell gas or suspect carbon monoxide, leave the property immediately, avoid switches/flames, and call the UK Gas Emergency Service on 0800 111 999 now. For urgent Geo Gas attendance, call 07854 451941.",
+        `If you can smell gas or suspect carbon monoxide, leave the property immediately, avoid switches/flames, and call the UK Gas Emergency Service on 0800 111 999 now. For urgent Geo Gas attendance, call ${emergencyPhone}.`,
       suggestions: [
         "Repeat emergency phone numbers",
         "What details should I give on the emergency call?",
@@ -220,7 +217,7 @@ const getGuardrail = (question: string): GuardrailResult => {
     return {
       kind: "emergency",
       answer:
-        "This sounds urgent. Call our 24/7 emergency line on 07854 451941 now. If you also suspect a gas leak, leave the property and call 0800 111 999 immediately.",
+        `This sounds urgent. Call our 24/7 emergency line on ${emergencyPhone} now. If you also suspect a gas leak, leave the property and call 0800 111 999 immediately.`,
       suggestions: [
         "What should I do before the engineer arrives?",
         "How quickly can an emergency engineer attend?",
@@ -236,8 +233,7 @@ const getGuardrail = (question: string): GuardrailResult => {
   ) {
     return {
       kind: "business_info",
-      answer:
-        "Our main contact hours are Monday - Saturday, 8AM - 7PM. Emergency support is available 24/7.",
+      answer: `We are available ${regularHours}.`,
       suggestions: [
         "What areas do you cover?",
         "How do I book a call-out?",
@@ -253,8 +249,7 @@ const getGuardrail = (question: string): GuardrailResult => {
   ) {
     return {
       kind: "business_info",
-      answer:
-        "We operate across London, Sussex and Surrey. Main contact hours are Monday - Saturday, 8AM - 7PM, with emergency support available 24/7.",
+      answer: `We operate across ${globalContent.operatingLocations} and provide ${regularHours}.`,
       suggestions: [
         "How do I request a quote?",
         "What are your current call-out rates?",
@@ -275,7 +270,7 @@ const getGuardrail = (question: string): GuardrailResult => {
         "I can only help with Geo Gas services: current pricing, contracts, boiler/heating/plumbing support, landlord checks, and service cover terms.",
       suggestions: [
         "Show current call-out pricing",
-        "What is included in HomeCare contracts?",
+        "What is included in Home Rescue contracts?",
         "How much is a landlord gas safety inspection?",
       ],
     };
@@ -317,25 +312,32 @@ const readBrochureText = async (): Promise<string> => {
   }
 };
 
-const getKnowledgeBase = async (): Promise<KnowledgeBase> => {
-  if (!knowledgePromise) {
-    knowledgePromise = (async () => {
-      const pricingPath = path.join(process.cwd(), "public/info/price.txt");
+const buildPricingKnowledgeText = (content: SiteContent): string[] => {
+  const pricing = content.pricingPage;
 
-      const [pricingRaw, brochureRaw] = await Promise.all([
-        readFile(pricingPath, "utf8"),
-        readBrochureText(),
-      ]);
-      const chunks = [
-        ...splitIntoChunks("pricing", pricingRaw, 300),
-        ...splitIntoChunks("brochure", brochureRaw, 430),
-      ];
-
-      return { chunks };
-    })();
-  }
-
-  return knowledgePromise;
+  return [
+    `${pricing.title}. ${pricing.description} ${pricing.note}`,
+    `Pricing call-out rules: ${pricing.calloutRules.join(" ")}`,
+    ...pricing.hourlyCategories.map(
+      (category) =>
+        `${category.title}. ${category.rates
+          .map((rate) => `${rate.period}: ${rate.price}`)
+          .join(". ")}`
+    ),
+    `Service pricing. ${pricing.serviceItems
+      .map((item) => `${item.label}: ${item.value}`)
+      .join(". ")}`,
+    `Installation pricing. ${pricing.installationItems
+      .map((item) => `${item.label}: ${item.value}`)
+      .join(". ")}`,
+    `Sales and upgrades pricing. ${pricing.salesItems
+      .map((item) => `${item.label}: ${item.value}`)
+      .join(". ")}`,
+    `Electrical pricing. ${pricing.electricalItems
+      .map((item) => `${item.label}: ${item.value}`)
+      .join(". ")}`,
+    pricing.ctaText,
+  ];
 };
 
 const detectIntent = (question: string) => {
@@ -343,19 +345,132 @@ const detectIntent = (question: string) => {
     /(price|pricing|cost|quote|how much|vat|hour|call[- ]?out|service fee|installation)/i.test(
       question
     );
-  const coverageIntent =
+  const contractIntent =
     /(cover|covered|include|included|exclude|contract|terms|service|helpline|response|claims)/i.test(
+      question
+    );
+  const seoIntent =
+    /(boiler|radiator|pressure|heating|water|leak|noise|fault|thermostat|engineer|camden|hackney|islington|london|certificate|servic|repair|install|guide|landlord)/i.test(
       question
     );
   const greeting = /^(hi|hello|hey|yo|good morning|good evening)\b/i.test(
     question.trim()
   );
 
-  return { pricingIntent, coverageIntent, greeting };
+  return { pricingIntent, contractIntent, seoIntent, greeting };
+};
+
+const buildContractsKnowledgeText = (content: SiteContent): string[] => {
+  const contracts = content.contractsPage;
+
+  return [
+    `${contracts.introHeading}. ${contracts.introSubheading} ${contracts.currentPricingNotice}`,
+    `${contracts.packageBenefitsTitle}. ${contracts.packageBenefits.join(". ")}`,
+    ...contracts.packages.map((pkg) =>
+      [
+        `${pkg.name}. ${pkg.subtitle} ${pkg.monthlyFrom}.`,
+        `Includes: ${pkg.includes.join(". ")}.`,
+        pkg.extraCover?.length ? `Extra cover: ${pkg.extraCover.join(". ")}.` : "",
+      ]
+        .filter(Boolean)
+        .join(" ")
+    ),
+    `${contracts.landlordTitle}. ${contracts.landlordBody} ${contracts.landlordHighlights.join(
+      ". "
+    )} ${contracts.landlordNote}`,
+    `${contracts.atAGlanceTitle}. ${contracts.atAGlance.join(". ")}`,
+    `${contracts.annualServiceChecksTitle}. ${contracts.annualServiceChecks.join(
+      ". "
+    )} ${contracts.annualServiceChecksNote}`,
+    `${contracts.exclusionsTitle}. ${contracts.sharedExclusions.join(". ")}`,
+    `${contracts.termsHighlightsTitle}. ${contracts.termsHighlights.join(". ")}`,
+    ...contracts.faq.map((item) => `FAQ. ${item.question} ${item.answer}`),
+  ];
+};
+
+const buildSeoKnowledgeText = (page: SeoPage): string => {
+  const sectionText = page.sections
+    .slice(0, 3)
+    .map((section) =>
+      [section.heading, section.body, section.bullets?.slice(0, 4).join(". ")]
+        .filter(Boolean)
+        .join(". ")
+    )
+    .join(" ");
+  const faqText = page.faq
+    .slice(0, 2)
+    .map((item) => `${item.question} ${item.answer}`)
+    .join(" ");
+
+  return [
+    `${page.h1}. ${page.intro}`,
+    page.pricingGuidance ? `Pricing guidance: ${page.pricingGuidance}` : "",
+    page.localProof ? `Local coverage: ${page.localProof}` : "",
+    sectionText,
+    faqText,
+  ]
+    .filter(Boolean)
+    .join(" ");
+};
+
+const getStaticKnowledgeChunks = async (): Promise<KnowledgeChunk[]> => {
+  if (!staticKnowledgePromise) {
+    staticKnowledgePromise = (async () => {
+      const pricingPath = path.join(process.cwd(), "public/info/price.txt");
+
+      const [pricingRaw, brochureRaw] = await Promise.all([
+        readFile(pricingPath, "utf8"),
+        readBrochureText(),
+      ]);
+
+      return [
+        ...splitIntoChunks("pricing", "/pricing", pricingRaw, 300),
+        ...splitIntoChunks("brochure", "/info/geo-gas-brochure-2026.pdf", brochureRaw, 430),
+      ];
+    })();
+  }
+
+  return staticKnowledgePromise;
+};
+
+const getKnowledgeBase = async (content: SiteContent): Promise<KnowledgeBase> => {
+  const [staticChunks, seoPages] = await Promise.all([
+    getStaticKnowledgeChunks(),
+    getAllSeoPages(),
+  ]);
+
+  const contractChunks = buildContractsKnowledgeText(content).flatMap((text, index) =>
+    splitIntoChunks("contracts", "/contracts", text, 420).map((chunk) => ({
+      ...chunk,
+      id: `contracts-${index}-${chunk.id}`,
+    }))
+  );
+
+  const seoChunks = seoPages
+    .filter((page) => !page.noindex)
+    .flatMap((page) =>
+      splitIntoChunks("seo", `/${page.slug}`, buildSeoKnowledgeText(page), 420).map(
+        (chunk) => ({
+          ...chunk,
+          id: `seo-${page.slug}-${chunk.id}`,
+        })
+      )
+    );
+
+  const pricingChunks = buildPricingKnowledgeText(content).flatMap((text, index) =>
+    splitIntoChunks("pricing", "/pricing", text, 320).map((chunk) => ({
+      ...chunk,
+      id: `pricing-structured-${index}-${chunk.id}`,
+    }))
+  );
+
+  return {
+    chunks: [...staticChunks, ...pricingChunks, ...contractChunks, ...seoChunks],
+  };
 };
 
 const rankChunks = (question: string, knowledge: KnowledgeBase) => {
-  const { pricingIntent, coverageIntent } = detectIntent(question);
+  const { pricingIntent, contractIntent, seoIntent } = detectIntent(question);
   const tokens = tokenize(question);
 
   return knowledge.chunks
@@ -369,7 +484,10 @@ const rankChunks = (question: string, knowledge: KnowledgeBase) => {
       }
 
       if (pricingIntent && chunk.source === "pricing") score += 3;
-      if (coverageIntent && chunk.source === "brochure") score += 2;
+      if (pricingIntent && chunk.source === "contracts") score += 1;
+      if (contractIntent && chunk.source === "contracts") score += 3;
+      if (contractIntent && chunk.source === "brochure") score += 2;
+      if (seoIntent && chunk.source === "seo") score += 2;
       if (/landlord|inspection|certificate|gas safe/i.test(question)) {
         if (/landlord|inspection|certificate|gas safe/i.test(chunk.text)) score += 2;
       }
@@ -381,14 +499,14 @@ const rankChunks = (question: string, knowledge: KnowledgeBase) => {
 };
 
 const buildSuggestions = (question: string): string[] => {
-  const { pricingIntent, coverageIntent, greeting } = detectIntent(question);
+  const { pricingIntent, contractIntent, seoIntent, greeting } = detectIntent(question);
   const tokens = tokenize(question);
 
   if (greeting || tokens.length === 0) {
     return [
       "What are your current gas and boiler call-out rates?",
       "How much is a landlord gas inspection?",
-      "What is included in your home care contracts?",
+      "What is included in your home rescue contracts?",
     ];
   }
 
@@ -400,11 +518,19 @@ const buildSuggestions = (question: string): string[] => {
     ];
   }
 
-  if (coverageIntent) {
+  if (contractIntent) {
     return [
       "Explain what is included in every contract",
       "What is excluded from contract cover?",
       "What is the response time and helpline detail?",
+    ];
+  }
+
+  if (seoIntent) {
+    return [
+      "Do you cover this service in Camden or Islington?",
+      "What checks are safe before I book an engineer?",
+      "Show the closest matching service or guide page",
     ];
   }
 
@@ -435,7 +561,7 @@ Rules:
 2) Do not invent prices, terms, names or policies.
 3) Keep responses concise, practical, and customer-friendly.
 4) When giving prices, keep currency/time windows exactly as written.
-5) Mention if details appear to come from brochure terms versus live pricing text.
+5) Mention if details appear to come from live pricing text, structured contract content, brochure terms or SEO guidance pages.
 6) If user follow-up depends on previous turns, use the provided conversation excerpt.
 7) You may also use the supplied static Geo Gas business facts for operating locations and contact hours.`;
 
@@ -456,14 +582,31 @@ const sanitizeHistory = (history: unknown): ChatHistoryItem[] => {
     .filter((item): item is ChatHistoryItem => item !== null);
 };
 
+const buildStaticBusinessFacts = (globalContent: SiteContent["global"]): string => {
+  const { operatingLocations, contactHours } = globalContent;
+  const contactHoursLine = [contactHours.regularDays, contactHours.regularHours]
+    .filter(Boolean)
+    .join(", ");
+
+  return [
+    `Operating locations: ${operatingLocations}.`,
+    `Contact hours: ${contactHoursLine}.`,
+    contactHours.emergency
+      ? `${contactHours.emergency} emergency support is available.`
+      : "Emergency support is available.",
+  ].join(" ");
+};
+
 const createReply = async (
   question: string,
   history: ChatHistoryItem[],
   knowledge: KnowledgeBase,
+  globalContent: SiteContent["global"],
+  staticBusinessFacts: string,
   signal: AbortSignal
 ): Promise<ReadableStream<Uint8Array>> => {
   const ranked = rankChunks(question, knowledge).slice(0, 8);
-  const guardrail = getGuardrail(question);
+  const guardrail = getGuardrail(question, globalContent);
   const suggestions =
     guardrail.kind === "none" ? buildSuggestions(question) : guardrail.suggestions;
   const encoder = new TextEncoder();
@@ -493,10 +636,10 @@ const createReply = async (
           send({ type: "chunk", delta: fallback });
           send({
             type: "final",
-            sources: ["/info/price.txt", "/info/geo-gas-brochure-2026.pdf"],
+            sources: ["/pricing", "/contracts", "/guides", "/info/geo-gas-brochure-2026.pdf"],
             suggestions,
             confidence: "low",
-            sourceKinds: ["pricing", "brochure"],
+            sourceKinds: ["pricing", "contracts", "seo", "brochure"],
           });
           return;
         }
@@ -507,9 +650,7 @@ const createReply = async (
           })
           .join("\n");
 
-        const sources = Array.from(
-          new Set(ranked.map((item) => sourcePath(item.chunk.source)))
-        );
+        const sources = Array.from(new Set(ranked.map((item) => item.chunk.href)));
         const sourceKinds = Array.from(
           new Set(ranked.map((item) => item.chunk.source))
         );
@@ -532,7 +673,7 @@ const createReply = async (
           input:
             `Conversation excerpt:\n${conversationExcerpt}\n\n` +
             `Current user question:\n${question}\n\n` +
-            `Static Geo Gas business facts:\n${STATIC_BUSINESS_FACTS}\n\n` +
+            `Static Geo Gas business facts:\n${staticBusinessFacts}\n\n` +
             `Context from Geo Gas files:\n${context}\n\n` +
             "Answer using only this context.",
         });
@@ -604,8 +745,17 @@ export async function POST(request: Request) {
       );
     }
 
-    const knowledge = await getKnowledgeBase();
-    const stream = await createReply(question, history, knowledge, request.signal);
+    const content = await getSiteContent();
+    const knowledge = await getKnowledgeBase(content);
+    const staticBusinessFacts = buildStaticBusinessFacts(content.global);
+    const stream = await createReply(
+      question,
+      history,
+      knowledge,
+      content.global,
+      staticBusinessFacts,
+      request.signal
+    );
 
     return new Response(stream, {
       headers: {

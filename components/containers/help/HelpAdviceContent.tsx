@@ -1,26 +1,27 @@
-import { helpAdviceItems } from "@/data/helpAdviceContent";
+"use client";
+
+import { useSiteContent } from "@/components/providers/SiteContentProvider";
 
 const toAnchorId = (value: string) =>
   `help-advice-${value.toLowerCase().replace(/[^\w\s-]/g, "").trim().replace(/\s+/g, "-")}`;
 
 const HelpAdviceContent = () => {
+  const { content } = useSiteContent();
+  const helpAdviceContent = content.helpAdvicePage;
+
   return (
     <section className="help-advice section-padding">
       <div className="container">
         <div className="row jc-center">
           <div className="col-xl-10">
             <div className="help-advice__intro">
-              <span className="help-advice__eyebrow">FAQ</span>
-              <h2>Here Are Some Of The Most Common Problems Associated With Your Boiler</h2>
-              <p>
-                Quick checks can help identify simple issues before you book a
-                call-out. If you are unsure at any stage, stop and contact a
-                qualified engineer.
-              </p>
+              <span className="help-advice__eyebrow">{helpAdviceContent.eyebrow}</span>
+              <h2>{helpAdviceContent.title}</h2>
+              <p>{helpAdviceContent.description}</p>
             </div>
 
             <div className="help-advice__grid">
-              {helpAdviceItems.map((section, index) => (
+              {helpAdviceContent.items.map((section, index) => (
                 <article
                   className="help-advice__card"
                   key={section.title}

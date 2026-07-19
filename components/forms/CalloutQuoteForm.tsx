@@ -113,6 +113,7 @@ const CalloutQuoteForm = ({
               value={name}
               onChange={(event) => setName(event.target.value)}
               placeholder={namePlaceholder}
+              aria-label="Full name"
               required
             />
           </div>
@@ -125,6 +126,7 @@ const CalloutQuoteForm = ({
               value={phone}
               onChange={(event) => setPhone(event.target.value)}
               placeholder={phonePlaceholder}
+              aria-label="Phone number"
               required
             />
           </div>
@@ -137,6 +139,7 @@ const CalloutQuoteForm = ({
               value={email}
               onChange={(event) => setEmail(event.target.value)}
               placeholder={emailPlaceholder}
+              aria-label="Email address"
               required
             />
           </div>
@@ -149,6 +152,7 @@ const CalloutQuoteForm = ({
               value={postcode}
               onChange={(event) => setPostcode(event.target.value)}
               placeholder={postcodePlaceholder}
+              aria-label="Postcode"
             />
           </div>
         </div>
@@ -160,6 +164,7 @@ const CalloutQuoteForm = ({
               value={subject}
               onChange={(event) => setSubject(event.target.value)}
               placeholder={subjectPlaceholder}
+              aria-label="Service required"
             />
           </div>
         </div>
@@ -170,6 +175,7 @@ const CalloutQuoteForm = ({
               value={message}
               onChange={(event) => setMessage(event.target.value)}
               placeholder={messagePlaceholder}
+              aria-label="Details of the issue"
               required
             ></textarea>
           </div>
@@ -185,6 +191,8 @@ const CalloutQuoteForm = ({
             </button>
             {submitState.status !== "idle" ? (
               <p
+                role="status"
+                aria-live="polite"
                 className={
                   "contact__form-feedback " +
                   (submitState.status === "success" ? "is-success" : "") +

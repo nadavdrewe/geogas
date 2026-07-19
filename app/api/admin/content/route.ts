@@ -1,19 +1,36 @@
 import { NextResponse } from "next/server";
+import { getContentDocumentById, SITE_DOCUMENT_ID } from "@/lib/contentDatabase";
 import { getSiteContent, saveSiteContent } from "@/lib/siteContent";
+import {
+  isAdminPanelConfigured,
+  isAdminPanelRequestAuthorized,
+} from "@/lib/adminAuth";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
-const isAuthorized = (request: Request): boolean => {
-  const key = process.env.ADMIN_PANEL_KEY;
-  if (!key) return true;
+const authorize = (request: Request): NextResponse | null => {
+  if (!isAdminPanelConfigured()) {
+    return NextResponse.json(
+      { error: "Admin access is not configured." },
+      { status: 503 }
+    );
+  }
 
-  const providedKey = request.headers.get("x-admin-key");
-  return providedKey === key;
+  if (!isAdminPanelRequestAuthorized(request)) {
+    return NextResponse.json({ error: "Unauthorized." }, { status: 401 });
+  }
+
+  return null;
 };
 
-export async function GET() {
-  const content = await getSiteContent();
+export async function GET(request: Request) {
+  const authorizationError = authorize(request);
+  if (authorizationError) return authorizationError;
+
+  const document = await getContentDocumentById(SITE_DOCUMENT_ID);
+  const content = document?.content ?? (await getSiteContent());
+
   return NextResponse.json(
     { content },
     {
@@ -25,18 +42,11 @@ export async function GET() {
 }
 
 export async function PUT(request: Request) {
-  if (!isAuthorized(request)) {
-    return NextResponse.json({ error: "Unauthorized." }, { status: 401 });
-  }
+  const authorizationError = authorize(request);
+  if (authorizationError) return authorizationError;
 
   try {
     const body = (await request.json()) as { content?: unknown };
-    if (!body || typeof body !== "object") {
-      return NextResponse.json(
-        { error: "Request body must be an object." },
-        { status: 400 }
-      );
-    }
     if (
       !body.content ||
       typeof body.content !== "object" ||

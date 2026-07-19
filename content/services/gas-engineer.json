@@ -2,15 +2,15 @@
   "type": "service",
   "slug": "gas-engineer",
   "serviceKey": "gas-engineer",
-  "primaryLocation": "London",
-  "linkTitle": "gas engineer in London",
-  "metaTitle": "Gas Engineer in London | Local Gas Safe Support",
-  "metaDescription": "Need a gas engineer in London? Book a Gas Safe engineer for boiler work, gas safety checks, fault finding and landlord support.",
-  "h1": "Gas Engineer in London",
-  "intro": "We provide Gas Safe engineering support across London for boiler repairs, gas safety checks, landlord work and general fault finding where safe diagnosis and clear advice matter.",
+  "primaryLocation": "London and Sussex",
+  "linkTitle": "gas engineer in London and Sussex",
+  "metaTitle": "Gas Engineer in London and Sussex | Local Gas Safe Support",
+  "metaDescription": "Need a gas engineer in London and Sussex? Book a Gas Safe engineer for boiler work, gas safety checks, fault finding and landlord support.",
+  "h1": "Gas Engineer in London and Sussex",
+  "intro": "We provide Gas Safe engineering support across London and Sussex for boiler repairs, gas safety checks, landlord work and general fault finding where safe diagnosis and clear advice matter.",
   "pricingGuidance": "Gas engineer visits are quoted around the type of work needed, whether that is diagnosis, servicing, safety inspection or follow-up repair.",
   "localProof": "Booked by homeowners and landlords who need one point of contact for gas safety, heating faults and day-to-day boiler issues.",
-  "areasCovered": ["Camden", "Islington", "Hackney", "Westminster", "Croydon"],
+  "areasCovered": ["Camden", "Islington", "Brighton", "Hove", "Haywards Heath"],
   "sections": [
     {
       "heading": "What a local gas engineer can help with",
@@ -27,12 +27,12 @@
   ],
   "internalLinks": [
     {
-      "label": "boiler repair in London",
+      "label": "boiler repair in London and Sussex",
       "href": "/boiler-repair",
       "intent": "service"
     },
     {
-      "label": "gas safety certificate in London",
+      "label": "gas safety certificate in London and Sussex",
       "href": "/gas-safety-certificate",
       "intent": "service"
     },

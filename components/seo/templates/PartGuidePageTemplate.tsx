@@ -1,3 +1,4 @@
+import { SeoCompanyInfo } from "@/lib/seo/company";
 import SeoBulletPanel from "@/components/seo/SeoBulletPanel";
 import SeoCtaStrip from "@/components/seo/SeoCtaStrip";
 import SeoFaqBlock from "@/components/seo/SeoFaqBlock";
@@ -7,12 +8,14 @@ import SeoSectionList from "@/components/seo/SeoSectionList";
 import { PartGuidePage } from "@/lib/seo/types";
 
 type PartGuidePageTemplateProps = {
+  company: SeoCompanyInfo;
   page: PartGuidePage;
 };
 
-const PartGuidePageTemplate = ({ page }: PartGuidePageTemplateProps) => {
+const PartGuidePageTemplate = ({ company, page }: PartGuidePageTemplateProps) => {
   return (
     <SeoPageScaffold
+      company={company}
       page={page}
       summaryTitle="Component guide"
       summaryItems={[
@@ -25,7 +28,7 @@ const PartGuidePageTemplate = ({ page }: PartGuidePageTemplateProps) => {
       <SeoSectionList sections={page.sections} />
       <SeoFaqBlock faq={page.faq} />
       <SeoInternalLinks links={page.internalLinks || []} />
-      <SeoCtaStrip cta={page.cta} />
+      <SeoCtaStrip company={company} cta={page.cta} />
     </SeoPageScaffold>
   );
 };

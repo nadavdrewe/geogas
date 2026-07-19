@@ -16,7 +16,11 @@ const ProjectDetails = () => {
               <div className="meta">
                 <ul>
                   <li>
-                    <Link href="https://www.google.com/maps" target="_blank">
+                    <Link
+                      href="https://www.google.com/maps"
+                      target="_blank"
+                      rel="noreferrer"
+                    >
                       <i className="fa-solid fa-location-dot"></i>3891 Ranchview
                       Dr. Richardson, California 62639,
                     </Link>

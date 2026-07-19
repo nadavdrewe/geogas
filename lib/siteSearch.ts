@@ -1,14 +1,6 @@
 import type { SiteContent } from "@/data/siteContent";
-import {
-  annualServiceChecks,
-  contractPackages,
-  contractsFaq,
-  currentPricingNotice,
-  packageBenefits,
-  sharedExclusions,
-  termsHighlights,
-} from "@/data/contractsContent";
-import { helpAdviceItems } from "@/data/helpAdviceContent";
+import { getAllSeoPages } from "@/lib/seo/content";
+import type { SeoPage } from "@/lib/seo/types";
 
 export type SearchResult = {
   id: string;
@@ -21,6 +13,15 @@ export type SearchResult = {
 
 type SearchEntry = Omit<SearchResult, "score"> & {
   keywords?: string[];
+};
+
+const seoCategoryLabel: Record<SeoPage["type"], string> = {
+  service: "Service Page",
+  location_service: "Location Page",
+  problem: "Problem Guide",
+  part_guide: "Part Guide",
+  brand_service: "Brand Page",
+  guide: "Guide",
 };
 
 const normalize = (value: string): string =>
@@ -60,7 +61,59 @@ const truncate = (value: string, length = 180): string => {
 const toAnchorSlug = (value: string): string =>
   value.toLowerCase().replace(/[^\w\s-]/g, "").trim().replace(/\s+/g, "-");
 
-const buildEntries = (content: SiteContent): SearchEntry[] => {
+const buildSeoEntries = (pages: SeoPage[]): SearchEntry[] => {
+  return pages
+    .filter((page) => !page.noindex)
+    .map((page) => {
+      const typeKeywords =
+        page.type === "guide"
+          ? [page.targetKeyword, page.guideKey]
+          : page.type === "brand_service"
+            ? [page.brand, page.serviceKey, page.primaryLocation]
+            : page.type === "service"
+              ? [page.serviceKey, page.primaryLocation]
+              : page.type === "location_service"
+                ? [page.serviceKey, page.location]
+                : page.type === "problem"
+                  ? [page.problemKey]
+                  : [page.partKey];
+
+      const areaKeywords =
+        page.type === "service" || page.type === "brand_service"
+          ? page.areasCovered
+          : page.type === "location_service"
+            ? page.nearbyAreas
+            : [];
+
+      const snippetParts = [
+        page.intro,
+        page.pricingGuidance,
+        page.localProof,
+        page.sections[0]?.heading,
+      ].filter(Boolean);
+
+      const keywords = [
+        page.linkTitle,
+        page.metaTitle,
+        page.h1,
+        ...typeKeywords,
+        ...areaKeywords,
+        ...page.sections.slice(0, 3).map((section) => section.heading),
+        ...page.faq.slice(0, 3).map((item) => item.question),
+      ].filter((value): value is string => typeof value === "string" && value.trim().length > 0);
+
+      return {
+        id: `seo-${page.slug}`,
+        title: page.h1,
+        href: `/${page.slug}`,
+        category: seoCategoryLabel[page.type],
+        snippet: snippetParts.join(" "),
+        keywords,
+      };
+    });
+};
+
+const buildEntries = async (content: SiteContent): Promise<SearchEntry[]> => {
   const entries: SearchEntry[] = [
     {
       id: "page-home",
@@ -96,7 +149,7 @@ const buildEntries = (content: SiteContent): SearchEntry[] => {
       category: "Page",
       snippet:
         "GEO Starter and GEO Complete cover, contract benefits, exclusions and terms highlights.",
-      keywords: ["contracts", "cover", "homecare", "starter", "complete"],
+      keywords: ["contracts", "cover", "home rescue", "starter", "complete"],
     },
     {
       id: "page-pricing",
@@ -148,14 +201,14 @@ const buildEntries = (content: SiteContent): SearchEntry[] => {
       href: "/contact",
       category: "Contact Info",
       snippet: `Geo Gas operates in ${content.home.contact.operatingLocations}.`,
-      keywords: ["areas", "coverage", "service area", "london", "sussex", "surrey"],
+      keywords: ["areas", "coverage", "service area", "london", "surrey"],
     },
     {
       id: "contracts-pricing-notice",
       title: "Contract Pricing Notice",
       href: "/pricing",
       category: "Pricing",
-      snippet: currentPricingNotice,
+      snippet: content.contractsPage.currentPricingNotice,
       keywords: ["contract pricing", "current rates", "prices"],
     },
   ];
@@ -182,7 +235,7 @@ const buildEntries = (content: SiteContent): SearchEntry[] => {
     });
   });
 
-  packageBenefits.slice(0, 12).forEach((item, index) => {
+  content.contractsPage.packageBenefits.slice(0, 12).forEach((item, index) => {
     entries.push({
       id: `contract-benefit-${index}`,
       title: `Contract Benefit: ${item}`,
@@ -193,7 +246,7 @@ const buildEntries = (content: SiteContent): SearchEntry[] => {
     });
   });
 
-  annualServiceChecks.slice(0, 10).forEach((item, index) => {
+  content.contractsPage.annualServiceChecks.slice(0, 10).forEach((item, index) => {
     entries.push({
       id: `service-check-${index}`,
       title: `Annual Service Check: ${item}`,
@@ -204,7 +257,7 @@ const buildEntries = (content: SiteContent): SearchEntry[] => {
     });
   });
 
-  sharedExclusions.slice(0, 10).forEach((item, index) => {
+  content.contractsPage.sharedExclusions.slice(0, 10).forEach((item, index) => {
     entries.push({
       id: `contract-exclusion-${index}`,
       title: `Contract Exclusion: ${item}`,
@@ -215,7 +268,7 @@ const buildEntries = (content: SiteContent): SearchEntry[] => {
     });
   });
 
-  termsHighlights.slice(0, 8).forEach((item, index) => {
+  content.contractsPage.termsHighlights.slice(0, 8).forEach((item, index) => {
     entries.push({
       id: `terms-highlight-${index}`,
       title: `Terms Highlight: ${item}`,
@@ -226,7 +279,7 @@ const buildEntries = (content: SiteContent): SearchEntry[] => {
     });
   });
 
-  contractPackages.forEach((pkg, index) => {
+  content.contractsPage.packages.forEach((pkg, index) => {
     entries.push({
       id: `contract-package-${index}`,
       title: pkg.name,
@@ -237,7 +290,7 @@ const buildEntries = (content: SiteContent): SearchEntry[] => {
     });
   });
 
-  contractsFaq.forEach((faq, index) => {
+  content.contractsPage.faq.forEach((faq, index) => {
     entries.push({
       id: `contracts-faq-${index}`,
       title: faq.question,
@@ -248,7 +301,36 @@ const buildEntries = (content: SiteContent): SearchEntry[] => {
     });
   });
 
-  helpAdviceItems.forEach((item, index) => {
+  content.pricingPage.hourlyCategories.forEach((category, index) => {
+    entries.push({
+      id: `pricing-hourly-${index}`,
+      title: `${category.title} Hourly Rates`,
+      href: "/pricing",
+      category: "Pricing",
+      snippet: category.rates
+        .map((rate) => `${rate.period}: ${rate.price}`)
+        .join(" | "),
+      keywords: [category.title, "hourly rates", "pricing", "call-out"],
+    });
+  });
+
+  [
+    ...content.pricingPage.serviceItems,
+    ...content.pricingPage.installationItems,
+    ...content.pricingPage.salesItems,
+    ...content.pricingPage.electricalItems,
+  ].forEach((item, index) => {
+    entries.push({
+      id: `pricing-item-${index}`,
+      title: item.label,
+      href: "/pricing",
+      category: "Pricing",
+      snippet: `${item.label}: ${item.value}`,
+      keywords: [item.label, item.value, "pricing", "cost", "quote"],
+    });
+  });
+
+  content.helpAdvicePage.items.forEach((item, index) => {
     entries.push({
       id: `help-advice-${index}`,
       title: item.title,
@@ -258,6 +340,8 @@ const buildEntries = (content: SiteContent): SearchEntry[] => {
       keywords: ["boiler", "help", "advice", "troubleshooting"],
     });
   });
+
+  entries.push(...buildSeoEntries(await getAllSeoPages()));
 
   return entries;
 };
@@ -318,15 +402,15 @@ const dedupeAndDiversify = (results: SearchResult[]): SearchResult[] => {
   return finalResults;
 };
 
-export const searchSiteContent = (
+export const searchSiteContent = async (
   queryInput: string,
   content: SiteContent
-): SearchResult[] => {
+): Promise<SearchResult[]> => {
   const query = normalize(queryInput);
   if (!query) return [];
 
   const tokens = tokenize(queryInput);
-  const entries = buildEntries(content);
+  const entries = await buildEntries(content);
 
   const rankedResults = entries
     .map((entry) => ({

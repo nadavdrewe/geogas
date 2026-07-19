@@ -1,3 +1,4 @@
+import { SeoCompanyInfo } from "@/lib/seo/company";
 import SeoBulletPanel from "@/components/seo/SeoBulletPanel";
 import SeoCtaStrip from "@/components/seo/SeoCtaStrip";
 import SeoFaqBlock from "@/components/seo/SeoFaqBlock";
@@ -8,18 +9,20 @@ import SeoSectionList from "@/components/seo/SeoSectionList";
 import { ServicePage } from "@/lib/seo/types";
 
 type ServicePageTemplateProps = {
+  company: SeoCompanyInfo;
   page: ServicePage;
 };
 
-const ServicePageTemplate = ({ page }: ServicePageTemplateProps) => {
+const ServicePageTemplate = ({ company, page }: ServicePageTemplateProps) => {
   return (
     <SeoPageScaffold
+      company={company}
       page={page}
       summaryTitle="Service overview"
       summaryItems={[
         { label: "Pricing", value: page.pricingGuidance || "Call for pricing" },
         { label: "Areas covered", value: page.areasCovered.join(", ") },
-        { label: "Local proof", value: page.localProof || "London call-out coverage" },
+        { label: "Local proof", value: page.localProof || "London and Sussex call-out coverage" },
       ]}
       sidebarExtra={<SeoBulletPanel items={page.areasCovered} title="Areas covered" />}
     >
@@ -28,7 +31,7 @@ const ServicePageTemplate = ({ page }: ServicePageTemplateProps) => {
       <SeoReviewsBlock reviews={page.reviews || []} />
       <SeoFaqBlock faq={page.faq} />
       <SeoInternalLinks links={page.internalLinks || []} />
-      <SeoCtaStrip cta={page.cta} />
+      <SeoCtaStrip company={company} cta={page.cta} />
     </SeoPageScaffold>
   );
 };

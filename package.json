@@ -4,12 +4,15 @@
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
-    "build": "next build",
+    "build": "node ./scripts/build.js",
+    "deploy": "cmd /c scripts\\deploy.cmd",
+    "live-build": "cmd /c scripts\\live-build.cmd",
     "start": "next start",
     "lint": "next lint"
   },
   "dependencies": {
     "aos": "^2.3.4",
+    "better-sqlite3": "^12.9.0",
     "bootstrap": "^5.3.3",
     "gsap": "^3.12.5",
     "next": "15.1.0",

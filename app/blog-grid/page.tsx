@@ -6,6 +6,9 @@ import Footer from "@/components/layout/footer/Footer";
 import InitAnimations from "@/components/layout/InitAnimations";
 import CustomCursor from "@/components/layout/CustomCursor";
 import ScrollProgressButton from "@/components/layout/ScrollProgressButton";
+import { legacyPageMetadata } from "@/lib/seo/metadata";
+
+export const metadata = legacyPageMetadata;
 
 const page = () => {
   return (

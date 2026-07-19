@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import HeaderTwo from "@/components/layout/header/HeaderTwo";
 import BreadCrumb from "@/components/layout/banner/BreadCrumb";
 import PricingListing from "@/components/containers/pricing/PricingListing";
@@ -8,21 +9,44 @@ import FooterTwo from "@/components/layout/footer/FooterTwo";
 import InitAnimations from "@/components/layout/InitAnimations";
 import CustomCursor from "@/components/layout/CustomCursor";
 import ScrollProgressButton from "@/components/layout/ScrollProgressButton";
+import { getSiteContent } from "@/lib/siteContent";
+import { buildPageMetadata } from "@/lib/seo/metadata";
 
-const page = () => {
+export async function generateMetadata(): Promise<Metadata> {
+  const content = await getSiteContent();
+  const pageContent = content.pages.pricing;
+
+  return buildPageMetadata({
+    title: pageContent.metaTitle,
+    description: pageContent.metaDescription,
+    path: "/pricing",
+    siteUrl: content.global.siteUrl,
+    siteName: content.global.companyName,
+  });
+}
+
+const page = async () => {
+  const content = await getSiteContent();
+  const pageContent = content.pages.pricing;
+  const heroSpot = pageContent.heroSpot;
+
   return (
     <>
       <HeaderTwo />
-      <BreadCrumb title="Pricing" />
+      <BreadCrumb title={pageContent.breadcrumbTitle} />
       <InnerPageEngineerSpot
-        name="Mia"
-        imageSrc="/cartoons/mia_hero.jpg"
-        imageAlt="Superhero-style illustration of Mia from GEO Gas"
-        heading="Mia Helps You Compare Rates And Cover"
-        description="Use this page for live call-out and service pricing, then compare contract plans now starting from £19 per month in the brochure and contracts section."
-        ctaHref="/contracts"
-        ctaLabel="Compare £19 Plans"
-        accent="green"
+        eyebrow={heroSpot.eyebrow}
+        name={heroSpot.name}
+        role={heroSpot.role}
+        imageSrc={heroSpot.imageSrc}
+        imageAlt={heroSpot.imageAlt}
+        heading={heroSpot.heading}
+        description={heroSpot.description}
+        ctaHref={heroSpot.ctaHref}
+        ctaLabel={heroSpot.ctaLabel}
+        secondaryCtaHref={heroSpot.secondaryCtaHref}
+        secondaryCtaLabel={heroSpot.secondaryCtaLabel}
+        accent={heroSpot.accent}
       />
       <PricingListing />
       <Contact addClass={true} />
