@@ -10,6 +10,12 @@ set "STOP_SCRIPT=%ROOT%\scripts\stop-geogas-direct.ps1"
 set "START_SCRIPT=%ROOT%\scripts\start-geogas-direct.ps1"
 set "HEALTH_URL=http://127.0.0.1:15023/"
 
+cd /d "%ROOT%"
+if errorlevel 1 (
+  echo [deploy] Failed to enter %ROOT%
+  exit /b 1
+)
+
 echo [deploy] Building application into %BUILD_NAME%
 set "NEXT_DIST_DIR=%BUILD_NAME%"
 call npm run build
