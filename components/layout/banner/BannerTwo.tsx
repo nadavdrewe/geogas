@@ -93,7 +93,7 @@ const BannerTwo = () => {
     : hero.highlights.slice(0, 2);
 
   return (
-    <div className="banner__two">
+    <div className="banner__two d-lg-none">
       <div className="container">
         <div className="row ai-center">
           <div className="col-lg-7 lg-mb-40">

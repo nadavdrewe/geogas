@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import HeaderTwo from "@/components/layout/header/HeaderTwo";
 import BannerTwo from "@/components/layout/banner/BannerTwo";
+import DesktopCompetitionHero from "@/components/competition/DesktopCompetitionHero";
 import GeoChatbotSection from "@/components/chatbot/GeoChatbotSection";
 import ComicStripSection from "@/components/containers/home/ComicStripSection";
 import Services from "@/components/containers/home/Services";
@@ -46,6 +47,7 @@ const page = () => {
   return (
     <>
       <HeaderTwo />
+      <DesktopCompetitionHero />
       <BannerTwo />
       <GeoChatbotSection />
       <Services />
