@@ -69,6 +69,23 @@ export type CompetitionEntry = CompetitionEntryInput & {
   createdAt: string;
 };
 
+export type WebsiteLeadInput = {
+  name: string;
+  email: string;
+  phone: string;
+  postcode: string;
+  service: string;
+  note: string;
+  sourceQuestion: string;
+  sourceAnswer: string;
+  source: string;
+};
+
+export type WebsiteLead = WebsiteLeadInput & {
+  id: number;
+  createdAt: string;
+};
+
 export const SITE_DOCUMENT_ID = "site:published";
 
 const DATABASE_PATH =
@@ -171,6 +188,23 @@ const runSchema = (db: Database) => {
 
     CREATE INDEX IF NOT EXISTS idx_competition_entries_created_at
       ON competition_entries(created_at DESC);
+
+    CREATE TABLE IF NOT EXISTS website_leads (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      name TEXT NOT NULL,
+      email TEXT NOT NULL,
+      phone TEXT NOT NULL,
+      postcode TEXT NOT NULL,
+      service TEXT NOT NULL,
+      note TEXT NOT NULL DEFAULT '',
+      source_question TEXT NOT NULL DEFAULT '',
+      source_answer TEXT NOT NULL DEFAULT '',
+      source TEXT NOT NULL DEFAULT 'website-chatbot',
+      created_at TEXT NOT NULL
+    );
+
+    CREATE INDEX IF NOT EXISTS idx_website_leads_created_at
+      ON website_leads(created_at DESC);
   `);
 };
 
@@ -675,6 +709,57 @@ export const createCompetitionEntry = async (
       }
 
       throw error;
+    } finally {
+      db.close();
+    }
+  });
+};
+
+export const createWebsiteLead = async (
+  input: WebsiteLeadInput
+): Promise<WebsiteLead> => {
+  await ensureContentDatabase();
+
+  return enqueueWrite(async () => {
+    const db = openDatabase();
+
+    try {
+      runSchema(db);
+      const createdAt = new Date().toISOString();
+      const result = db
+        .prepare(
+          `INSERT INTO website_leads (
+             name,
+             email,
+             phone,
+             postcode,
+             service,
+             note,
+             source_question,
+             source_answer,
+             source,
+             created_at
+           )
+           VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);`
+        )
+        .run(
+          input.name,
+          input.email,
+          input.phone,
+          input.postcode,
+          input.service,
+          input.note,
+          input.sourceQuestion,
+          input.sourceAnswer,
+          input.source,
+          createdAt
+        );
+
+      return {
+        id: Number(result.lastInsertRowid),
+        ...input,
+        createdAt,
+      };
     } finally {
       db.close();
     }

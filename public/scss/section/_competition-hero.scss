@@ -1,47 +1,59 @@
 .competition-hero {
   position: relative;
-  overflow: hidden;
-  padding: 56px 0 58px;
-  background:
-    radial-gradient(circle at 10% 4%, rgba(245, 158, 11, 0.21), transparent 28%),
-    radial-gradient(circle at 89% 82%, rgba(225, 29, 46, 0.32), transparent 34%),
-    linear-gradient(132deg, #090c14 0%, #151c2c 48%, #281118 100%);
+  overflow: visible;
+  padding: 18px 0 46px;
   color: #ffffff;
-
-  &::before,
-  &::after {
-    position: absolute;
-    content: "";
-    pointer-events: none;
-  }
-
-  &::before {
-    inset: 0;
-    opacity: 0.38;
-    background-image: radial-gradient(rgba(255, 255, 255, 0.19) 1px, transparent 1px);
-    background-size: 20px 20px;
-    mask-image: linear-gradient(to right, #000000, transparent 74%);
-  }
-
-  &::after {
-    top: -100px;
-    right: -150px;
-    width: 520px;
-    height: 520px;
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    border-radius: 50%;
-    box-shadow:
-      0 0 0 42px rgba(255, 255, 255, 0.035),
-      0 0 0 84px rgba(255, 255, 255, 0.02);
-  }
 
   &__grid {
     position: relative;
-    z-index: 1;
+    isolation: isolate;
+    overflow: hidden;
     display: grid;
     grid-template-columns: minmax(0, 1fr) minmax(360px, 0.82fr);
     align-items: center;
     gap: clamp(34px, 5vw, 76px);
+    padding: 46px clamp(36px, 4.2vw, 66px) 48px;
+    border: 1px solid rgba(255, 255, 255, 0.13);
+    border-radius: 24px;
+    background:
+      radial-gradient(circle at 10% 4%, rgba(245, 158, 11, 0.21), transparent 28%),
+      radial-gradient(circle at 89% 82%, rgba(225, 29, 46, 0.32), transparent 34%),
+      linear-gradient(132deg, #090c14 0%, #151c2c 48%, #281118 100%);
+    box-shadow: 0 24px 50px rgba(15, 23, 42, 0.14);
+
+    &::before,
+    &::after {
+      position: absolute;
+      z-index: 0;
+      content: "";
+      pointer-events: none;
+    }
+
+    &::before {
+      inset: 0;
+      opacity: 0.3;
+      background-image: radial-gradient(rgba(255, 255, 255, 0.19) 1px, transparent 1px);
+      background-size: 20px 20px;
+      mask-image: linear-gradient(to right, #000000, transparent 74%);
+    }
+
+    &::after {
+      top: -100px;
+      right: -150px;
+      width: 520px;
+      height: 520px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 50%;
+      box-shadow:
+        0 0 0 42px rgba(255, 255, 255, 0.035),
+        0 0 0 84px rgba(255, 255, 255, 0.02);
+    }
+  }
+
+  &__copy,
+  &__visual {
+    position: relative;
+    z-index: 1;
   }
 
   &__copy {
@@ -210,7 +222,7 @@
 
 @media (max-width: 1199px) {
   .competition-hero {
-    padding: 48px 0 52px;
+    padding: 16px 0 38px;
 
     h1 {
       font-size: clamp(42px, 4.4vw, 57px);
@@ -244,24 +256,26 @@
 
 @media (max-width: 991px) {
   .competition-hero {
-    padding: 34px 0 42px;
-
-    &::before {
-      opacity: 0.25;
-      mask-image: none;
-    }
-
-    &::after {
-      top: auto;
-      right: -150px;
-      bottom: -210px;
-      width: 420px;
-      height: 420px;
-    }
+    padding: 14px 0 34px;
 
     &__grid {
       grid-template-columns: minmax(0, 1fr);
       gap: 30px;
+      padding: 32px 26px 34px;
+      border-radius: 20px;
+
+      &::before {
+        opacity: 0.25;
+        mask-image: none;
+      }
+
+      &::after {
+        top: auto;
+        right: -150px;
+        bottom: -210px;
+        width: 420px;
+        height: 420px;
+      }
     }
 
     &__copy {
@@ -325,7 +339,12 @@
 
 @media (max-width: 575px) {
   .competition-hero {
-    padding: 28px 0 35px;
+    padding: 12px 0 28px;
+
+    &__grid {
+      padding: 25px 19px 27px;
+      border-radius: 18px;
+    }
 
     &__eyebrow {
       margin-bottom: 10px;

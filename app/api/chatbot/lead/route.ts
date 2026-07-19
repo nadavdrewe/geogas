@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { createWebsiteLead } from "@/lib/contentDatabase";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -14,9 +15,8 @@ type LeadPayload = {
   sourceAnswer?: string;
 };
 
-const clean = (value: unknown): string => {
-  return typeof value === "string" ? value.trim() : "";
-};
+const clean = (value: unknown): string =>
+  typeof value === "string" ? value.trim().replace(/\s+/g, " ") : "";
 
 const validEmail = (value: string): boolean => {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
@@ -35,11 +35,33 @@ const validate = (payload: LeadPayload): string | null => {
   if (!phone) return "Phone is required.";
   if (!postcode) return "Postcode is required.";
   if (!service) return "Service requested is required.";
+  if (name.length > 120 || email.length > 254 || phone.length > 40) {
+    return "Please check the contact details entered.";
+  }
+  if (postcode.length > 24 || service.length > 160) {
+    return "Please check the booking details entered.";
+  }
+  if (
+    clean(payload.note).length > 4_000 ||
+    clean(payload.sourceQuestion).length > 4_000 ||
+    clean(payload.sourceAnswer).length > 4_000
+  ) {
+    return "Please shorten the extra details and try again.";
+  }
 
   return null;
 };
 
+const requestIsSameOrigin = (request: Request): boolean => {
+  const origin = request.headers.get("origin");
+  return !origin || origin === new URL(request.url).origin;
+};
+
 export async function POST(request: Request) {
+  if (!requestIsSameOrigin(request)) {
+    return NextResponse.json({ error: "Invalid booking request." }, { status: 403 });
+  }
+
   try {
     const body = (await request.json()) as LeadPayload;
     const error = validate(body);
@@ -49,7 +71,7 @@ export async function POST(request: Request) {
 
     const lead = {
       name: clean(body.name),
-      email: clean(body.email),
+      email: clean(body.email).toLowerCase(),
       phone: clean(body.phone),
       postcode: clean(body.postcode),
       service: clean(body.service),
@@ -59,29 +81,37 @@ export async function POST(request: Request) {
       createdAt: new Date().toISOString(),
     };
 
-    const webhookUrl = process.env.LEAD_WEBHOOK_URL;
-
-    if (!webhookUrl) {
-      return NextResponse.json(
-        { error: "Lead capture is temporarily unavailable. Please call us instead." },
-        { status: 503 }
-      );
-    }
-
-    const webhookResponse = await fetch(webhookUrl, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(lead),
-      signal: AbortSignal.timeout(10_000),
+    await createWebsiteLead({
+      name: lead.name,
+      email: lead.email,
+      phone: lead.phone,
+      postcode: lead.postcode,
+      service: lead.service,
+      note: lead.note,
+      sourceQuestion: lead.sourceQuestion,
+      sourceAnswer: lead.sourceAnswer,
+      source: "website-chatbot",
     });
 
-    if (!webhookResponse.ok) {
-      return NextResponse.json(
-        { error: "Lead capture webhook failed." },
-        { status: 502 }
-      );
+    const webhookUrl = process.env.LEAD_WEBHOOK_URL;
+
+    if (webhookUrl) {
+      try {
+        const webhookResponse = await fetch(webhookUrl, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(lead),
+          signal: AbortSignal.timeout(10_000),
+        });
+
+        if (!webhookResponse.ok) {
+          console.error("Lead webhook failed after the booking was saved.");
+        }
+      } catch {
+        console.error("Lead webhook could not be reached after the booking was saved.");
+      }
     }
 
     return NextResponse.json({
