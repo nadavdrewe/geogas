@@ -2,6 +2,7 @@ import Image from "next/image";
 import { SeoCompanyInfo } from "@/lib/seo/company";
 import { SeoCtaBlock } from "@/lib/seo/types";
 import SeoActionLink from "@/components/seo/SeoActionLink";
+import { BRAND_VAN_IMAGE } from "@/lib/brandAssets";
 
 type SeoContactCardProps = {
   company: SeoCompanyInfo;
@@ -13,7 +14,7 @@ const SeoContactCard = ({ company, cta }: SeoContactCardProps) => {
     <aside className="seo-page__sidebar-card">
       <div className="seo-page__sidebar-image">
         <Image
-          src="/cartoons/van1.jpeg"
+          src={BRAND_VAN_IMAGE}
           alt="Geo Gas Services side-view van"
           width={1280}
           height={720}
@@ -48,4 +49,3 @@ const SeoContactCard = ({ company, cta }: SeoContactCardProps) => {
 };
 
 export default SeoContactCard;
-

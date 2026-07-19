@@ -2,6 +2,10 @@ import { mkdir, readdir, writeFile } from "fs/promises";
 import path from "path";
 import { randomUUID } from "crypto";
 import { NextResponse } from "next/server";
+import {
+  isAdminPanelConfigured,
+  isAdminPanelRequestAuthorized,
+} from "@/lib/adminAuth";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -22,12 +26,19 @@ const ALLOWED_EXTENSIONS = new Set([
   ".pdf",
 ]);
 
-const isAuthorized = (request: Request): boolean => {
-  const key = process.env.ADMIN_PANEL_KEY;
-  if (!key) return true;
+const authorize = (request: Request): NextResponse | null => {
+  if (!isAdminPanelConfigured()) {
+    return NextResponse.json(
+      { error: "Admin access is not configured." },
+      { status: 503 }
+    );
+  }
 
-  const providedKey = request.headers.get("x-admin-key");
-  return providedKey === key;
+  if (!isAdminPanelRequestAuthorized(request)) {
+    return NextResponse.json({ error: "Unauthorized." }, { status: 401 });
+  }
+
+  return null;
 };
 
 const toPublicPath = (fileName: string) => `/uploads/${fileName}`;
@@ -49,9 +60,8 @@ const listUploads = async (): Promise<string[]> => {
 };
 
 export async function GET(request: Request) {
-  if (!isAuthorized(request)) {
-    return NextResponse.json({ error: "Unauthorized." }, { status: 401 });
-  }
+  const authorizationError = authorize(request);
+  if (authorizationError) return authorizationError;
 
   const files = await listUploads();
   return NextResponse.json(
@@ -65,9 +75,8 @@ export async function GET(request: Request) {
 }
 
 export async function POST(request: Request) {
-  if (!isAuthorized(request)) {
-    return NextResponse.json({ error: "Unauthorized." }, { status: 401 });
-  }
+  const authorizationError = authorize(request);
+  if (authorizationError) return authorizationError;
 
   try {
     const formData = await request.formData();

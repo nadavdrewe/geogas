@@ -1,4 +1,4 @@
-import { mkdirSync } from "fs";
+import { existsSync, mkdirSync, readdirSync, readFileSync } from "fs";
 import path from "path";
 import DatabaseConstructor from "better-sqlite3";
 import type { Database } from "better-sqlite3";
@@ -53,6 +53,8 @@ export const SITE_DOCUMENT_ID = "site:published";
 const DATABASE_PATH =
   process.env.CONTENT_DATABASE_PATH ??
   path.join(process.cwd(), "content", "geogas-content.sqlite");
+
+const CONTENT_DIRECTORY = path.join(process.cwd(), "content");
 
 const DIRECTORY_BY_TYPE: Record<SeoPageType, string> = {
   service: "services",
@@ -224,6 +226,78 @@ const upsertContentDocument = (db: Database, input: ContentDocumentInput) => {
   );
 };
 
+const readVersionedJson = (sourcePath: string): unknown => {
+  return JSON.parse(readFileSync(sourcePath, "utf8")) as unknown;
+};
+
+const seedVersionedSiteContent = (db: Database): void => {
+  upsertContentDocument(db, {
+    collection: "site",
+    documentType: null,
+    slug: "published",
+    title: "Published Site Content",
+    sourcePath: "data/siteContent.ts",
+    content: cloneDefaultContent(),
+  });
+};
+
+const seedVersionedSeoDefaults = (db: Database): number => {
+  let seededCount = 0;
+
+  for (const type of PAGE_TYPES) {
+    const sourcePath = path.join(CONTENT_DIRECTORY, "defaults", `${type}.json`);
+    if (!existsSync(sourcePath)) continue;
+
+    upsertContentDocument(db, {
+      collection: "seo_default",
+      documentType: type,
+      slug: type,
+      title: `SEO Default: ${type}`,
+      sourcePath: `content/defaults/${type}.json`,
+      content: readVersionedJson(sourcePath),
+    });
+    seededCount += 1;
+  }
+
+  return seededCount;
+};
+
+const seedVersionedSeoPages = (db: Database): number => {
+  let seededCount = 0;
+
+  for (const type of PAGE_TYPES) {
+    const directoryName = DIRECTORY_BY_TYPE[type];
+    const directoryPath = path.join(CONTENT_DIRECTORY, directoryName);
+    if (!existsSync(directoryPath)) continue;
+
+    const files = readdirSync(directoryPath, { withFileTypes: true })
+      .filter((entry) => entry.isFile() && entry.name.endsWith(".json"))
+      .sort((left, right) => left.name.localeCompare(right.name));
+
+    for (const file of files) {
+      const sourcePath = path.join(directoryPath, file.name);
+      const content = readVersionedJson(sourcePath);
+      const fallbackSlug = file.name.replace(/\.json$/, "");
+      const slug =
+        isPlainObject(content) && typeof content.slug === "string" && content.slug.trim()
+          ? content.slug.trim()
+          : fallbackSlug;
+
+      upsertContentDocument(db, {
+        collection: "seo_page",
+        documentType: type,
+        slug,
+        title: null,
+        sourcePath: `content/${directoryName}/${file.name}`,
+        content,
+      });
+      seededCount += 1;
+    }
+  }
+
+  return seededCount;
+};
+
 const rowToSummary = (row: DocumentRow): ContentDocumentSummary | null => {
   if (
     typeof row.id !== "string" ||
@@ -332,15 +406,21 @@ export const ensureContentDatabase = async (): Promise<void> => {
       runSchema(db);
 
       if (documentCount(db, "site") === 0) {
-        migrateLegacySiteContent(db);
+        if (!migrateLegacySiteContent(db)) {
+          seedVersionedSiteContent(db);
+        }
       }
 
       if (documentCount(db, "seo_default") === 0) {
-        migrateLegacySeoDefaults(db);
+        if (!migrateLegacySeoDefaults(db)) {
+          seedVersionedSeoDefaults(db);
+        }
       }
 
       if (documentCount(db, "seo_page") === 0) {
-        migrateLegacySeoPages(db);
+        if (!migrateLegacySeoPages(db)) {
+          seedVersionedSeoPages(db);
+        }
       }
     } finally {
       db.close();

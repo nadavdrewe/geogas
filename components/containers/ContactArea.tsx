@@ -4,6 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import CalloutQuoteForm from "@/components/forms/CalloutQuoteForm";
 import { useSiteContent } from "@/components/providers/SiteContentProvider";
+import { BRAND_VAN_IMAGE } from "@/lib/brandAssets";
 
 const iconForLabel = (label: string) => {
   const lower = label.toLowerCase();
@@ -29,7 +30,7 @@ const ContactArea = () => {
             <div className="contact__page-left">
               <div className="contact__page-image">
                 <Image
-                  src="/cartoons/van1.jpeg"
+                  src={BRAND_VAN_IMAGE}
                   alt="Geo Gas Services branded van"
                   priority
                   width={1128}

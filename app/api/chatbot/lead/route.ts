@@ -61,23 +61,27 @@ export async function POST(request: Request) {
 
     const webhookUrl = process.env.LEAD_WEBHOOK_URL;
 
-    if (webhookUrl) {
-      const webhookResponse = await fetch(webhookUrl, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(lead),
-      });
+    if (!webhookUrl) {
+      return NextResponse.json(
+        { error: "Lead capture is temporarily unavailable. Please call us instead." },
+        { status: 503 }
+      );
+    }
 
-      if (!webhookResponse.ok) {
-        return NextResponse.json(
-          { error: "Lead capture webhook failed." },
-          { status: 502 }
-        );
-      }
-    } else {
-      console.log("GeoGas chatbot lead", JSON.stringify(lead));
+    const webhookResponse = await fetch(webhookUrl, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(lead),
+      signal: AbortSignal.timeout(10_000),
+    });
+
+    if (!webhookResponse.ok) {
+      return NextResponse.json(
+        { error: "Lead capture webhook failed." },
+        { status: 502 }
+      );
     }
 
     return NextResponse.json({

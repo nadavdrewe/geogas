@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import StaffHeroCarousel from "@/components/containers/home/StaffHeroCarousel";
+import { BRAND_VAN_IMAGE } from "@/lib/brandAssets";
 import { useSiteContent } from "@/components/providers/SiteContentProvider";
 import {
   getPhoneItems,
@@ -163,7 +164,7 @@ const BannerTwo = () => {
                 </h1>
                 <div className="banner__two-mobile-van d-lg-none">
                   <Image
-                    src="/cartoons/van1.jpeg"
+                    src={BRAND_VAN_IMAGE}
                     alt="Geo Gas services van"
                     width={1280}
                     height={720}

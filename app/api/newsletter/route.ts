@@ -66,23 +66,27 @@ export async function POST(request: Request) {
       process.env.CONTACT_WEBHOOK_URL ||
       process.env.LEAD_WEBHOOK_URL;
 
-    if (webhookUrl) {
-      const webhookResponse = await fetch(webhookUrl, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(subscription),
-      });
+    if (!webhookUrl) {
+      return NextResponse.json(
+        { error: "Subscriptions are temporarily unavailable. Please try again later." },
+        { status: 503 }
+      );
+    }
 
-      if (!webhookResponse.ok) {
-        return NextResponse.json(
-          { error: "Unable to save your subscription right now." },
-          { status: 502 }
-        );
-      }
-    } else {
-      console.log("GeoGas newsletter signup", JSON.stringify(subscription));
+    const webhookResponse = await fetch(webhookUrl, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(subscription),
+      signal: AbortSignal.timeout(10_000),
+    });
+
+    if (!webhookResponse.ok) {
+      return NextResponse.json(
+        { error: "Unable to save your subscription right now." },
+        { status: 502 }
+      );
     }
 
     return NextResponse.json({

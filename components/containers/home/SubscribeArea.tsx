@@ -13,7 +13,7 @@ const SubscribeArea = () => {
         <div className="row">
           <div className="col-xl-8 col-lg-7 lg-mb-20">
             <div className="subscribe__two-title lg-t-center">
-              <h1>{subscribe.heading}</h1>
+              <h2>{subscribe.heading}</h2>
             </div>
           </div>
           <div className="col-xl-4 col-lg-5">
