@@ -66,7 +66,7 @@ const HeaderTwo = () => {
                       </Link>
                     </div>
                   </div>
-                  <div className="col-xl-6 col-lg-8 res-hide">
+                  <div className="col-xl-8 col-lg-8 res-hide">
                     <div className="header-one__center">
                       <div className="header-one__center-menu t-center">
                         <ul id="mobilemenu">
@@ -91,7 +91,7 @@ const HeaderTwo = () => {
                       </div>
                     </div>
                   </div>
-                  <div className="col-xl-4 col-lg-2 col-5">
+                  <div className="col-xl-2 col-lg-2 col-5 ms-auto">
                     <div className="header-one__right">
                       <div className="header-one__right-search">
                         <div className="search">

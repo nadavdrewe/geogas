@@ -482,6 +482,8 @@
   }
 
   .header-one__center-menu ul li {
+    margin-inline: 10px;
+
     a {
       position: relative;
       &::after {
@@ -519,6 +521,21 @@
   .header-one__right-sidebar-popup-icon:hover i,
   .header-one__right-responsive-menu:hover i {
     color: var(--primary-color-1);
+  }
+
+  @media (min-width: 1200px) {
+    .header-one__center-menu ul {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: clamp(8px, 1.2vw, 18px);
+      flex-wrap: nowrap;
+    }
+
+    .header-one__center-menu ul li {
+      flex: 0 0 auto;
+      margin: 0;
+    }
   }
 }
 /*==========================================================================
@@ -710,6 +727,16 @@
   }
   .header-one {
     padding: 28px 0;
+  }
+  .header-two {
+    .res-hide,
+    .header-one__center {
+      display: none;
+    }
+
+    .menu__bar {
+      display: block;
+    }
   }
 }
 @media (max-width: 991px) {

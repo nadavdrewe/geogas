@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import HeaderTwo from "@/components/layout/header/HeaderTwo";
 import BannerTwo from "@/components/layout/banner/BannerTwo";
-import DesktopCompetitionHero from "@/components/competition/DesktopCompetitionHero";
+import CompetitionHomeHero from "@/components/competition/CompetitionHomeHero";
 import GeoChatbotSection from "@/components/chatbot/GeoChatbotSection";
 import ComicStripSection from "@/components/containers/home/ComicStripSection";
 import Services from "@/components/containers/home/Services";
@@ -21,6 +21,9 @@ import CustomCursor from "@/components/layout/CustomCursor";
 import ScrollProgressButton from "@/components/layout/ScrollProgressButton";
 import { getSiteContent } from "@/lib/siteContent";
 import { buildPageMetadata } from "@/lib/seo/metadata";
+
+// Switch this to "standard" to restore the previous BannerTwo homepage hero.
+const homeHeroVariant: "competition" | "standard" = "competition";
 
 export async function generateMetadata(): Promise<Metadata> {
   const content = await getSiteContent();
@@ -47,8 +50,7 @@ const page = () => {
   return (
     <>
       <HeaderTwo />
-      <DesktopCompetitionHero />
-      <BannerTwo />
+      {homeHeroVariant === "competition" ? <CompetitionHomeHero /> : <BannerTwo />}
       <GeoChatbotSection />
       <Services />
       <ContractsOverview />

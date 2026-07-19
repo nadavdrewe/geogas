@@ -2,11 +2,11 @@ import Image from "next/image";
 import Link from "next/link";
 import { competitionSlides } from "@/components/competition/competitionSlides";
 
-const DesktopCompetitionHero = () => {
+const CompetitionHomeHero = () => {
   const featureSlide = competitionSlides[0];
 
   return (
-    <section className="competition-hero d-none d-lg-block" aria-labelledby="competition-hero-heading">
+    <section className="competition-hero" aria-labelledby="competition-hero-heading">
       <div className="container">
         <div className="competition-hero__grid">
           <div className="competition-hero__copy">
@@ -20,7 +20,7 @@ const DesktopCompetitionHero = () => {
             </p>
             <ul className="competition-hero__benefits">
               <li>
-                <i className="fa-solid fa-shield-heart" aria-hidden="true" />
+                <i className="fa-solid fa-shield" aria-hidden="true" />
                 One year&apos;s boiler cover subscription
               </li>
               <li>
@@ -47,12 +47,15 @@ const DesktopCompetitionHero = () => {
                 alt={featureSlide.alt}
                 width={1254}
                 height={1254}
-                sizes="(max-width: 1199px) 43vw, 520px"
+                sizes="(max-width: 575px) 88vw, (max-width: 991px) 430px, (max-width: 1199px) 43vw, 520px"
                 priority
                 className="competition-hero__poster"
               />
             </div>
-            <div className="competition-hero__prize-badge" aria-label="Prize: 12 months of boiler cover">
+            <div
+              className="competition-hero__prize-badge"
+              aria-label="Prize: 12 months of boiler cover"
+            >
               <strong>12</strong>
               <span>months of cover</span>
             </div>
@@ -63,4 +66,4 @@ const DesktopCompetitionHero = () => {
   );
 };
 
-export default DesktopCompetitionHero;
+export default CompetitionHomeHero;
