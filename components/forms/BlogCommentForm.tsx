@@ -90,6 +90,7 @@ const BlogCommentForm = () => {
               value={name}
               onChange={(event) => setName(event.target.value)}
               placeholder="Full Name"
+              aria-label="Full name"
               required
             />
           </div>
@@ -102,6 +103,7 @@ const BlogCommentForm = () => {
               value={phone}
               onChange={(event) => setPhone(event.target.value)}
               placeholder="Phone Number"
+              aria-label="Phone number"
               required
             />
           </div>
@@ -114,6 +116,7 @@ const BlogCommentForm = () => {
               value={email}
               onChange={(event) => setEmail(event.target.value)}
               placeholder="Email Address"
+              aria-label="Email address"
               required
             />
           </div>
@@ -126,6 +129,7 @@ const BlogCommentForm = () => {
               value={subject}
               onChange={(event) => setSubject(event.target.value)}
               placeholder="Subject"
+              aria-label="Subject"
             />
           </div>
         </div>
@@ -136,6 +140,7 @@ const BlogCommentForm = () => {
               value={message}
               onChange={(event) => setMessage(event.target.value)}
               placeholder="Type your comments...."
+              aria-label="Comment"
               required
             ></textarea>
           </div>
@@ -147,6 +152,8 @@ const BlogCommentForm = () => {
             </button>
             {submitState.status !== "idle" ? (
               <p
+                role="status"
+                aria-live="polite"
                 className={
                   "contact__form-feedback " +
                   (submitState.status === "success" ? "is-success" : "") +

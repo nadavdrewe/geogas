@@ -6,6 +6,7 @@ interface SearchBoxProps {
 const SearchBox = ({ search, setSearch }: SearchBoxProps) => {
   return (
     <div
+      id="site-search-panel"
       className={(search ? " active" : " ") + " header-one__right-search-box"}
     >
       <form action="/search" method="get">
@@ -13,18 +14,21 @@ const SearchBox = ({ search, setSearch }: SearchBoxProps) => {
           type="search"
           name="q"
           placeholder="Search service or topic..."
+          aria-label="Search service or topic"
           required
         />
-        <button type="submit">
+        <button type="submit" aria-label="Submit search">
           <i className="fal fa-search"></i>
         </button>
       </form>
-      <span
+      <button
+        type="button"
         className="header-one__right-search-box-icon"
         onClick={() => setSearch(false)}
+        aria-label="Close site search"
       >
         <i className="fal fa-times"></i>
-      </span>
+      </button>
     </div>
   );
 };

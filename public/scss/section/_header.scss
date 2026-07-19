@@ -441,6 +441,18 @@
   visibility: visible;
   opacity: 1;
 }
+
+.header-one__right-search-icon,
+.header-one__right-sidebar-popup-icon,
+.header-one__right-responsive-menu,
+.header-one__right-search-box-icon,
+.sidebar-close-btn {
+  background: transparent;
+  border: 0;
+  color: inherit;
+  cursor: pointer;
+  padding: 0;
+}
 /*==========================================================================
 * Header Two CSS
 ==========================================================================*/

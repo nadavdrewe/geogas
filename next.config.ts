@@ -11,6 +11,31 @@ const nextConfig: NextConfig = {
   images: {
     unoptimized: true,
   },
+  async headers() {
+    return [
+      {
+        source: "/:path*",
+        headers: [
+          {
+            key: "X-Content-Type-Options",
+            value: "nosniff",
+          },
+          {
+            key: "X-Frame-Options",
+            value: "SAMEORIGIN",
+          },
+          {
+            key: "Referrer-Policy",
+            value: "strict-origin-when-cross-origin",
+          },
+          {
+            key: "Permissions-Policy",
+            value: "camera=(), geolocation=(), microphone=(), payment=(), usb=()",
+          },
+        ],
+      },
+    ];
+  },
   webpack: (config, { dev }) => {
     // This box has repeatedly hit corrupted filesystem cache entries during production builds.
     // Disabling webpack's persistent cache avoids the resolver loop/OOM path.

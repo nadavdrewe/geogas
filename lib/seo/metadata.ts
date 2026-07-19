@@ -11,6 +11,13 @@ type BuildPageMetadataInput = {
   siteName?: string;
 };
 
+export const legacyPageMetadata: Metadata = {
+  robots: {
+    index: false,
+    follow: false,
+  },
+};
+
 export const buildPageMetadata = ({
   title,
   description,

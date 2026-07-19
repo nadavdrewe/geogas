@@ -36,6 +36,7 @@ const FooterTwo = () => {
                             <Link
                               href={item.href}
                               target={item.href.startsWith("http") ? "_blank" : undefined}
+                              rel={item.href.startsWith("http") ? "noreferrer" : undefined}
                             >
                               <i className={item.icon}></i>
                             </Link>

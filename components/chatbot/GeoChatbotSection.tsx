@@ -544,6 +544,7 @@ const GeoChatbotSection = () => {
                   <select
                     value={selectedFaqPrompt}
                     onChange={(event) => setSelectedFaqPrompt(event.target.value)}
+                    aria-label="Choose a quick topic"
                     disabled={isSending}
                   >
                     {chatbotContent.faqShortcuts.map((shortcut) => (
@@ -676,6 +677,7 @@ const GeoChatbotSection = () => {
                     value={leadForm.name}
                     onChange={updateLeadField("name")}
                     placeholder={chatbotContent.fieldPlaceholders.name}
+                    aria-label="Full name"
                     required
                   />
                   <input
@@ -683,6 +685,7 @@ const GeoChatbotSection = () => {
                     value={leadForm.email}
                     onChange={updateLeadField("email")}
                     placeholder={chatbotContent.fieldPlaceholders.email}
+                    aria-label="Email address"
                     required
                   />
                   <input
@@ -690,6 +693,7 @@ const GeoChatbotSection = () => {
                     value={leadForm.phone}
                     onChange={updateLeadField("phone")}
                     placeholder={chatbotContent.fieldPlaceholders.phone}
+                    aria-label="Phone number"
                     required
                   />
                   <input
@@ -697,6 +701,7 @@ const GeoChatbotSection = () => {
                     value={leadForm.postcode}
                     onChange={updateLeadField("postcode")}
                     placeholder={chatbotContent.fieldPlaceholders.postcode}
+                    aria-label="Postcode"
                     required
                   />
                   <input
@@ -704,12 +709,14 @@ const GeoChatbotSection = () => {
                     value={leadForm.service}
                     onChange={updateLeadField("service")}
                     placeholder={chatbotContent.fieldPlaceholders.service}
+                    aria-label="Service required"
                     required
                   />
                   <textarea
                     value={leadForm.note}
                     onChange={updateLeadField("note")}
                     placeholder={chatbotContent.fieldPlaceholders.note}
+                    aria-label="Additional details"
                   />
                   <button type="submit" disabled={leadStatus === "sending"}>
                     {leadStatus === "sending"

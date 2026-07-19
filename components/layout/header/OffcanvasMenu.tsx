@@ -23,7 +23,10 @@ const OffcanvasMenu = ({
   return (
     <>
       <div className="fix-area d-block d-xl-none">
-        <div className={(toggleMenu ? " info-open" : " ") + " offcanvas__info"}>
+        <div
+          id="mobile-navigation"
+          className={(toggleMenu ? " info-open" : " ") + " offcanvas__info"}
+        >
           <div className="offcanvas__wrapper">
             <div className="offcanvas__content">
               <div className="offcanvas__top mb-5 d-flex justify-content-between align-items-center">
@@ -84,6 +87,7 @@ const OffcanvasMenu = ({
                             target={
                               item.href.startsWith("http") ? "_blank" : undefined
                             }
+                            rel={item.href.startsWith("http") ? "noreferrer" : undefined}
                           >
                             {displayValue}
                           </Link>

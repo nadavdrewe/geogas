@@ -94,6 +94,7 @@ const NewsletterSubscribeForm = ({
         value={name}
         onChange={(event) => setName(event.target.value)}
         placeholder={namePlaceholder}
+        aria-label="Full name"
         required
       />
       <input
@@ -102,6 +103,7 @@ const NewsletterSubscribeForm = ({
         value={phone}
         onChange={(event) => setPhone(event.target.value)}
         placeholder={phonePlaceholder}
+        aria-label="Phone number"
         required
       />
       <input
@@ -110,6 +112,7 @@ const NewsletterSubscribeForm = ({
         value={email}
         onChange={(event) => setEmail(event.target.value)}
         placeholder={placeholder}
+        aria-label="Email address"
         required
       />
       <button
@@ -121,6 +124,8 @@ const NewsletterSubscribeForm = ({
       </button>
       {submitState.status !== "idle" ? (
         <p
+          role="status"
+          aria-live="polite"
           className={
             "contact__form-feedback " +
             (submitState.status === "success" ? "is-success" : "") +
