@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { SiteContentProvider } from "@/components/providers/SiteContentProvider";
 import InternalLinkNavigationFix from "@/components/layout/InternalLinkNavigationFix";
+import CompetitionModal from "@/components/layout/CompetitionModal";
 import WhatsAppWidget from "@/components/chatbot/WhatsAppWidget";
 import { getSiteContent } from "@/lib/siteContent";
 
@@ -74,6 +75,7 @@ export default async function RootLayout({
         <SiteContentProvider initialContent={content}>
           <InternalLinkNavigationFix />
           {children}
+          <CompetitionModal />
           <WhatsAppWidget />
         </SiteContentProvider>
       </body>

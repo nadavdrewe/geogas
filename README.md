@@ -34,6 +34,8 @@ The project now includes a starter admin panel for editable site content:
 - Public client refreshes read site content through `/api/content/site`.
 - `ADMIN_PANEL_KEY` is required: without it, all admin content and upload routes fail closed.
 - `LEAD_WEBHOOK_URL` (or the contact/newsletter-specific override) is required for forms to report successful delivery. Without one, forms return a safe temporary-unavailable response and do not log personal data.
+- Competition entries submitted from the site-load modal are stored in the local `competition_entries` SQLite table. Retrieve the latest entries from `/api/competition/entries` using the configured `x-admin-key`; the endpoint never exposes entries publicly.
+- The QR-code destination is `/competition`; it uses the same entry flow and records entries with the `competition-page` source.
 
 ## Learn More
 

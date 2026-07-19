@@ -28,6 +28,15 @@ type DocumentRow = {
   updated_at?: unknown;
 };
 
+type CompetitionEntryRow = {
+  id?: unknown;
+  name?: unknown;
+  email?: unknown;
+  phone?: unknown;
+  source?: unknown;
+  created_at?: unknown;
+};
+
 export type SeoContentRecord = {
   slug: string;
   type: SeoPageType;
@@ -46,6 +55,18 @@ export type ContentDocumentSummary = {
 
 export type ContentDocument = ContentDocumentSummary & {
   content: unknown;
+};
+
+export type CompetitionEntryInput = {
+  name: string;
+  email: string;
+  phone: string;
+  source: string;
+};
+
+export type CompetitionEntry = CompetitionEntryInput & {
+  id: number;
+  createdAt: string;
 };
 
 export const SITE_DOCUMENT_ID = "site:published";
@@ -138,6 +159,18 @@ const runSchema = (db: Database) => {
 
     CREATE INDEX IF NOT EXISTS idx_content_documents_type_slug
       ON content_documents(document_type, slug);
+
+    CREATE TABLE IF NOT EXISTS competition_entries (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      name TEXT NOT NULL,
+      email TEXT NOT NULL COLLATE NOCASE UNIQUE,
+      phone TEXT NOT NULL,
+      source TEXT NOT NULL DEFAULT 'competition-modal',
+      created_at TEXT NOT NULL
+    );
+
+    CREATE INDEX IF NOT EXISTS idx_competition_entries_created_at
+      ON competition_entries(created_at DESC);
   `);
 };
 
@@ -317,6 +350,30 @@ const rowToSummary = (row: DocumentRow): ContentDocumentSummary | null => {
     title: typeof row.title === "string" ? row.title : null,
     sourcePath: typeof row.source_path === "string" ? row.source_path : null,
     updatedAt: typeof row.updated_at === "string" ? row.updated_at : "",
+  };
+};
+
+const rowToCompetitionEntry = (
+  row: CompetitionEntryRow
+): CompetitionEntry | null => {
+  if (
+    typeof row.id !== "number" ||
+    typeof row.name !== "string" ||
+    typeof row.email !== "string" ||
+    typeof row.phone !== "string" ||
+    typeof row.source !== "string" ||
+    typeof row.created_at !== "string"
+  ) {
+    return null;
+  }
+
+  return {
+    id: row.id,
+    name: row.name,
+    email: row.email,
+    phone: row.phone,
+    source: row.source,
+    createdAt: row.created_at,
   };
 };
 
@@ -576,6 +633,79 @@ export const saveContentDocumentContent = async (
 
     return getContentDocumentById(id);
   });
+};
+
+export const createCompetitionEntry = async (
+  input: CompetitionEntryInput
+): Promise<{ entry: CompetitionEntry } | { duplicate: true }> => {
+  await ensureContentDatabase();
+
+  return enqueueWrite(async () => {
+    const db = openDatabase();
+
+    try {
+      runSchema(db);
+      const createdAt = new Date().toISOString();
+      const result = db
+        .prepare(
+          `INSERT INTO competition_entries (
+             name,
+             email,
+             phone,
+             source,
+             created_at
+           )
+           VALUES (?, ?, ?, ?, ?);`
+        )
+        .run(input.name, input.email, input.phone, input.source, createdAt);
+
+      return {
+        entry: {
+          id: Number(result.lastInsertRowid),
+          ...input,
+          createdAt,
+        },
+      };
+    } catch (error) {
+      if (
+        error instanceof Error &&
+        error.message.includes("competition_entries.email")
+      ) {
+        return { duplicate: true };
+      }
+
+      throw error;
+    } finally {
+      db.close();
+    }
+  });
+};
+
+export const getCompetitionEntries = async (
+  limit = 100
+): Promise<CompetitionEntry[]> => {
+  await ensureContentDatabase();
+  const safeLimit = Number.isFinite(limit)
+    ? Math.min(Math.max(Math.floor(limit), 1), 500)
+    : 100;
+  const db = openDatabase();
+
+  try {
+    const rows = db
+      .prepare(
+        `SELECT id, name, email, phone, source, created_at
+         FROM competition_entries
+         ORDER BY created_at DESC, id DESC
+         LIMIT ?;`
+      )
+      .all(safeLimit) as CompetitionEntryRow[];
+
+    return rows
+      .map(rowToCompetitionEntry)
+      .filter((entry): entry is CompetitionEntry => entry !== null);
+  } finally {
+    db.close();
+  }
 };
 
 export const getSeoDefaultsByType = async (): Promise<Map<SeoPageType, unknown>> => {
