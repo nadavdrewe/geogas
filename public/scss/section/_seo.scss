@@ -291,8 +291,7 @@
   }
 
   &__sidebar-card {
-    position: sticky;
-    top: 124px;
+    position: static;
     background: linear-gradient(180deg, #111111 0%, #2a1618 100%);
     color: var(--text-white);
 
@@ -329,6 +328,23 @@
       background: rgba(255, 255, 255, 0.12);
       color: var(--text-white);
       font-weight: 600;
+    }
+  }
+
+  &__sidebar-actions {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 10px;
+
+    .button-1,
+    .button-2 {
+      width: 100%;
+      min-height: 56px;
+      justify-content: space-between;
+      padding: 14px 18px 13px;
+      font-size: 16px;
+      line-height: 20px;
+      text-align: left;
     }
   }
 
