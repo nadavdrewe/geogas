@@ -14,9 +14,11 @@ const focusableSelector = [
   "a[href]",
 ].join(",");
 
+const competitionModalSessionKey = "geogas:competition-modal-seen";
+
 const CompetitionModal = () => {
   const pathname = usePathname();
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(false);
   const [activeSlide, setActiveSlide] = useState(0);
   const [autoRotate, setAutoRotate] = useState(true);
   const modalRef = useRef<HTMLDivElement>(null);
@@ -29,6 +31,28 @@ const CompetitionModal = () => {
   const closeModal = () => {
     setIsOpen(false);
   };
+
+  useEffect(() => {
+    if (pathname.startsWith("/admin") || pathname.startsWith("/competition")) {
+      setIsOpen(false);
+      return;
+    }
+
+    try {
+      const hasSeenModal = window.sessionStorage.getItem(competitionModalSessionKey) === "true";
+
+      if (hasSeenModal) {
+        setIsOpen(false);
+        return;
+      }
+
+      window.sessionStorage.setItem(competitionModalSessionKey, "true");
+      setIsOpen(true);
+    } catch {
+      // If storage is unavailable, retain the original behaviour for this page load.
+      setIsOpen(true);
+    }
+  }, [pathname]);
 
   useEffect(() => {
     if (
