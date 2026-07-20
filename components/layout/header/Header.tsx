@@ -69,81 +69,78 @@ const Header = () => {
         }
       >
         <div className="container">
-          <div className="row ai-center">
-            <div className="col-xl-2 col-lg-2 col-7">
-              <div className="header-one__left logo">
-                <Link href="/">
-                  <Image src={logo} alt="Geo Gas Services logo" priority />
-                </Link>
-              </div>
-            </div>
-            <div className="col-xl-6 col-lg-8 res-hide">
-              <div className="header-one__center">
-                <div className="header-one__center-menu t-center">
-                  <ul id="mobilemenu">
-                    {navItems.map((item) => {
-                      const isActive =
-                        item.href === "/"
-                          ? pathname === "/"
-                          : pathname.startsWith(item.href);
-                      return (
-                        <li key={item.href}>
-                          <Link
-                            href={item.href}
-                            className={isActive ? "is-active" : ""}
-                          >
-                            {item.label}
-                          </Link>
-                        </li>
-                      );
-                    })}
-                  </ul>
-                </div>
-              </div>
-            </div>
-            <div className="col-xl-4 col-lg-2 col-5">
-              <div className="header-one__right">
-                <div className="header-one__right-search">
-                  <div className="search">
-                    <button
-                      type="button"
-                      className="header-one__right-search-icon open"
-                      onClick={handleSearch}
-                      aria-label="Open site search"
-                      aria-expanded={search}
-                      aria-controls="site-search-panel"
-                    >
-                      <i className="fal fa-search"></i>
-                    </button>
-                  </div>
-                </div>
-                <div className="header-one__right-sidebar">
-                  <button
-                    type="button"
-                    className="header-one__right-sidebar-popup-icon"
-                    onClick={handleHamburger}
-                    aria-label="Open contact details"
-                    aria-expanded={hamburger}
-                    aria-controls="site-sidebar"
-                  >
-                    <i className="fa-regular fa-bars-sort"></i>
-                  </button>
-                </div>
-                <div className="header-one__right-button">
-                  <Link className="button-1" href="/contact">
-                    Get A Quote<i className="fa-regular fa-angle-right"></i>
+          <div className="header-one__shell">
+            <div className="row ai-center">
+              <div className="col-xl-2 col-lg-2 col-7">
+                <div className="header-one__left logo">
+                  <Link href="/">
+                    <Image src={logo} alt="Geo Gas Services logo" priority />
                   </Link>
                 </div>
-                <button
-                  type="button"
-                  className="header-one__right-responsive-menu menu__bar"
-                  onClick={() => handleToggleMenu()}
-                  aria-label="Open navigation menu"
-                  aria-expanded={toggleMenu}
-                  aria-controls="mobile-navigation"
-                >
-                  <i className="fa-regular fa-bars"></i>
-                </button>
+              </div>
+              <div className="col-xl-8 col-lg-8 res-hide">
+                <div className="header-one__center">
+                  <div className="header-one__center-menu t-center">
+                    <ul id="mobilemenu">
+                      {navItems.map((item) => {
+                        const isActive =
+                          item.href === "/"
+                            ? pathname === "/"
+                            : pathname.startsWith(item.href);
+                        return (
+                          <li key={item.href}>
+                            <Link
+                              href={item.href}
+                              className={isActive ? "is-active" : ""}
+                            >
+                              {item.label}
+                            </Link>
+                          </li>
+                        );
+                      })}
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <div className="col-xl-2 col-lg-2 col-5 ms-auto">
+                <div className="header-one__right">
+                  <div className="header-one__right-search">
+                    <div className="search">
+                      <button
+                        type="button"
+                        className="header-one__right-search-icon open"
+                        onClick={handleSearch}
+                        aria-label="Open site search"
+                        aria-expanded={search}
+                        aria-controls="site-search-panel"
+                      >
+                        <i className="fal fa-search"></i>
+                      </button>
+                    </div>
+                  </div>
+                  <div className="header-one__right-sidebar">
+                    <button
+                      type="button"
+                      className="header-one__right-sidebar-popup-icon"
+                      onClick={handleHamburger}
+                      aria-label="Open contact details"
+                      aria-expanded={hamburger}
+                      aria-controls="site-sidebar"
+                    >
+                      <i className="fa-regular fa-bars-sort"></i>
+                    </button>
+                  </div>
+                  <button
+                    type="button"
+                    className="header-one__right-responsive-menu menu__bar"
+                    onClick={() => handleToggleMenu()}
+                    aria-label="Open navigation menu"
+                    aria-expanded={toggleMenu}
+                    aria-controls="mobile-navigation"
+                  >
+                    <i className="fa-regular fa-bars"></i>
+                  </button>
+                </div>
               </div>
             </div>
           </div>
