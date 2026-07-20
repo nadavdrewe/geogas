@@ -29,7 +29,7 @@ const ContractsContent = () => {
               <p>{contractsContent.currentPricingNotice}</p>
               <div className="contracts__page-reference-links">
                 <Link href="/pricing">View Current Pricing</Link>
-                <Link href="/pricing">Open Pricing Page</Link>
+                <Link href="/pricing">See Call-Out Rates</Link>
               </div>
             </div>
           </div>

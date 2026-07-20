@@ -323,6 +323,52 @@ select:focus {
   }
 }
 
+/* Main navigation routes share the same page rhythm and action alignment. */
+@media (min-width: 768px) {
+  .breadcrumb__area {
+    padding: clamp(104px, 10vw, 138px) 0;
+
+    &-title h1 {
+      font-size: clamp(46px, 4vw, 60px);
+      line-height: 1.08;
+    }
+  }
+}
+
+.about__one-right-actions,
+.contact__page-left-links,
+.contracts__overview-buttons {
+  .button-1,
+  .button-2 {
+    display: flex;
+    min-height: 56px;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    padding: 14px 18px;
+    text-align: left;
+    line-height: 22px;
+
+    i {
+      margin-inline-start: auto;
+      flex: 0 0 auto;
+    }
+  }
+}
+
+.contact__page-left-links {
+  .button-2 {
+    min-width: 212px;
+  }
+}
+
+.contracts__overview-buttons {
+  .button-1,
+  .button-2 {
+    min-width: 220px;
+  }
+}
+
 @media (max-width: 1199px) {
   .header-two {
     padding: 14px 0;
@@ -458,6 +504,16 @@ select:focus {
 
   .competition-hero__secondary-cta {
     width: 100%;
+  }
+
+  .about__one-right-actions,
+  .contact__page-left-links,
+  .contracts__overview-buttons {
+    .button-1,
+    .button-2 {
+      width: 100%;
+      justify-content: space-between;
+    }
   }
 
   .subscribe__two {
