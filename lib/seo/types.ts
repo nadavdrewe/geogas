@@ -47,6 +47,14 @@ export type SeoReview = {
   location?: string;
 };
 
+export type SeoVisualAsset = {
+  src: string;
+  alt: string;
+  label?: string;
+  title?: string;
+  description?: string;
+};
+
 export type SeoPageBase = {
   type: SeoPageType;
   slug: string;
@@ -56,6 +64,8 @@ export type SeoPageBase = {
   h1: string;
   intro: string;
   heroEyebrow?: string;
+  heroImage?: SeoVisualAsset;
+  featureImage?: SeoVisualAsset;
   pricingGuidance?: string;
   trustSignals?: string[];
   localProof?: string;

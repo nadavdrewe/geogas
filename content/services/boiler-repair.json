@@ -8,6 +8,19 @@
   "metaDescription": "Need boiler repair in London and Sussex? Fast response from a Gas Safe engineer for no heating, no hot water, leaks, pressure loss and boiler faults.",
   "h1": "Boiler Repair in London and Sussex",
   "intro": "If your boiler has stopped working, is leaking, losing pressure or not producing hot water, we provide fast boiler repair across London and Sussex with clear advice and practical fault diagnosis.",
+  "heroImage": {
+    "src": "/images/seo/boiler-repair/boiler-repair-hero-v1.png",
+    "alt": "Gas engineer using a diagnostic meter while inspecting a domestic boiler",
+    "label": "Boiler repair response",
+    "title": "Diagnosis before the repair"
+  },
+  "featureImage": {
+    "src": "/images/seo/boiler-repair/boiler-repair-diagnostics-v1.png",
+    "alt": "Engineer using diagnostic equipment on a domestic boiler with copper pipework",
+    "label": "A proper repair visit",
+    "title": "We test first, then explain the best repair route",
+    "description": "Clear fault finding gives you a practical recommendation before any major work is approved."
+  },
   "pricingGuidance": "Boiler repair visits are priced from a standard diagnostic call-out, with clear advice before additional parts or labour are approved.",
   "localProof": "Trusted by homeowners, landlords and property managers for breakdowns across Camden, Islington, Hackney and wider London and Sussex coverage.",
   "areasCovered": ["Camden", "Islington", "Brighton", "Hove", "Haywards Heath"],

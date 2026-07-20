@@ -106,127 +106,321 @@
 * Inner Page Engineer Spot
 ==========================================================================*/
 .inner-engineer-spot {
-  padding: 36px 0 10px;
+  --spot-accent: #e23b42;
+  --spot-accent-rgb: 226, 59, 66;
+  --spot-surface-start: #201416;
+  --spot-surface-end: #4a191d;
+  padding: 48px 0 18px;
+
   &__card {
     position: relative;
+    isolation: isolate;
+    display: grid;
+    grid-template-columns: minmax(0, 1.08fr) minmax(380px, 0.92fr);
+    align-items: stretch;
+    gap: clamp(32px, 5vw, 72px);
     overflow: hidden;
-    border-radius: 24px;
-    padding: 28px;
-    border: 1px solid rgba(255, 255, 255, 0.25);
-    background: linear-gradient(135deg, #111 0%, #1d1d1d 52%, #2a2a2a 100%);
-    box-shadow: 0 20px 55px rgba(0, 0, 0, 0.16);
+    min-height: 460px;
+    border-radius: 30px;
+    padding: clamp(28px, 4vw, 52px);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    background:
+      radial-gradient(circle at 92% 7%, rgba(var(--spot-accent-rgb), 0.34), transparent 27%),
+      linear-gradient(128deg, var(--spot-surface-start) 0%, var(--spot-surface-end) 100%);
+    box-shadow: 0 30px 75px rgba(15, 23, 42, 0.2);
   }
+
   &__card::before {
     content: "";
     position: absolute;
-    top: -80px;
-    right: -60px;
-    width: 240px;
-    height: 240px;
-    border-radius: 50%;
-    background: rgba(255, 255, 255, 0.08);
+    z-index: -1;
+    inset: 0;
+    opacity: 0.18;
+    background-image: radial-gradient(rgba(255, 255, 255, 0.7) 1px, transparent 1px);
+    background-size: 22px 22px;
+    mask-image: linear-gradient(90deg, transparent 48%, #000 100%);
     pointer-events: none;
   }
+
+  &__card::after {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 6px;
+    background: var(--spot-accent);
+  }
+
   &__content {
     position: relative;
     z-index: 1;
-    h3 {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+
+    h2 {
       color: var(--text-white);
-      margin-bottom: 12px;
-      max-width: 520px;
+      max-width: 640px;
+      margin-bottom: 18px;
+      font-size: clamp(38px, 3.2vw, 54px);
+      line-height: 1.06;
+      letter-spacing: -0.035em;
     }
+
     p {
-      color: rgba(255, 255, 255, 0.86);
-      margin-bottom: 16px;
-      max-width: 560px;
+      max-width: 620px;
+      margin-bottom: 30px;
+      color: rgba(255, 255, 255, 0.76);
+      font-size: 18px;
+      line-height: 1.65;
     }
   }
+
   &__eyebrow {
     display: inline-flex;
-    margin-bottom: 10px;
-    padding: 7px 12px;
-    font-size: 13px;
-    line-height: 1;
-    font-weight: 600;
-    border-radius: 999px;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--text-white);
-    background: rgba(255, 255, 255, 0.14);
-  }
-  &__meta {
-    display: flex;
-    gap: 12px;
-    flex-wrap: wrap;
     align-items: center;
+    gap: 9px;
     margin-bottom: 20px;
-  }
-  &__name {
-    color: var(--text-white);
+    padding: 8px 13px;
+    font-size: 12px;
+    line-height: 1;
     font-weight: 700;
+    border-radius: 999px;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.9);
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(10px);
   }
+
+  &__eyebrow-mark {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--spot-accent);
+    box-shadow: 0 0 0 5px rgba(var(--spot-accent-rgb), 0.16);
+  }
+
+  &__meta {
+    position: absolute;
+    z-index: 2;
+    right: 18px;
+    bottom: 18px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-width: 220px;
+    padding: 12px 14px;
+    border: 1px solid rgba(15, 23, 42, 0.09);
+    border-radius: 16px;
+    color: #17212a;
+    background: rgba(255, 255, 255, 0.92);
+    box-shadow: 0 16px 35px rgba(15, 23, 42, 0.18);
+    backdrop-filter: blur(12px);
+  }
+
+  &__avatar {
+    display: grid;
+    width: 42px;
+    height: 42px;
+    flex: 0 0 42px;
+    place-items: center;
+    border-radius: 12px;
+    color: #fff;
+    background: var(--spot-accent);
+    font-size: 16px;
+    font-weight: 800;
+  }
+
+  &__person {
+    display: flex;
+    min-width: 0;
+    flex: 1;
+    flex-direction: column;
+  }
+
+  &__name {
+    color: #17212a;
+    font-size: 15px;
+    line-height: 20px;
+    font-weight: 800;
+  }
+
   &__role {
-    font-size: 14px;
-    line-height: 24px;
-    color: rgba(255, 255, 255, 0.75);
+    overflow: hidden;
+    color: #65717c;
+    font-size: 12px;
+    line-height: 17px;
+    font-weight: 500;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
+
+  &__verified {
+    display: grid;
+    width: 26px;
+    height: 26px;
+    flex: 0 0 26px;
+    place-items: center;
+    border-radius: 50%;
+    color: #fff;
+    background: #17212a;
+    font-size: 11px;
+  }
+
   &__actions {
     display: flex;
-    gap: 12px;
+    gap: 14px;
     flex-wrap: wrap;
 
     .button-1,
     .button-2 {
-      display: grid;
-      grid-template-columns: minmax(0, 1fr) auto;
-      column-gap: 12px;
+      display: flex;
       align-items: center;
+      justify-content: space-between;
+      gap: 20px;
       min-height: 56px;
-      padding: 14px 18px;
-      font-size: 16px;
+      padding: 10px 12px 10px 20px;
+      border: 1px solid transparent;
+      border-radius: 14px;
+      box-shadow: none;
+      font-size: 15px;
       line-height: 22px;
+      font-weight: 700;
       text-align: left;
 
-      .inner-engineer-spot__action-label {
-        min-width: 0;
+      &:hover {
+        border-color: rgba(255, 255, 255, 0.28);
+        box-shadow: 0 12px 24px rgba(0, 0, 0, 0.18);
       }
+    }
 
-      i {
-        justify-self: end;
+    .button-1 {
+      color: #18212a;
+      background: #fff;
+
+      &:hover {
+        color: #18212a;
+        background: #fff;
+      }
+    }
+
+    .button-2 {
+      color: #fff;
+      border-color: rgba(255, 255, 255, 0.24);
+      background: rgba(255, 255, 255, 0.08);
+
+      &:hover {
+        color: #fff;
+        background: rgba(255, 255, 255, 0.15);
       }
     }
   }
-  &__image {
-    position: relative;
-    border-radius: 18px;
-    background: linear-gradient(
-      180deg,
-      rgba(255, 255, 255, 0.12) 0%,
-      rgba(255, 255, 255, 0.04) 100%
-    );
-    border: 1px solid rgba(255, 255, 255, 0.18);
-    min-height: 320px;
-    padding: 16px;
+
+  &__action-icon {
+    display: grid;
+    width: 34px;
+    height: 34px;
+    flex: 0 0 34px;
+    place-items: center;
+    border-radius: 10px;
+    color: #fff;
+    background: var(--spot-accent);
+    font-size: 13px;
   }
+
+  .button-2 &__action-icon {
+    color: #17212a;
+    background: #fff;
+  }
+
+  &__visual {
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+    min-height: 356px;
+    border: 1px solid rgba(255, 255, 255, 0.32);
+    border-radius: 24px;
+    background:
+      radial-gradient(circle at 75% 20%, rgba(var(--spot-accent-rgb), 0.17), transparent 28%),
+      #f4efe7;
+    box-shadow: 0 22px 45px rgba(0, 0, 0, 0.2);
+  }
+
+  &__visual::before {
+    content: "";
+    position: absolute;
+    z-index: 1;
+    top: 22px;
+    right: 22px;
+    width: 62px;
+    height: 62px;
+    border: 1px solid rgba(var(--spot-accent-rgb), 0.32);
+    border-radius: 50%;
+    box-shadow:
+      0 0 0 11px rgba(var(--spot-accent-rgb), 0.08),
+      0 0 0 22px rgba(var(--spot-accent-rgb), 0.04);
+    pointer-events: none;
+  }
+
   &__image-frame {
     position: relative;
     width: 100%;
     height: 100%;
-    min-height: 286px;
+    min-height: 356px;
   }
+
   &__image-tag {
-    object-fit: contain;
-    object-position: center bottom;
-    filter: drop-shadow(0 20px 24px rgba(0, 0, 0, 0.22));
+    object-fit: cover;
+    object-position: center 20%;
+    mix-blend-mode: multiply;
+    filter: saturate(0.96) contrast(1.02);
   }
+
   &--red &__card {
-    background: linear-gradient(135deg, #171717 0%, #6f0f16 55%, #cc212f 100%);
+    --spot-accent: #e23b42;
+    --spot-accent-rgb: 226, 59, 66;
+    --spot-surface-start: #201416;
+    --spot-surface-end: #511a20;
   }
+
   &--teal &__card {
-    background: linear-gradient(135deg, #10202c 0%, #0d4c57 55%, #1497a8 100%);
+    --spot-accent: #35bec9;
+    --spot-accent-rgb: 53, 190, 201;
+    --spot-surface-start: #0d2730;
+    --spot-surface-end: #0f5962;
   }
+
   &--green &__card {
-    background: linear-gradient(135deg, #122116 0%, #1f6330 56%, #46b34f 100%);
+    --spot-accent: #62bd6d;
+    --spot-accent-rgb: 98, 189, 109;
+    --spot-surface-start: #14271b;
+    --spot-surface-end: #285d34;
+  }
+}
+
+@media (max-width: 991px) {
+  .inner-engineer-spot {
+    &__card {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    &__content {
+      align-items: flex-start;
+    }
+
+    &__visual,
+    &__image-frame {
+      min-height: 400px;
+    }
+
+    &__image-tag {
+      object-position: center 16%;
+    }
   }
 }
 @media (max-width: 767px) {
@@ -264,21 +458,49 @@
   }
   .inner-engineer-spot {
     padding-top: 24px;
+
     &__card {
-      padding: 22px 18px;
-      border-radius: 20px;
+      gap: 26px;
+      min-height: 0;
+      padding: 26px 20px 20px;
+      border-radius: 22px;
     }
-    &__content h3 {
-      font-size: 26px;
-      line-height: 36px;
+
+    &__content h2 {
+      margin-bottom: 14px;
+      font-size: 32px;
+      line-height: 1.08;
     }
-    &__image {
-      min-height: 260px;
-      padding: 10px;
+
+    &__content p {
+      margin-bottom: 24px;
+      font-size: 16px;
+      line-height: 1.6;
     }
+
+    &__eyebrow {
+      margin-bottom: 16px;
+    }
+
+    &__visual,
     &__image-frame {
-      min-height: 240px;
+      min-height: 300px;
+      border-radius: 18px;
     }
+
+    &__image-tag {
+      object-position: center 17%;
+    }
+
+    &__meta {
+      right: 12px;
+      bottom: 12px;
+      left: 12px;
+      min-width: 0;
+      padding: 10px 11px;
+      border-radius: 14px;
+    }
+
     &__actions {
       display: grid;
       grid-template-columns: minmax(0, 1fr);
@@ -286,7 +508,7 @@
       .button-1,
       .button-2 {
         width: 100%;
-        min-height: 58px;
+        min-height: 56px;
       }
     }
   }

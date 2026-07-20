@@ -6,6 +6,8 @@ import SeoInternalLinks from "@/components/seo/SeoInternalLinks";
 import SeoPageScaffold from "@/components/seo/SeoPageScaffold";
 import SeoReviewsBlock from "@/components/seo/SeoReviewsBlock";
 import SeoSectionList from "@/components/seo/SeoSectionList";
+import SeoVisualFeature from "@/components/seo/SeoVisualFeature";
+import { getSeoPageVisuals } from "@/lib/seo/pageVisuals";
 import { ServicePage } from "@/lib/seo/types";
 
 type ServicePageTemplateProps = {
@@ -14,6 +16,8 @@ type ServicePageTemplateProps = {
 };
 
 const ServicePageTemplate = ({ company, page }: ServicePageTemplateProps) => {
+  const { featureImage } = getSeoPageVisuals(page);
+
   return (
     <SeoPageScaffold
       company={company}
@@ -26,7 +30,9 @@ const ServicePageTemplate = ({ company, page }: ServicePageTemplateProps) => {
       ]}
       sidebarExtra={<SeoBulletPanel items={page.areasCovered} title="Areas covered" />}
     >
-      <SeoSectionList sections={page.sections} />
+      <SeoSectionList sections={page.sections.slice(0, 1)} />
+      {featureImage ? <SeoVisualFeature image={featureImage} /> : null}
+      <SeoSectionList sections={page.sections.slice(1)} />
       <SeoBulletPanel items={page.trustSignals || []} title="Why customers book us" />
       <SeoReviewsBlock reviews={page.reviews || []} />
       <SeoFaqBlock faq={page.faq} />
@@ -37,4 +43,3 @@ const ServicePageTemplate = ({ company, page }: ServicePageTemplateProps) => {
 };
 
 export default ServicePageTemplate;
-
