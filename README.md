@@ -33,7 +33,9 @@ The project now includes a starter admin panel for editable site content:
 - `/admin` reads and writes content through `/api/admin/documents`, with the site document stored as `site:published`.
 - Public client refreshes read site content through `/api/content/site`.
 - `ADMIN_PANEL_KEY` is required: without it, all admin content and upload routes fail closed.
-- `LEAD_WEBHOOK_URL` (or the contact/newsletter-specific override) is required for forms to report successful delivery. Without one, forms return a safe temporary-unavailable response and do not log personal data.
+- `LEAD_WEBHOOK_URL` (or the contact/newsletter-specific override) remains the fallback form delivery method. Contact/quote and chatbot booking forms can instead use the Gmail SMTP configuration below; without either delivery method, forms return a safe temporary-unavailable response and do not log personal data.
+- To send contact/quote and chatbot booking notifications directly through a personal Gmail account, set `GMAIL_SMTP_USER`, `GMAIL_SMTP_APP_PASSWORD`, and `BOOKING_NOTIFICATION_TO`. When all three are set, Gmail SMTP is used in preference to the legacy webhook. The App Password must never be committed or exposed to the browser.
+- `FORM_ALLOWED_ORIGINS` is a comma-separated list of public origins that can submit chatbot booking requests. Set it to the public domain(s) when the app is behind a reverse proxy; Geo Gas's `www` and non-`www` domains are allowed by default.
 - Competition entries submitted from the site-load modal are stored in the local `competition_entries` SQLite table. Retrieve the latest entries from `/api/competition/entries` using the configured `x-admin-key`; the endpoint never exposes entries publicly.
 - The QR-code destination is `/competition`; it uses the same entry flow and records entries with the `competition-page` source.
 

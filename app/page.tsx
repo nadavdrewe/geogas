@@ -50,20 +50,22 @@ const page = () => {
   return (
     <>
       <HeaderTwo />
-      {homeHeroVariant === "competition" ? <CompetitionHomeHero /> : <BannerTwo />}
-      <GeoChatbotSection />
-      <Services />
-      <ContractsOverview />
-      <PricingListing compact={true} />
-      <Solutions />
-      <WorkProcess />
-      <Faq />
-      <Team />
-      <Testimonial />
-      <Contact />
-      <Blog />
-      <SubscribeArea />
-      <ComicStripSection />
+      <main className="site-home">
+        {homeHeroVariant === "competition" ? <CompetitionHomeHero /> : <BannerTwo />}
+        <GeoChatbotSection />
+        <Services />
+        <ContractsOverview />
+        <PricingListing compact={true} />
+        <Solutions />
+        <WorkProcess />
+        <Faq />
+        <Team />
+        <Testimonial />
+        <Contact />
+        <Blog />
+        <SubscribeArea />
+        <ComicStripSection />
+      </main>
       <FooterTwo />
       <InitAnimations />
       <CustomCursor />

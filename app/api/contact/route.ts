@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { sendBookingEmail } from "@/lib/bookingEmail";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -55,26 +56,46 @@ export async function POST(request: Request) {
       createdAt: new Date().toISOString(),
     };
 
-    const webhookUrl =
-      process.env.CONTACT_WEBHOOK_URL || process.env.LEAD_WEBHOOK_URL;
+    try {
+      const emailSent = await sendBookingEmail({
+        name: enquiry.name,
+        email: enquiry.email,
+        phone: enquiry.phone,
+        postcode: enquiry.postcode,
+        service: enquiry.subject,
+        details: enquiry.message,
+        source: enquiry.source,
+        receivedAt: enquiry.createdAt,
+      });
 
-    if (!webhookUrl) {
-      return NextResponse.json(
-        { error: "Enquiries are temporarily unavailable. Please call us instead." },
-        { status: 503 }
-      );
-    }
+      if (!emailSent) {
+        const webhookUrl =
+          process.env.CONTACT_WEBHOOK_URL || process.env.LEAD_WEBHOOK_URL;
 
-    const webhookResponse = await fetch(webhookUrl, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(enquiry),
-      signal: AbortSignal.timeout(10_000),
-    });
+        if (!webhookUrl) {
+          return NextResponse.json(
+            { error: "Enquiries are temporarily unavailable. Please call us instead." },
+            { status: 503 }
+          );
+        }
 
-    if (!webhookResponse.ok) {
+        const webhookResponse = await fetch(webhookUrl, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(enquiry),
+          signal: AbortSignal.timeout(10_000),
+        });
+
+        if (!webhookResponse.ok) {
+          return NextResponse.json(
+            { error: "Unable to deliver enquiry right now." },
+            { status: 502 }
+          );
+        }
+      }
+    } catch {
       return NextResponse.json(
         { error: "Unable to deliver enquiry right now." },
         { status: 502 }

@@ -37,6 +37,10 @@ const CompetitionHomeHero = () => {
                 Enter the competition
                 <i className="fa-regular fa-angle-right" aria-hidden="true" />
               </Link>
+              <Link className="competition-hero__secondary-cta" href="/contact">
+                Need help today? Book a call-out
+                <i className="fa-solid fa-phone" aria-hidden="true" />
+              </Link>
               <span>It only takes a moment to enter.</span>
             </div>
           </div>

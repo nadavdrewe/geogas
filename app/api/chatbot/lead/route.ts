@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { sendBookingEmail } from "@/lib/bookingEmail";
 import { createWebsiteLead } from "@/lib/contentDatabase";
 
 export const runtime = "nodejs";
@@ -52,9 +53,52 @@ const validate = (payload: LeadPayload): string | null => {
   return null;
 };
 
+const normaliseOrigin = (value: string | null): string | null => {
+  if (!value) return null;
+
+  try {
+    return new URL(value).origin;
+  } catch {
+    return null;
+  }
+};
+
 const requestIsSameOrigin = (request: Request): boolean => {
   const origin = request.headers.get("origin");
-  return !origin || origin === new URL(request.url).origin;
+  if (!origin) return true;
+
+  const requestOrigin = normaliseOrigin(request.url);
+  const forwardedHost = request.headers.get("x-forwarded-host")?.split(",")[0]?.trim();
+  const forwardedProtocol =
+    request.headers.get("x-forwarded-proto")?.split(",")[0]?.trim() || "https";
+  const forwardedOrigin = forwardedHost
+    ? normaliseOrigin(`${forwardedProtocol}://${forwardedHost}`)
+    : null;
+  const configuredOrigins = (process.env.FORM_ALLOWED_ORIGINS || "")
+    .split(",")
+    .map((value) => normaliseOrigin(value.trim()))
+    .filter((value): value is string => Boolean(value));
+  const defaultPublicOrigins = [
+    "https://www.geogasservices.uk",
+    "https://geogasservices.uk",
+  ];
+  const allowedOrigins = new Set([...configuredOrigins, ...defaultPublicOrigins]);
+
+  // Local development can legitimately use a changing localhost port. In
+  // production only the explicitly trusted public origins above are accepted.
+  if (process.env.NODE_ENV !== "production" && origin === requestOrigin) {
+    return true;
+  }
+
+  if (
+    process.env.NODE_ENV !== "production" &&
+    forwardedOrigin &&
+    origin === forwardedOrigin
+  ) {
+    return true;
+  }
+
+  return allowedOrigins.has(origin);
 };
 
 export async function POST(request: Request) {
@@ -93,10 +137,30 @@ export async function POST(request: Request) {
       source: "website-chatbot",
     });
 
-    const webhookUrl = process.env.LEAD_WEBHOOK_URL;
+    try {
+      const emailSent = await sendBookingEmail({
+        name: lead.name,
+        email: lead.email,
+        phone: lead.phone,
+        postcode: lead.postcode,
+        service: lead.service,
+        details: lead.note,
+        source: "website-chatbot",
+        receivedAt: lead.createdAt,
+        sourceQuestion: lead.sourceQuestion,
+        sourceAnswer: lead.sourceAnswer,
+      });
 
-    if (webhookUrl) {
-      try {
+      if (!emailSent) {
+        const webhookUrl = process.env.LEAD_WEBHOOK_URL;
+
+        if (!webhookUrl) {
+          return NextResponse.json(
+            { error: "Unable to deliver booking request right now." },
+            { status: 503 }
+          );
+        }
+
         const webhookResponse = await fetch(webhookUrl, {
           method: "POST",
           headers: {
@@ -107,11 +171,17 @@ export async function POST(request: Request) {
         });
 
         if (!webhookResponse.ok) {
-          console.error("Lead webhook failed after the booking was saved.");
+          return NextResponse.json(
+            { error: "Unable to deliver booking request right now." },
+            { status: 502 }
+          );
         }
-      } catch {
-        console.error("Lead webhook could not be reached after the booking was saved.");
       }
+    } catch {
+      return NextResponse.json(
+        { error: "Unable to deliver booking request right now." },
+        { status: 502 }
+      );
     }
 
     return NextResponse.json({
