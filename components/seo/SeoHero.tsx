@@ -15,6 +15,14 @@ type SeoHeroProps = {
 };
 
 const SeoHero = ({ company, page, summaryTitle, summaryItems }: SeoHeroProps) => {
+  const contactMetaSignals = new Set([
+    "whatsapp support available",
+    "gas safe registered",
+  ]);
+  const trustSignals = page.trustSignals?.filter(
+    (signal) => !contactMetaSignals.has(signal.trim().toLowerCase())
+  );
+
   return (
     <section className="seo-page__hero">
       <div className="seo-page__hero-card">
@@ -44,9 +52,9 @@ const SeoHero = ({ company, page, summaryTitle, summaryItems }: SeoHeroProps) =>
                   Gas Safe registered
                 </span>
               </div>
-              {page.trustSignals?.length ? (
+              {trustSignals?.length ? (
                 <div className="seo-page__chips">
-                  {page.trustSignals.map((signal) => (
+                  {trustSignals.map((signal) => (
                     <span key={signal}>{signal}</span>
                   ))}
                 </div>
@@ -103,4 +111,3 @@ const SeoHero = ({ company, page, summaryTitle, summaryItems }: SeoHeroProps) =>
 };
 
 export default SeoHero;
-

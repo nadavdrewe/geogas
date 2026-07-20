@@ -40,73 +40,90 @@ const ContactArea = () => {
                 />
               </div>
               <div className="info">
-                <h4 className="info-title">Direct Contact Details</h4>
+                <div className="contact__page-info-heading">
+                  <span>Talk to the team</span>
+                  <h4 className="info-title">Direct Contact Details</h4>
+                </div>
                 <p className="info-note">
                   Use the numbers below for general enquiries and emergency
                   call-outs. Contract helpline details from the brochure are
                   listed separately.
                 </p>
 
-                {contactContent.infoItems.map((item) => (
-                  <div className="info-item" key={`${item.label}-${item.href}`}>
+                <div className="contact__page-direct-grid">
+                  {contactContent.infoItems.map((item) => {
+                    const isEmergency = item.label.toLowerCase().includes("emergency");
+
+                    return (
+                      <div
+                        className={
+                          "info-item info-item--action" +
+                          (isEmergency ? " info-item--emergency" : "")
+                        }
+                        key={`${item.label}-${item.href}`}
+                      >
+                        <div className="info-item-icon">
+                          <i className={iconForLabel(item.label)}></i>
+                        </div>
+                        <div className="info-item-content">
+                          <span>{item.label}</span>
+                          <h6>
+                            <Link href={item.href}>{item.value}</Link>
+                          </h6>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+
+                <div className="contact__page-info-details">
+                  <div className="info-item info-item--meta">
                     <div className="info-item-icon">
-                      <i className={iconForLabel(item.label)}></i>
+                      <i className="fal fa-map-marked-alt"></i>
                     </div>
                     <div className="info-item-content">
-                      <span>{item.label}</span>
-                      <h6>
-                        <Link href={item.href}>{item.value}</Link>
-                      </h6>
+                      <span>Operating Locations</span>
+                      <h6>{contactContent.operatingLocations}</h6>
                     </div>
                   </div>
-                ))}
 
-                <div className="info-item info-item--meta">
-                  <div className="info-item-icon">
-                    <i className="fal fa-map-marked-alt"></i>
+                  <div className="info-item info-item--meta">
+                    <div className="info-item-icon">
+                      <i className="fal fa-clock"></i>
+                    </div>
+                    <div className="info-item-content">
+                      <span>Contact Hours</span>
+                      <h6>{contactContent.contactHours.regularDays}</h6>
+                      {contactContent.contactHours.regularHours ? (
+                        <h6>{contactContent.contactHours.regularHours}</h6>
+                      ) : null}
+                      {contactContent.contactHours.emergency ? (
+                        <p>{contactContent.contactHours.emergency}</p>
+                      ) : null}
+                    </div>
                   </div>
-                  <div className="info-item-content">
-                    <span>Operating Locations</span>
-                    <h6>{contactContent.operatingLocations}</h6>
-                  </div>
-                </div>
 
-                <div className="info-item info-item--meta">
-                  <div className="info-item-icon">
-                    <i className="fal fa-clock"></i>
-                  </div>
-                  <div className="info-item-content">
-                    <span>Contact Hours</span>
-                    <h6>{contactContent.contactHours.regularDays}</h6>
-                    {contactContent.contactHours.regularHours ? (
-                      <h6>{contactContent.contactHours.regularHours}</h6>
-                    ) : null}
-                    {contactContent.contactHours.emergency ? (
-                      <p>{contactContent.contactHours.emergency}</p>
-                    ) : null}
-                  </div>
-                </div>
-
-                <div className="info-item info-item--brochure">
-                  <div className="info-item-icon">
-                    <i className="fal fa-file-alt"></i>
-                  </div>
-                  <div className="info-item-content">
-                    <span>Brochure Contract Helpline</span>
-                    {brochureContactItems.map((item) => (
-                      <p key={`${item.label}-${item.href}`}>
-                        <a
-                          href={item.href}
-                          target={item.href.startsWith("http") ? "_blank" : undefined}
-                          rel={item.href.startsWith("http") ? "noreferrer" : undefined}
-                        >
-                          {item.value}
-                          {item.label === "Email" || item.label === "Website"
-                            ? ""
-                            : ` (${item.label})`}
-                        </a>
-                      </p>
-                    ))}
+                  <div className="info-item info-item--brochure">
+                    <div className="info-item-icon">
+                      <i className="fal fa-file-alt"></i>
+                    </div>
+                    <div className="info-item-content">
+                      <span>Brochure Contract Helpline</span>
+                      {brochureContactItems.map((item) => (
+                        <p key={`${item.label}-${item.href}`}>
+                          <a
+                            href={item.href}
+                            target={item.href.startsWith("http") ? "_blank" : undefined}
+                            rel={item.href.startsWith("http") ? "noreferrer" : undefined}
+                          >
+                            {item.value}
+                            {item.label === "Email" || item.label === "Website"
+                              ? ""
+                              : ` (${item.label})`}
+                          </a>
+                        </p>
+                      ))}
+                    </div>
                   </div>
                 </div>
 
@@ -134,6 +151,13 @@ const ContactArea = () => {
                   <span key={badge}>{badge}</span>
                 ))}
               </div>
+              <div className="contact__page-form-heading">
+                <span>Request details</span>
+                <p>
+                  Give us the essentials and we will route your enquiry to the right
+                  team member. For an urgent call-out, use the 24/7 number instead.
+                </p>
+              </div>
               <div data-aos-duration="800" data-aos="fade-left" data-aos-delay="500">
                 <CalloutQuoteForm
                   namePlaceholder={contactContent.form.fullNamePlaceholder}
@@ -143,6 +167,7 @@ const ContactArea = () => {
                   submitLabel={contactContent.form.submitLabel}
                   submitButtonClassName="button-1"
                   source="contact-page-form"
+                  showFieldLabels
                 />
               </div>
             </div>

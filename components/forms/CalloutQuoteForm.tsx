@@ -1,6 +1,6 @@
 "use client";
 
-import { FormEvent, useState } from "react";
+import { FormEvent, useId, useState } from "react";
 
 type CalloutQuoteFormProps = {
   namePlaceholder: string;
@@ -12,6 +12,7 @@ type CalloutQuoteFormProps = {
   submitLabel: string;
   submitButtonClassName?: string;
   source?: string;
+  showFieldLabels?: boolean;
 };
 
 type SubmitState = {
@@ -34,7 +35,9 @@ const CalloutQuoteForm = ({
   submitLabel,
   submitButtonClassName = "button-1",
   source = "website-contact-form",
+  showFieldLabels = false,
 }: CalloutQuoteFormProps) => {
+  const fieldIdPrefix = useId().replace(/:/g, "");
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
@@ -102,13 +105,34 @@ const CalloutQuoteForm = ({
     }
   };
 
+  const FieldLabel = ({
+    field,
+    children,
+    optional = false,
+  }: {
+    field: string;
+    children: string;
+    optional?: boolean;
+  }) =>
+    showFieldLabels ? (
+      <label className="contact__form-label" htmlFor={`${fieldIdPrefix}-${field}`}>
+        {children}
+        {optional ? <span>Optional</span> : <strong aria-hidden="true">Required</strong>}
+      </label>
+    ) : null;
+
   return (
-    <form onSubmit={handleSubmit}>
+    <form
+      className={showFieldLabels ? "contact__form contact__form--labelled" : "contact__form"}
+      onSubmit={handleSubmit}
+    >
       <div className="row">
         <div className="col-md-6 mb-30">
           <div className="contact__form-area-item">
+            <FieldLabel field="name">Full name</FieldLabel>
             <input
               type="text"
+              id={`${fieldIdPrefix}-name`}
               name="name"
               value={name}
               onChange={(event) => setName(event.target.value)}
@@ -120,8 +144,10 @@ const CalloutQuoteForm = ({
         </div>
         <div className="col-md-6 mb-30">
           <div className="contact__form-area-item">
+            <FieldLabel field="phone">Phone number</FieldLabel>
             <input
               type="tel"
+              id={`${fieldIdPrefix}-phone`}
               name="phone"
               value={phone}
               onChange={(event) => setPhone(event.target.value)}
@@ -133,8 +159,10 @@ const CalloutQuoteForm = ({
         </div>
         <div className="col-md-6 mb-30">
           <div className="contact__form-area-item">
+            <FieldLabel field="email">Email address</FieldLabel>
             <input
               type="email"
+              id={`${fieldIdPrefix}-email`}
               name="email"
               value={email}
               onChange={(event) => setEmail(event.target.value)}
@@ -146,8 +174,12 @@ const CalloutQuoteForm = ({
         </div>
         <div className="col-md-6 mb-30">
           <div className="contact__form-area-item">
+            <FieldLabel field="postcode" optional>
+              Postcode
+            </FieldLabel>
             <input
               type="text"
+              id={`${fieldIdPrefix}-postcode`}
               name="postcode"
               value={postcode}
               onChange={(event) => setPostcode(event.target.value)}
@@ -158,8 +190,12 @@ const CalloutQuoteForm = ({
         </div>
         <div className="col-md-12 mb-30">
           <div className="contact__form-area-item">
+            <FieldLabel field="subject" optional>
+              Service required
+            </FieldLabel>
             <input
               type="text"
+              id={`${fieldIdPrefix}-subject`}
               name="subject"
               value={subject}
               onChange={(event) => setSubject(event.target.value)}
@@ -170,7 +206,9 @@ const CalloutQuoteForm = ({
         </div>
         <div className="col-md-12 mb-30">
           <div className="contact__form-area-item">
+            <FieldLabel field="message">What can we help with?</FieldLabel>
             <textarea
+              id={`${fieldIdPrefix}-message`}
               name="message"
               value={message}
               onChange={(event) => setMessage(event.target.value)}

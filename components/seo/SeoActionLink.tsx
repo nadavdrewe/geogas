@@ -21,7 +21,7 @@ const SeoActionLink = ({ href, label, className }: SeoActionLinkProps) => {
         target={href.startsWith("http") ? "_blank" : undefined}
         rel={href.startsWith("http") ? "noreferrer" : undefined}
       >
-        {label}
+        <span className="seo-action-link__label">{label}</span>
         <i className="fa-regular fa-angle-right"></i>
       </a>
     );
@@ -29,11 +29,10 @@ const SeoActionLink = ({ href, label, className }: SeoActionLinkProps) => {
 
   return (
     <Link className={className} href={href}>
-      {label}
+      <span className="seo-action-link__label">{label}</span>
       <i className="fa-regular fa-angle-right"></i>
     </Link>
   );
 };
 
 export default SeoActionLink;
-
