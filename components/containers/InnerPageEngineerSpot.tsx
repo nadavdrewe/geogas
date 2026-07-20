@@ -48,11 +48,13 @@ const InnerPageEngineerSpot = ({
                 </div>
                 <div className="inner-engineer-spot__actions">
                   <Link className="button-1" href={ctaHref}>
-                    {ctaLabel}
+                    <span className="inner-engineer-spot__action-label">{ctaLabel}</span>
                     <i className="fa-regular fa-angle-right"></i>
                   </Link>
                   <Link className="button-2" href={secondaryCtaHref}>
-                    {secondaryCtaLabel}
+                    <span className="inner-engineer-spot__action-label">
+                      {secondaryCtaLabel}
+                    </span>
                     <i className="fa-regular fa-angle-right"></i>
                   </Link>
                 </div>

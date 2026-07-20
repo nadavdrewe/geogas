@@ -60,6 +60,32 @@
     gap: 12px;
   }
 
+  &__actions {
+    margin-top: 2px;
+
+    .button-1,
+    .button-2 {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      column-gap: 14px;
+      align-items: center;
+      min-height: 60px;
+      padding: 14px 18px;
+      font-size: 16px;
+      line-height: 22px;
+      font-weight: 600;
+      text-align: left;
+
+      .seo-action-link__label {
+        min-width: 0;
+      }
+
+      i {
+        justify-self: end;
+      }
+    }
+  }
+
   &__contact-meta {
     margin-bottom: 18px;
 
@@ -427,6 +453,18 @@
       .button-1,
       .button-2 {
         width: 100%;
+      }
+    }
+
+    &__actions {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      gap: 12px;
+
+      .button-1,
+      .button-2 {
+        width: 100%;
+        min-height: 60px;
       }
     }
   }
