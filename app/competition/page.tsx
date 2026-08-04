@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import CompetitionEntryCount from "@/components/competition/CompetitionEntryCount";
 import CompetitionEntryForm from "@/components/competition/CompetitionEntryForm";
 import CompetitionGallery from "@/components/competition/CompetitionGallery";
 import FooterTwo from "@/components/layout/footer/FooterTwo";
@@ -38,6 +39,7 @@ const CompetitionPage = () => {
                   Enter your details for the chance to win a year’s boiler cover
                   subscription and ongoing peace of mind.
                 </p>
+                <CompetitionEntryCount />
                 <ul className="competition-page__steps">
                   <li>Complete the short entry form below.</li>
                   <li>Follow, like and comment <strong>HERO</strong> on the competition post.</li>

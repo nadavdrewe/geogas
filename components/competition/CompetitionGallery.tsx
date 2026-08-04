@@ -7,6 +7,7 @@ import { competitionSlides } from "@/components/competition/competitionSlides";
 const CompetitionGallery = () => {
   const [activeSlide, setActiveSlide] = useState(0);
   const [autoRotate, setAutoRotate] = useState(true);
+  const hasMultipleSlides = competitionSlides.length > 1;
 
   const goToSlide = (index: number) => {
     setActiveSlide((index + competitionSlides.length) % competitionSlides.length);
@@ -14,6 +15,7 @@ const CompetitionGallery = () => {
 
   useEffect(() => {
     if (
+      !hasMultipleSlides ||
       !autoRotate ||
       window.matchMedia("(prefers-reduced-motion: reduce)").matches
     ) {
@@ -25,7 +27,7 @@ const CompetitionGallery = () => {
     }, 6000);
 
     return () => window.clearInterval(intervalId);
-  }, [autoRotate]);
+  }, [autoRotate, hasMultipleSlides]);
 
   const slide = competitionSlides[activeSlide];
 
@@ -43,46 +45,54 @@ const CompetitionGallery = () => {
           className="competition-gallery__image"
         />
       </div>
-      <div className="competition-gallery__controls" aria-label="Competition artwork controls">
-        <button
-          type="button"
-          onClick={() => goToSlide(activeSlide - 1)}
-          aria-label="Show previous competition image"
+      {hasMultipleSlides ? (
+        <div
+          className="competition-gallery__controls"
+          aria-label="Competition artwork controls"
         >
-          <i className="fa-solid fa-arrow-left" aria-hidden="true" />
-        </button>
-        <div className="competition-gallery__dots" aria-label="Choose competition image">
-          {competitionSlides.map((item, index) => (
-            <button
-              type="button"
-              key={item.src}
-              className={index === activeSlide ? "is-active" : ""}
-              onClick={() => goToSlide(index)}
-              aria-label={`Show competition image ${index + 1}`}
-              aria-pressed={index === activeSlide}
+          <button
+            type="button"
+            onClick={() => goToSlide(activeSlide - 1)}
+            aria-label="Show previous competition image"
+          >
+            <i className="fa-solid fa-arrow-left" aria-hidden="true" />
+          </button>
+          <div
+            className="competition-gallery__dots"
+            aria-label="Choose competition image"
+          >
+            {competitionSlides.map((item, index) => (
+              <button
+                type="button"
+                key={item.src}
+                className={index === activeSlide ? "is-active" : ""}
+                onClick={() => goToSlide(index)}
+                aria-label={`Show competition image ${index + 1}`}
+                aria-pressed={index === activeSlide}
+              />
+            ))}
+          </div>
+          <button
+            type="button"
+            onClick={() => goToSlide(activeSlide + 1)}
+            aria-label="Show next competition image"
+          >
+            <i className="fa-solid fa-arrow-right" aria-hidden="true" />
+          </button>
+          <button
+            type="button"
+            className="competition-gallery__pause"
+            onClick={() => setAutoRotate((enabled) => !enabled)}
+            aria-pressed={!autoRotate}
+          >
+            <i
+              className={autoRotate ? "fa-solid fa-pause" : "fa-solid fa-play"}
+              aria-hidden="true"
             />
-          ))}
+            {autoRotate ? "Pause" : "Play"}
+          </button>
         </div>
-        <button
-          type="button"
-          onClick={() => goToSlide(activeSlide + 1)}
-          aria-label="Show next competition image"
-        >
-          <i className="fa-solid fa-arrow-right" aria-hidden="true" />
-        </button>
-        <button
-          type="button"
-          className="competition-gallery__pause"
-          onClick={() => setAutoRotate((enabled) => !enabled)}
-          aria-pressed={!autoRotate}
-        >
-          <i
-            className={autoRotate ? "fa-solid fa-pause" : "fa-solid fa-play"}
-            aria-hidden="true"
-          />
-          {autoRotate ? "Pause" : "Play"}
-        </button>
-      </div>
+      ) : null}
     </section>
   );
 };

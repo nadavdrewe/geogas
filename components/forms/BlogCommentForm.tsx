@@ -1,6 +1,7 @@
 "use client";
 
 import { FormEvent, useState } from "react";
+import ContactCaptcha, { ContactCaptchaValue } from "./ContactCaptcha";
 
 type SubmitState = {
   status: "idle" | "sending" | "success" | "error";
@@ -12,18 +13,26 @@ const defaultState: SubmitState = {
   message: "",
 };
 
+const defaultCaptcha: ContactCaptchaValue = { token: "", answer: "" };
+
 const BlogCommentForm = () => {
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
   const [subject, setSubject] = useState("");
   const [message, setMessage] = useState("");
+  const [captcha, setCaptcha] = useState<ContactCaptchaValue>(defaultCaptcha);
   const [submitState, setSubmitState] = useState<SubmitState>(defaultState);
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     if (submitState.status === "sending") {
+      return;
+    }
+
+    if (!captcha.token || !captcha.answer.trim()) {
+      setSubmitState({ status: "error", message: "Please complete the security check." });
       return;
     }
 
@@ -42,6 +51,8 @@ const BlogCommentForm = () => {
           subject: subject || "Website blog comment enquiry",
           message,
           source: "website-blog-comment-form",
+          captchaToken: captcha.token,
+          captchaAnswer: captcha.answer,
         }),
       });
 
@@ -143,6 +154,11 @@ const BlogCommentForm = () => {
               aria-label="Comment"
               required
             ></textarea>
+          </div>
+        </div>
+        <div className="col-sm-12 mb-30">
+          <div className="contact-item">
+            <ContactCaptcha value={captcha} onChange={setCaptcha} />
           </div>
         </div>
         <div className="col-lg-12">

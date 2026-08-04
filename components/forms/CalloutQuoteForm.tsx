@@ -1,6 +1,7 @@
 "use client";
 
 import { FormEvent, useId, useState } from "react";
+import ContactCaptcha, { ContactCaptchaValue } from "./ContactCaptcha";
 
 type CalloutQuoteFormProps = {
   namePlaceholder: string;
@@ -25,6 +26,8 @@ const defaultState: SubmitState = {
   message: "",
 };
 
+const defaultCaptcha: ContactCaptchaValue = { token: "", answer: "" };
+
 const CalloutQuoteForm = ({
   namePlaceholder,
   phonePlaceholder = "Phone Number",
@@ -44,12 +47,18 @@ const CalloutQuoteForm = ({
   const [postcode, setPostcode] = useState("");
   const [subject, setSubject] = useState("");
   const [message, setMessage] = useState("");
+  const [captcha, setCaptcha] = useState<ContactCaptchaValue>(defaultCaptcha);
   const [submitState, setSubmitState] = useState<SubmitState>(defaultState);
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     if (submitState.status === "sending") {
+      return;
+    }
+
+    if (!captcha.token || !captcha.answer.trim()) {
+      setSubmitState({ status: "error", message: "Please complete the security check." });
       return;
     }
 
@@ -69,6 +78,8 @@ const CalloutQuoteForm = ({
           subject,
           message,
           source,
+          captchaToken: captcha.token,
+          captchaAnswer: captcha.answer,
         }),
       });
 
@@ -216,6 +227,11 @@ const CalloutQuoteForm = ({
               aria-label="Details of the issue"
               required
             ></textarea>
+          </div>
+        </div>
+        <div className="col-md-12 mb-30">
+          <div className="contact__form-area-item">
+            <ContactCaptcha value={captcha} onChange={setCaptcha} />
           </div>
         </div>
         <div className="col-md-12">

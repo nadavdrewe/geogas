@@ -75,6 +75,35 @@
   }
 }
 
+.competition-entry-count {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  margin: 0 0 18px;
+  padding: 9px 13px;
+  border: 1px solid rgba(188, 21, 32, 0.2);
+  border-radius: 999px;
+  background: rgba(188, 21, 32, 0.08);
+  color: #8f1019;
+  font-size: 14px;
+  font-weight: 800;
+  line-height: 1.3;
+
+  i {
+    color: #bc1520;
+  }
+
+  &.is-dark {
+    border-color: rgba(255, 255, 255, 0.28);
+    background: rgba(255, 255, 255, 0.12);
+    color: #ffffff;
+
+    i {
+      color: #ffffff;
+    }
+  }
+}
+
 .competition-gallery {
   display: flex;
   flex-direction: column;

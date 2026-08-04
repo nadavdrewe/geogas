@@ -31,13 +31,17 @@
   "include": [
     "**/*.ts",
     "**/*.tsx",
+    ".next-build-hardening/types/**/*.ts",
     ".next-build-live-*/types/**/*.ts",
+    ".next-build-live-122654406/types/**/*.ts",
+    ".next-build-live-2063219851/types/**/*.ts",
+    ".next-build-live-3185632274/types/**/*.ts",
     ".next-build/types/**/*.ts",
     ".next-dev/types/**/*.ts",
     ".next-prod/types/**/*.ts",
     ".next/types/**/*.ts",
     "next-env.d.ts",
-    ".next-build-hardening/types/**/*.ts"
+    ".next-build-live-3228020542/types/**/*.ts"
   ],
   "exclude": [
     "node_modules"

@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useState } from "react";
+import CompetitionAdminDashboard from "@/components/admin/CompetitionAdminDashboard";
 import { defaultSiteContent } from "@/data/siteContent";
 
 type Primitive = string | number | boolean | null;
@@ -547,6 +548,8 @@ const AdminPage = () => {
             />
           </div>
         </div>
+
+        <CompetitionAdminDashboard adminKey={adminKey} />
 
         <div className="row mb-20">
           <div className="col-xl-8 col-lg-10">

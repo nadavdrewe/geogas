@@ -163,6 +163,12 @@
   display: grid;
   gap: 13px;
 
+  &__required-note {
+    margin: -5px 0 0;
+    color: #64748b;
+    font-size: 12px;
+  }
+
   label:not(.competition-entry-form__honeypot) {
     display: grid;
     gap: 6px;
@@ -184,6 +190,12 @@
     &:focus {
       border-color: #bb151e;
       outline: 3px solid rgba(187, 21, 30, 0.16);
+    }
+
+    &:disabled {
+      cursor: wait;
+      background: #f8fafc;
+      opacity: 0.75;
     }
   }
 

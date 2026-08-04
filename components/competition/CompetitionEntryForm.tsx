@@ -41,7 +41,13 @@ const CompetitionEntryForm = ({
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ name, email, phone, website, source }),
+        body: JSON.stringify({
+          name: name.trim(),
+          email: email.trim(),
+          phone: phone.trim(),
+          website,
+          source,
+        }),
       });
       const payload = (await response.json().catch(() => null)) as
         | { ok?: boolean; message?: string; error?: string }
@@ -63,6 +69,7 @@ const CompetitionEntryForm = ({
       setEmail("");
       setPhone("");
       setWebsite("");
+      window.dispatchEvent(new Event("competition-entry-created"));
     } catch {
       setSubmitState({
         status: "error",
@@ -86,7 +93,12 @@ const CompetitionEntryForm = ({
   }
 
   return (
-    <form className="competition-entry-form" onSubmit={handleSubmit}>
+    <form
+      className="competition-entry-form"
+      onSubmit={handleSubmit}
+      aria-busy={submitState.status === "sending"}
+    >
+      <p className="competition-entry-form__required-note">All fields are required.</p>
       <label>
         Full name
         <input
@@ -95,7 +107,9 @@ const CompetitionEntryForm = ({
           value={name}
           onChange={(event) => setName(event.target.value)}
           autoComplete="name"
+          minLength={2}
           maxLength={120}
+          disabled={submitState.status === "sending"}
           required
         />
       </label>
@@ -108,6 +122,8 @@ const CompetitionEntryForm = ({
           onChange={(event) => setEmail(event.target.value)}
           autoComplete="email"
           maxLength={254}
+          spellCheck={false}
+          disabled={submitState.status === "sending"}
           required
         />
       </label>
@@ -120,7 +136,9 @@ const CompetitionEntryForm = ({
           onChange={(event) => setPhone(event.target.value)}
           autoComplete="tel"
           inputMode="tel"
+          pattern="[0-9+().\-\s]{7,40}"
           maxLength={40}
+          disabled={submitState.status === "sending"}
           required
         />
       </label>

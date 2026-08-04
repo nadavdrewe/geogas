@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
+import CompetitionEntryCount from "@/components/competition/CompetitionEntryCount";
 import CompetitionEntryForm from "@/components/competition/CompetitionEntryForm";
 import { competitionSlides } from "@/components/competition/competitionSlides";
 
@@ -23,6 +24,7 @@ const CompetitionModal = () => {
   const [autoRotate, setAutoRotate] = useState(true);
   const modalRef = useRef<HTMLDivElement>(null);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
+  const hasMultipleSlides = competitionSlides.length > 1;
 
   const goToSlide = (index: number) => {
     setActiveSlide((index + competitionSlides.length) % competitionSlides.length);
@@ -57,6 +59,7 @@ const CompetitionModal = () => {
   useEffect(() => {
     if (
       !isOpen ||
+      !hasMultipleSlides ||
       !autoRotate ||
       pathname.startsWith("/competition") ||
       window.matchMedia("(prefers-reduced-motion: reduce)").matches
@@ -69,7 +72,7 @@ const CompetitionModal = () => {
     }, 6000);
 
     return () => window.clearInterval(intervalId);
-  }, [autoRotate, isOpen, pathname]);
+  }, [autoRotate, hasMultipleSlides, isOpen, pathname]);
 
   useEffect(() => {
     if (!isOpen || pathname.startsWith("/admin") || pathname.startsWith("/competition")) {
@@ -164,46 +167,56 @@ const CompetitionModal = () => {
               className="competition-modal__image"
             />
           </div>
-          <div className="competition-modal__controls" aria-label="Competition artwork controls">
-            <button
-              type="button"
-              onClick={() => goToSlide(activeSlide - 1)}
-              aria-label="Show previous competition image"
+          {hasMultipleSlides ? (
+            <div
+              className="competition-modal__controls"
+              aria-label="Competition artwork controls"
             >
-              <i className="fa-solid fa-arrow-left" aria-hidden="true" />
-            </button>
-            <div className="competition-modal__dots" aria-label="Choose competition image">
-              {competitionSlides.map((item, index) => (
-                <button
-                  type="button"
-                  key={item.src}
-                  className={index === activeSlide ? "is-active" : ""}
-                  onClick={() => goToSlide(index)}
-                  aria-label={`Show competition image ${index + 1}`}
-                  aria-pressed={index === activeSlide}
+              <button
+                type="button"
+                onClick={() => goToSlide(activeSlide - 1)}
+                aria-label="Show previous competition image"
+              >
+                <i className="fa-solid fa-arrow-left" aria-hidden="true" />
+              </button>
+              <div
+                className="competition-modal__dots"
+                aria-label="Choose competition image"
+              >
+                {competitionSlides.map((item, index) => (
+                  <button
+                    type="button"
+                    key={item.src}
+                    className={index === activeSlide ? "is-active" : ""}
+                    onClick={() => goToSlide(index)}
+                    aria-label={`Show competition image ${index + 1}`}
+                    aria-pressed={index === activeSlide}
+                  />
+                ))}
+              </div>
+              <button
+                type="button"
+                onClick={() => goToSlide(activeSlide + 1)}
+                aria-label="Show next competition image"
+              >
+                <i className="fa-solid fa-arrow-right" aria-hidden="true" />
+              </button>
+              <button
+                type="button"
+                className="competition-modal__pause"
+                onClick={() => setAutoRotate((enabled) => !enabled)}
+                aria-pressed={!autoRotate}
+              >
+                <i
+                  className={
+                    autoRotate ? "fa-solid fa-pause" : "fa-solid fa-play"
+                  }
+                  aria-hidden="true"
                 />
-              ))}
+                {autoRotate ? "Pause" : "Play"}
+              </button>
             </div>
-            <button
-              type="button"
-              onClick={() => goToSlide(activeSlide + 1)}
-              aria-label="Show next competition image"
-            >
-              <i className="fa-solid fa-arrow-right" aria-hidden="true" />
-            </button>
-            <button
-              type="button"
-              className="competition-modal__pause"
-              onClick={() => setAutoRotate((enabled) => !enabled)}
-              aria-pressed={!autoRotate}
-            >
-              <i
-                className={autoRotate ? "fa-solid fa-pause" : "fa-solid fa-play"}
-                aria-hidden="true"
-              />
-              {autoRotate ? "Pause" : "Play"}
-            </button>
-          </div>
+          ) : null}
         </section>
 
         <section className="competition-modal__entry">
@@ -212,6 +225,7 @@ const CompetitionModal = () => {
           <p id="competition-entry-description" className="competition-modal__description">
             Leave your details for the chance to win a year’s boiler cover subscription.
           </p>
+          <CompetitionEntryCount />
           <CompetitionEntryForm
             source="competition-modal"
             successAction={{ label: "Close", onClick: closeModal }}

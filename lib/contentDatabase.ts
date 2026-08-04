@@ -69,6 +69,13 @@ export type CompetitionEntry = CompetitionEntryInput & {
   createdAt: string;
 };
 
+export type CompetitionEntrySummary = {
+  total: number;
+  last24Hours: number;
+  competitionPage: number;
+  competitionModal: number;
+};
+
 export type WebsiteLeadInput = {
   name: string;
   email: string;
@@ -788,6 +795,38 @@ export const getCompetitionEntries = async (
     return rows
       .map(rowToCompetitionEntry)
       .filter((entry): entry is CompetitionEntry => entry !== null);
+  } finally {
+    db.close();
+  }
+};
+
+export const getCompetitionEntrySummary = async (): Promise<CompetitionEntrySummary> => {
+  await ensureContentDatabase();
+  const db = openDatabase();
+
+  try {
+    const cutoff = new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString();
+    const row = db
+      .prepare(
+        `SELECT
+           COUNT(*) AS total,
+           SUM(CASE WHEN created_at >= ? THEN 1 ELSE 0 END) AS last_24_hours,
+           SUM(CASE WHEN source = 'competition-page' THEN 1 ELSE 0 END) AS competition_page,
+           SUM(CASE WHEN source <> 'competition-page' THEN 1 ELSE 0 END) AS competition_modal
+         FROM competition_entries;`
+      )
+      .get(cutoff) as Record<string, unknown> | undefined;
+    const asCount = (value: unknown) => {
+      const count = typeof value === "number" ? value : Number(value);
+      return Number.isFinite(count) ? count : 0;
+    };
+
+    return {
+      total: asCount(row?.total),
+      last24Hours: asCount(row?.last_24_hours),
+      competitionPage: asCount(row?.competition_page),
+      competitionModal: asCount(row?.competition_modal),
+    };
   } finally {
     db.close();
   }

@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import CompetitionEntryCount from "@/components/competition/CompetitionEntryCount";
 import { competitionSlides } from "@/components/competition/competitionSlides";
 
 const CompetitionHomeHero = () => {
@@ -18,6 +19,7 @@ const CompetitionHomeHero = () => {
               Enter for the chance to win 12 months of boiler cover from Geo Gas
               Services, with emergency support when it matters most.
             </p>
+            <CompetitionEntryCount variant="dark" />
             <ul className="competition-hero__benefits">
               <li>
                 <i className="fa-solid fa-shield" aria-hidden="true" />

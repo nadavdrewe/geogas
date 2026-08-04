@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { sendBookingEmail } from "@/lib/bookingEmail";
+import { verifyContactCaptcha } from "@/lib/contactCaptcha";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -12,6 +13,8 @@ type ContactPayload = {
   subject?: string;
   message?: string;
   source?: string;
+  captchaToken?: string;
+  captchaAnswer?: string;
 };
 
 const clean = (value: unknown): string =>
@@ -19,6 +22,11 @@ const clean = (value: unknown): string =>
 
 const validEmail = (value: string): boolean => {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+};
+
+const requestIsSameOrigin = (request: Request): boolean => {
+  const origin = request.headers.get("origin");
+  return !origin || origin === new URL(request.url).origin;
 };
 
 const validate = (payload: ContactPayload): string | null => {
@@ -37,8 +45,20 @@ const validate = (payload: ContactPayload): string | null => {
 };
 
 export async function POST(request: Request) {
+  if (!requestIsSameOrigin(request)) {
+    return NextResponse.json({ error: "Invalid enquiry request." }, { status: 403 });
+  }
+
   try {
     const body = (await request.json()) as ContactPayload;
+
+    if (!verifyContactCaptcha(body.captchaToken, body.captchaAnswer)) {
+      return NextResponse.json(
+        { error: "Please complete the security check before submitting your enquiry." },
+        { status: 403 }
+      );
+    }
+
     const error = validate(body);
 
     if (error) {
