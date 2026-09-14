@@ -11,27 +11,27 @@ const CompetitionHomeHero = () => {
       <div className="container">
         <div className="competition-hero__grid">
           <div className="competition-hero__copy">
-            <p className="competition-hero__eyebrow">Geo Gas Services competition</p>
+            <p className="competition-hero__eyebrow">Geo Gas Services competition · Phase 1</p>
             <h1 id="competition-hero-heading">
-              Win a year of boiler cover for an Everyday Hero.
+              Win a Boiler Safety Check for an Everyday Hero.
             </h1>
             <p className="competition-hero__intro">
-              Enter for the chance to win 12 months of boiler cover from Geo Gas
-              Services, with emergency support when it matters most.
+              Enter for a free boiler service and gas inspection, plus a new
+              carbon monoxide detector with a 10-year warranty. Worth £200.
             </p>
             <CompetitionEntryCount variant="dark" />
             <ul className="competition-hero__benefits">
               <li>
                 <i className="fa-solid fa-shield" aria-hidden="true" />
-                One year&apos;s boiler cover subscription
+                Free boiler service and gas inspection
               </li>
               <li>
                 <i className="fa-solid fa-pen-to-square" aria-hidden="true" />
-                A quick online entry form
+                New carbon monoxide detector with 10-year warranty
               </li>
               <li>
                 <i className="fa-solid fa-circle-info" aria-hidden="true" />
-                Terms, cover level and eligibility apply
+                Prize worth £200. Terms and eligibility apply
               </li>
             </ul>
             <div className="competition-hero__actions">
@@ -60,10 +60,10 @@ const CompetitionHomeHero = () => {
             </div>
             <div
               className="competition-hero__prize-badge"
-              aria-label="Prize: 12 months of boiler cover"
+              aria-label="Phase 1 prize: boiler safety check worth 200 pounds"
             >
-              <strong>12</strong>
-              <span>months of cover</span>
+              <strong>£200</strong>
+              <span>boiler safety check</span>
             </div>
           </div>
         </div>

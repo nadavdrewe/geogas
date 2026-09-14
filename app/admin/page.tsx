@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useMemo, useState } from "react";
 import CompetitionAdminDashboard from "@/components/admin/CompetitionAdminDashboard";
+import CompetitionPhaseControl from "@/components/admin/CompetitionPhaseControl";
 import { defaultSiteContent } from "@/data/siteContent";
 
 type Primitive = string | number | boolean | null;
@@ -549,6 +550,7 @@ const AdminPage = () => {
           </div>
         </div>
 
+        <CompetitionPhaseControl adminKey={adminKey} />
         <CompetitionAdminDashboard adminKey={adminKey} />
 
         <div className="row mb-20">

@@ -9,7 +9,6 @@ const buildDir = path.join(rootDir, distDirName);
 function validateBuildOutput() {
   const requiredPaths = [
     "BUILD_ID",
-    "app-build-manifest.json",
     "build-manifest.json",
     "server",
     "static",
@@ -43,7 +42,7 @@ const nextBin = path.join(
 
 fs.rmSync(buildDir, { recursive: true, force: true });
 
-const child = spawn(process.execPath, ["--max-old-space-size=4096", nextBin, "build"], {
+const child = spawn(process.execPath, ["--max-old-space-size=4096", nextBin, "build", "--webpack"], {
   cwd: rootDir,
   env: {
     ...process.env,

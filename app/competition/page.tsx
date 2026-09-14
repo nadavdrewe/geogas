@@ -14,9 +14,9 @@ export async function generateMetadata(): Promise<Metadata> {
   const content = await getSiteContent();
 
   return buildPageMetadata({
-    title: "Enter the Everyday Heroes Competition",
+    title: "Win a Boiler Safety Check | Everyday Heroes Phase 1",
     description:
-      "Enter the Geo Gas Services Everyday Heroes competition for the chance to win a year’s boiler cover subscription.",
+      "Enter the Geo Gas Services Everyday Heroes Phase 1 competition to win a free boiler service, gas inspection and a carbon monoxide detector with a 10-year warranty, worth 200 pounds.",
     path: "/competition",
     siteUrl: content.global.siteUrl,
     siteName: content.global.companyName,
@@ -33,11 +33,11 @@ const CompetitionPage = () => {
             <div className="competition-page__grid">
               <CompetitionGallery />
               <div className="competition-page__entry">
-                <p className="competition-page__eyebrow">Geo Gas Services competition</p>
-                <h1>Enter the Everyday Heroes draw</h1>
+                <p className="competition-page__eyebrow">Geo Gas Services competition · Phase 1</p>
+                <h1>Win a Boiler Safety Check</h1>
                 <p className="competition-page__intro">
-                  Enter your details for the chance to win a year’s boiler cover
-                  subscription and ongoing peace of mind.
+                  Enter for a free boiler service and gas inspection, plus a new
+                  carbon monoxide detector with a 10-year warranty. Worth £200.
                 </p>
                 <CompetitionEntryCount />
                 <ul className="competition-page__steps">
@@ -47,8 +47,9 @@ const CompetitionPage = () => {
                 </ul>
                 <CompetitionEntryForm source="competition-page" />
                 <p className="competition-page__terms">
-                  Terms and conditions apply. Cover level and eligibility will be
-                  confirmed before a prize is awarded.
+                  Phase 1 prize: a free boiler service and gas inspection, plus a
+                  new carbon monoxide detector with a 10-year warranty, worth £200.
+                  Terms and eligibility apply.
                 </p>
               </div>
             </div>

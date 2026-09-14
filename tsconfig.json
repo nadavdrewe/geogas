@@ -15,7 +15,7 @@
     "moduleResolution": "bundler",
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "jsx": "preserve",
+    "jsx": "react-jsx",
     "incremental": true,
     "plugins": [
       {
@@ -35,13 +35,19 @@
     ".next-build-live-*/types/**/*.ts",
     ".next-build-live-122654406/types/**/*.ts",
     ".next-build-live-2063219851/types/**/*.ts",
+    ".next-build-live-259095245/types/**/*.ts",
     ".next-build-live-3185632274/types/**/*.ts",
+    ".next-build-live-3228020542/types/**/*.ts",
     ".next-build/types/**/*.ts",
     ".next-dev/types/**/*.ts",
     ".next-prod/types/**/*.ts",
     ".next/types/**/*.ts",
     "next-env.d.ts",
-    ".next-build-live-3228020542/types/**/*.ts"
+    ".next-build-live-2836427118/types/**/*.ts",
+    ".next-build-live-174555927/types/**/*.ts",
+    ".next-build-live-174555927/dev/types/**/*.ts",
+    ".next-build-live-275104590/types/**/*.ts",
+    ".next-build-live-275104590/dev/types/**/*.ts"
   ],
   "exclude": [
     "node_modules"

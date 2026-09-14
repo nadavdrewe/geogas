@@ -124,7 +124,6 @@ exit /b %ERRORLEVEL%
 set "CHECK_DIR=%~1"
 set "MISSING="
 if not exist "%CHECK_DIR%\BUILD_ID" set "MISSING=!MISSING! BUILD_ID"
-if not exist "%CHECK_DIR%\app-build-manifest.json" set "MISSING=!MISSING! app-build-manifest.json"
 if not exist "%CHECK_DIR%\build-manifest.json" set "MISSING=!MISSING! build-manifest.json"
 if not exist "%CHECK_DIR%\server" set "MISSING=!MISSING! server"
 if not exist "%CHECK_DIR%\static" set "MISSING=!MISSING! static"

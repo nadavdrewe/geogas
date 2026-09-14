@@ -220,10 +220,10 @@ const CompetitionModal = () => {
         </section>
 
         <section className="competition-modal__entry">
-          <p className="competition-modal__eyebrow">Geo Gas Services competition</p>
-          <h2 id="competition-entry-heading">Enter the Everyday Heroes draw</h2>
+          <p className="competition-modal__eyebrow">Geo Gas Services competition · Phase 1</p>
+          <h2 id="competition-entry-heading">Win a Boiler Safety Check</h2>
           <p id="competition-entry-description" className="competition-modal__description">
-            Leave your details for the chance to win a year’s boiler cover subscription.
+            Enter for a free boiler service and gas inspection, plus a new carbon monoxide detector with a 10-year warranty. Worth £200.
           </p>
           <CompetitionEntryCount />
           <CompetitionEntryForm

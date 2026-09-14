@@ -11,14 +11,13 @@ export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
 const UPLOADS_DIR = path.join(process.cwd(), "public", "uploads");
-const MAX_FILE_SIZE = 200 * 1024 * 1024;
+const MAX_FILE_SIZE = 50 * 1024 * 1024;
 const ALLOWED_EXTENSIONS = new Set([
   ".jpg",
   ".jpeg",
   ".png",
   ".webp",
   ".gif",
-  ".svg",
   ".mp4",
   ".webm",
   ".mov",
@@ -98,7 +97,7 @@ export async function POST(request: Request) {
 
     if (upload.size > MAX_FILE_SIZE) {
       return NextResponse.json(
-        { error: "File is too large. Maximum size is 200MB." },
+        { error: "File is too large. Maximum size is 50MB." },
         { status: 400 }
       );
     }
@@ -109,7 +108,7 @@ export async function POST(request: Request) {
       return NextResponse.json(
         {
           error:
-            "Unsupported file type. Use jpg, png, webp, gif, svg, mp4, webm, mov, m4v, or pdf.",
+            "Unsupported file type. Use jpg, png, webp, gif, mp4, webm, mov, m4v, or pdf.",
         },
         { status: 400 }
       );
