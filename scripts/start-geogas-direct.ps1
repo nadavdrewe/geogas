@@ -1,5 +1,11 @@
 $ErrorActionPreference = "Stop"
 
+$networkServiceSid = "S-1-5-20"
+$currentSid = [Security.Principal.WindowsIdentity]::GetCurrent().User.Value
+if ($currentSid -ne $networkServiceSid) {
+  throw "Geo Gas must be started by the NETWORK SERVICE watchdog task. Refusing to start as $currentSid."
+}
+
 $root = "C:\Deployment\geogas"
 $node = "C:\ProgramData\nvm\v20.20.2\node.exe"
 $next = Join-Path $root "node_modules\next\dist\bin\next"

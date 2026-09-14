@@ -113,11 +113,12 @@ call :start_geogas >nul 2>nul
 goto :eof
 
 :stop_geogas
+schtasks.exe /end /tn "GeoGas Application Watchdog" >nul 2>nul
 powershell -NoProfile -ExecutionPolicy Bypass -File "%STOP_SCRIPT%"
 exit /b %ERRORLEVEL%
 
 :start_geogas
-powershell -NoProfile -ExecutionPolicy Bypass -File "%START_SCRIPT%"
+schtasks.exe /run /tn "GeoGas Application Watchdog" >nul
 exit /b %ERRORLEVEL%
 
 :validate_build

@@ -6,6 +6,11 @@ import type { SiteContent } from "@/data/siteContent";
 import { getSiteContent } from "@/lib/siteContent";
 import { getAllSeoPages } from "@/lib/seo/content";
 import type { SeoPage } from "@/lib/seo/types";
+import {
+  consumeRateLimit,
+  readJsonRequest,
+  requestIsSameOrigin,
+} from "@/lib/apiRequestSecurity";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -576,7 +581,8 @@ const sanitizeHistory = (history: unknown): ChatHistoryItem[] => {
     .slice(-8)
     .map((item) => {
       const role = item?.role === "assistant" ? "assistant" : "user";
-      const text = typeof item?.text === "string" ? item.text.trim() : "";
+      const text =
+        typeof item?.text === "string" ? item.text.trim().slice(0, 1_500) : "";
       return text ? { role, text } : null;
     })
     .filter((item): item is ChatHistoryItem => item !== null);
@@ -730,17 +736,52 @@ const createReply = async (
 };
 
 export async function POST(request: Request) {
+  if (!requestIsSameOrigin(request, { requireOrigin: true })) {
+    return NextResponse.json(
+      { error: "Invalid chatbot request." },
+      { status: 403 }
+    );
+  }
+
+  const retryAfter = consumeRateLimit(
+    request,
+    "chatbot",
+    30,
+    60 * 60 * 1000
+  );
+  if (retryAfter !== null) {
+    return NextResponse.json(
+      { error: "Chat limit reached. Please try again later." },
+      { status: 429, headers: { "Retry-After": String(retryAfter) } }
+    );
+  }
+
   try {
-    const body = (await request.json()) as {
+    const parsed = await readJsonRequest<{
       message?: string;
       history?: unknown;
-    };
+    }>(request, 24 * 1024);
+    if (!parsed.ok) {
+      return NextResponse.json(
+        { error: parsed.error },
+        { status: parsed.status }
+      );
+    }
+
+    const body = parsed.value;
     const question = body.message?.trim();
     const history = sanitizeHistory(body.history);
 
     if (!question) {
       return NextResponse.json(
         { error: "A message is required." },
+        { status: 400 }
+      );
+    }
+
+    if (question.length > 1_000) {
+      return NextResponse.json(
+        { error: "Please shorten the message and try again." },
         { status: 400 }
       );
     }

@@ -1,6 +1,11 @@
 import { NextResponse } from "next/server";
 import { sendBookingEmail } from "@/lib/bookingEmail";
 import { createWebsiteLead } from "@/lib/contentDatabase";
+import {
+  consumeRateLimit,
+  readJsonRequest,
+  requestIsSameOrigin,
+} from "@/lib/apiRequestSecurity";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -53,61 +58,34 @@ const validate = (payload: LeadPayload): string | null => {
   return null;
 };
 
-const normaliseOrigin = (value: string | null): string | null => {
-  if (!value) return null;
-
-  try {
-    return new URL(value).origin;
-  } catch {
-    return null;
-  }
-};
-
-const requestIsSameOrigin = (request: Request): boolean => {
-  const origin = request.headers.get("origin");
-  if (!origin) return true;
-
-  const requestOrigin = normaliseOrigin(request.url);
-  const forwardedHost = request.headers.get("x-forwarded-host")?.split(",")[0]?.trim();
-  const forwardedProtocol =
-    request.headers.get("x-forwarded-proto")?.split(",")[0]?.trim() || "https";
-  const forwardedOrigin = forwardedHost
-    ? normaliseOrigin(`${forwardedProtocol}://${forwardedHost}`)
-    : null;
-  const configuredOrigins = (process.env.FORM_ALLOWED_ORIGINS || "")
-    .split(",")
-    .map((value) => normaliseOrigin(value.trim()))
-    .filter((value): value is string => Boolean(value));
-  const defaultPublicOrigins = [
-    "https://www.geogasservices.uk",
-    "https://geogasservices.uk",
-  ];
-  const allowedOrigins = new Set([...configuredOrigins, ...defaultPublicOrigins]);
-
-  // Local development can legitimately use a changing localhost port. In
-  // production only the explicitly trusted public origins above are accepted.
-  if (process.env.NODE_ENV !== "production" && origin === requestOrigin) {
-    return true;
-  }
-
-  if (
-    process.env.NODE_ENV !== "production" &&
-    forwardedOrigin &&
-    origin === forwardedOrigin
-  ) {
-    return true;
-  }
-
-  return allowedOrigins.has(origin);
-};
-
 export async function POST(request: Request) {
-  if (!requestIsSameOrigin(request)) {
+  if (!requestIsSameOrigin(request, { requireOrigin: true })) {
     return NextResponse.json({ error: "Invalid booking request." }, { status: 403 });
   }
 
+  const retryAfter = consumeRateLimit(
+    request,
+    "chatbot-lead",
+    8,
+    15 * 60 * 1000
+  );
+  if (retryAfter !== null) {
+    return NextResponse.json(
+      { error: "Too many booking attempts. Please try again shortly." },
+      { status: 429, headers: { "Retry-After": String(retryAfter) } }
+    );
+  }
+
   try {
-    const body = (await request.json()) as LeadPayload;
+    const parsed = await readJsonRequest<LeadPayload>(request, 16 * 1024);
+    if (!parsed.ok) {
+      return NextResponse.json(
+        { error: parsed.error },
+        { status: parsed.status }
+      );
+    }
+
+    const body = parsed.value;
     const error = validate(body);
     if (error) {
       return NextResponse.json({ error }, { status: 400 });

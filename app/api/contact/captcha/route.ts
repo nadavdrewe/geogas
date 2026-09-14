@@ -1,17 +1,29 @@
 import { NextResponse } from "next/server";
 import { createContactCaptcha } from "@/lib/contactCaptcha";
+import {
+  consumeRateLimit,
+  requestIsSameOrigin,
+} from "@/lib/apiRequestSecurity";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
-const requestIsSameOrigin = (request: Request): boolean => {
-  const origin = request.headers.get("origin");
-  return !origin || origin === new URL(request.url).origin;
-};
-
 export async function GET(request: Request) {
   if (!requestIsSameOrigin(request)) {
     return NextResponse.json({ error: "Invalid captcha request." }, { status: 403 });
+  }
+
+  const retryAfter = consumeRateLimit(
+    request,
+    "contact-captcha",
+    30,
+    15 * 60 * 1000
+  );
+  if (retryAfter !== null) {
+    return NextResponse.json(
+      { error: "Too many security-check requests. Please try again shortly." },
+      { status: 429, headers: { "Retry-After": String(retryAfter) } }
+    );
   }
 
   const captcha = createContactCaptcha();

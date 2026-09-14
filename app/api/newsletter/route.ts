@@ -1,4 +1,9 @@
 import { NextResponse } from "next/server";
+import {
+  consumeRateLimit,
+  readJsonRequest,
+  requestIsSameOrigin,
+} from "@/lib/apiRequestSecurity";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -18,11 +23,46 @@ const validEmail = (value: string): boolean => {
 };
 
 export async function POST(request: Request) {
+  if (!requestIsSameOrigin(request, { requireOrigin: true })) {
+    return NextResponse.json(
+      { error: "Invalid subscription request." },
+      { status: 403 }
+    );
+  }
+
+  const retryAfter = consumeRateLimit(
+    request,
+    "newsletter",
+    5,
+    60 * 60 * 1000
+  );
+  if (retryAfter !== null) {
+    return NextResponse.json(
+      { error: "Too many subscription attempts. Please try again later." },
+      { status: 429, headers: { "Retry-After": String(retryAfter) } }
+    );
+  }
+
   try {
-    const body = (await request.json()) as NewsletterPayload;
+    const parsed = await readJsonRequest<NewsletterPayload>(request, 4096);
+    if (!parsed.ok) {
+      return NextResponse.json(
+        { error: parsed.error },
+        { status: parsed.status }
+      );
+    }
+
+    const body = parsed.value;
     const name = clean(body.name);
     const phone = clean(body.phone);
     const email = clean(body.email);
+
+    if (name.length > 120 || phone.length > 40 || email.length > 254) {
+      return NextResponse.json(
+        { error: "Please check the contact details entered." },
+        { status: 400 }
+      );
+    }
 
     if (!name) {
       return NextResponse.json(

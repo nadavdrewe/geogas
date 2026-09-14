@@ -1,6 +1,11 @@
 import { NextResponse } from "next/server";
 import { sendBookingEmail } from "@/lib/bookingEmail";
 import { verifyContactCaptcha } from "@/lib/contactCaptcha";
+import {
+  consumeRateLimit,
+  readJsonRequest,
+  requestIsSameOrigin,
+} from "@/lib/apiRequestSecurity";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -24,11 +29,6 @@ const validEmail = (value: string): boolean => {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
 };
 
-const requestIsSameOrigin = (request: Request): boolean => {
-  const origin = request.headers.get("origin");
-  return !origin || origin === new URL(request.url).origin;
-};
-
 const validate = (payload: ContactPayload): string | null => {
   const name = clean(payload.name);
   const phone = clean(payload.phone);
@@ -40,17 +40,49 @@ const validate = (payload: ContactPayload): string | null => {
   if (!email) return "Email address is required.";
   if (!validEmail(email)) return "Please enter a valid email address.";
   if (!message) return "Please provide details about the issue.";
+  if (
+    name.length > 120 ||
+    phone.length > 40 ||
+    email.length > 254 ||
+    clean(payload.postcode).length > 24 ||
+    clean(payload.subject).length > 160 ||
+    message.length > 4_000 ||
+    clean(payload.source).length > 160
+  ) {
+    return "Please shorten the enquiry and try again.";
+  }
 
   return null;
 };
 
 export async function POST(request: Request) {
-  if (!requestIsSameOrigin(request)) {
+  if (!requestIsSameOrigin(request, { requireOrigin: true })) {
     return NextResponse.json({ error: "Invalid enquiry request." }, { status: 403 });
   }
 
+  const retryAfter = consumeRateLimit(
+    request,
+    "contact",
+    10,
+    15 * 60 * 1000
+  );
+  if (retryAfter !== null) {
+    return NextResponse.json(
+      { error: "Too many enquiry attempts. Please try again shortly." },
+      { status: 429, headers: { "Retry-After": String(retryAfter) } }
+    );
+  }
+
   try {
-    const body = (await request.json()) as ContactPayload;
+    const parsed = await readJsonRequest<ContactPayload>(request, 16 * 1024);
+    if (!parsed.ok) {
+      return NextResponse.json(
+        { error: parsed.error },
+        { status: parsed.status }
+      );
+    }
+
+    const body = parsed.value;
 
     if (!verifyContactCaptcha(body.captchaToken, body.captchaAnswer)) {
       return NextResponse.json(
