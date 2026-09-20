@@ -113,6 +113,7 @@ const STOP_WORDS = new Set([
 
 let staticKnowledgePromise: Promise<KnowledgeChunk[]> | null = null;
 let openaiClient: OpenAI | null = null;
+const DEFAULT_OPENAI_MODEL = "gpt-5.6-luna";
 
 const normalize = (value: string): string =>
   value
@@ -671,9 +672,12 @@ const createReply = async (
             : "No prior conversation.";
 
         const client = getOpenAI();
+        const model = process.env.OPENAI_MODEL || DEFAULT_OPENAI_MODEL;
         const responseStream = client.responses.stream({
-          model: process.env.OPENAI_MODEL || "gpt-4.1-mini",
-          temperature: 0.1,
+          model,
+          ...(model.startsWith("gpt-5.6")
+            ? { reasoning: { effort: "low" as const } }
+            : { temperature: 0.1 }),
           max_output_tokens: 500,
           instructions: SYSTEM_PROMPT,
           input:

@@ -1,4 +1,4 @@
-import Header from "@/components/layout/header/Header";
+import HeaderTwo from "@/components/layout/header/HeaderTwo";
 import Banner from "@/components/layout/banner/Banner";
 import About from "@/components/containers/home-two/About";
 import CtaArea from "@/components/containers/home-two/CtaArea";
@@ -10,8 +10,8 @@ import Faq from "@/components/containers/home-two/Faq";
 import TeamArea from "@/components/containers/home-two/Team";
 import Testimonial from "@/components/containers/home-two/Testimonial";
 import Blog from "@/components/containers/home-two/Blog";
-import SubscribeArea from "@/components/containers/home-two/SubscribeArea";
-import Footer from "@/components/layout/footer/Footer";
+import SubscribeArea from "@/components/containers/home/SubscribeArea";
+import FooterTwo from "@/components/layout/footer/FooterTwo";
 import InitAnimations from "@/components/layout/InitAnimations";
 import CustomCursor from "@/components/layout/CustomCursor";
 import ScrollProgressButton from "@/components/layout/ScrollProgressButton";
@@ -22,7 +22,7 @@ export const metadata = legacyPageMetadata;
 const page = () => {
   return (
     <>
-      <Header />
+      <HeaderTwo />
       <Banner />
       <About />
       <CtaArea />
@@ -35,7 +35,7 @@ const page = () => {
       <Testimonial />
       <Blog />
       <SubscribeArea />
-      <Footer />
+      <FooterTwo />
       <InitAnimations />
       <CustomCursor />
       <ScrollProgressButton />

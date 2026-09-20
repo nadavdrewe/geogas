@@ -1,8 +1,8 @@
-import Header from "@/components/layout/header/Header";
+import HeaderTwo from "@/components/layout/header/HeaderTwo";
 import BreadCrumb from "@/components/layout/banner/BreadCrumb";
 import TestimonialArea from "@/components/containers/TestimonialArea";
-import SubscribeArea from "@/components/containers/home-two/SubscribeArea";
-import Footer from "@/components/layout/footer/Footer";
+import SubscribeArea from "@/components/containers/home/SubscribeArea";
+import FooterTwo from "@/components/layout/footer/FooterTwo";
 import InitAnimations from "@/components/layout/InitAnimations";
 import CustomCursor from "@/components/layout/CustomCursor";
 import ScrollProgressButton from "@/components/layout/ScrollProgressButton";
@@ -13,11 +13,11 @@ export const metadata = legacyPageMetadata;
 const page = () => {
   return (
     <>
-      <Header />
+      <HeaderTwo />
       <BreadCrumb title="Testimonials" />
       <TestimonialArea />
       <SubscribeArea />
-      <Footer />
+      <FooterTwo />
       <InitAnimations />
       <CustomCursor />
       <ScrollProgressButton />
