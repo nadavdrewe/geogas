@@ -1,28 +1,7 @@
-import HeaderTwo from "@/components/layout/header/HeaderTwo";
-import BreadCrumb from "@/components/layout/banner/BreadCrumb";
-import ErrorArea from "@/components/containers/ErrorArea";
-import SubscribeArea from "@/components/containers/home/SubscribeArea";
-import FooterTwo from "@/components/layout/footer/FooterTwo";
-import InitAnimations from "@/components/layout/InitAnimations";
-import CustomCursor from "@/components/layout/CustomCursor";
-import ScrollProgressButton from "@/components/layout/ScrollProgressButton";
-import { legacyPageMetadata } from "@/lib/seo/metadata";
+import { notFound } from "next/navigation";
 
-export const metadata = legacyPageMetadata;
-
-const page = () => {
-  return (
-    <>
-      <HeaderTwo />
-      <BreadCrumb title="404 Error" />
-      <ErrorArea />
-      <SubscribeArea />
-      <FooterTwo />
-      <InitAnimations />
-      <CustomCursor />
-      <ScrollProgressButton />
-    </>
-  );
+const Page = () => {
+  notFound();
 };
 
-export default page;
+export default Page;

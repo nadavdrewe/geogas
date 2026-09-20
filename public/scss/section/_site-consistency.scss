@@ -222,6 +222,7 @@ textarea {
     .faq-page,
     .help-advice,
     .testimonial-page,
+    .breadcrumb__area ~ .blog__two.section-padding-three,
     .blog__standard,
     .blog__details,
     .portfolio__one.section-padding-three,
@@ -563,6 +564,13 @@ textarea {
     margin-bottom: 30px;
   }
 
+  &__hero-copy h1 {
+    max-width: 760px;
+    font-size: clamp(46px, 4.4vw, 66px);
+    line-height: 1.02;
+    letter-spacing: -0.045em;
+  }
+
   &__hero-card {
     border-radius: var(--ui-radius-lg);
   }
@@ -799,6 +807,11 @@ textarea {
   }
 
   .seo-page {
+    &__hero-copy h1 {
+      font-size: 38px;
+      line-height: 1.06;
+    }
+
     &__hero-card,
     &__card,
     &__sidebar-card,

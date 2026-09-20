@@ -116,3 +116,10 @@ All live sitemap entries share one generated last-modified timestamp, rather tha
 
 - Lint and the 67-route fresh-database production build pass.
 - The local production response emits the new headers, the legacy route emits `noindex, nofollow`, home still emits one H1, and the modern header/form controls expose their accessible names.
+
+## Fourth sweep — 20 September 2026
+
+- Audited the public route families at desktop and 390-pixel mobile widths. No horizontal overflow was found, and the active pages share the same header, footer, breadcrumb and responsive container system.
+- Normalised SEO hero heading sizing so image and non-image landing pages use the same desktop scale.
+- Retired the unused template surfaces with permanent redirects: the alternate homepage now resolves to `/`, legacy blog routes resolve to `/guides`, testimonials resolve to `/about`, and project/service-detail templates resolve to `/services`.
+- Changed `/error` from a misleading HTTP 200 page to the shared real 404 response.
