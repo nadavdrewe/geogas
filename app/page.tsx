@@ -17,7 +17,6 @@ import Blog from "@/components/containers/home/Blog";
 import SubscribeArea from "@/components/containers/home/SubscribeArea";
 import FooterTwo from "@/components/layout/footer/FooterTwo";
 import InitAnimations from "@/components/layout/InitAnimations";
-import CustomCursor from "@/components/layout/CustomCursor";
 import ScrollProgressButton from "@/components/layout/ScrollProgressButton";
 import { getSiteContent } from "@/lib/siteContent";
 import { buildPageMetadata } from "@/lib/seo/metadata";
@@ -68,7 +67,6 @@ const page = () => {
       </main>
       <FooterTwo />
       <InitAnimations />
-      <CustomCursor />
       <ScrollProgressButton />
     </>
   );

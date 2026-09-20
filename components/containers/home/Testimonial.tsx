@@ -103,8 +103,10 @@ const Testimonial = () => {
                       }}
                       className="swiper-wrapper"
                     >
-                      {testimonial.items.map((item) => (
-                        <SwiperSlide key={`${item.clientType}-${item.location}`}>
+                      {testimonial.items.map((item, index) => (
+                        <SwiperSlide
+                          key={`${item.clientType}-${item.location}-${index}`}
+                        >
                           <div className="testimonial__two-area-item swiper-slide">
                             <div className="testimonial__two-area-item-client">
                               <div className="testimonial__two-area-item-client-title">

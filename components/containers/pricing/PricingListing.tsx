@@ -27,7 +27,10 @@ const PricingListing = ({ compact = false }: PricingListingProps) => {
 
   return (
     <section
-      className={(compact ? "pt-0 " : "") + "pricing__listing section-padding"}
+      className={
+        "pricing__listing section-padding" +
+        (compact ? " pricing__listing--compact" : "")
+      }
     >
       <div className="container">
         <div className="row">

@@ -126,16 +126,14 @@ const sanitizeStoredMessages = (value: unknown): ChatMessage[] => {
 const GeoChatbotSection = () => {
   const { content } = useSiteContent();
   const chatbotContent = content.chatbot;
+  const initialMessageText = chatbotContent.initialMessage;
 
-  const initialMessage = useMemo<ChatMessage>(
-    () => ({
-      id: "initial-assistant",
-      role: "assistant",
-      text: chatbotContent.initialMessage,
-      createdAt: 0,
-    }),
-    [chatbotContent.initialMessage]
-  );
+  const initialMessage: ChatMessage = {
+    id: "initial-assistant",
+    role: "assistant",
+    text: initialMessageText,
+    createdAt: 0,
+  };
 
   const defaultLeadForm = useMemo<LeadFormState>(
     () => ({
@@ -166,18 +164,35 @@ const GeoChatbotSection = () => {
   );
   const [leadError, setLeadError] = useState<string | null>(null);
   const [showQuickTools, setShowQuickTools] = useState(false);
+  const [showLeadForm, setShowLeadForm] = useState(false);
   const messagesRef = useRef<HTMLDivElement | null>(null);
   const abortRef = useRef<AbortController | null>(null);
 
   useEffect(() => {
-    if (
-      messages.length === 1 &&
-      messages[0]?.id === "initial-assistant" &&
-      messages[0]?.createdAt === 0
-    ) {
-      setMessages([initialMessage]);
-    }
-  }, [initialMessage, messages]);
+    setMessages((currentMessages) => {
+      const currentInitialMessage = currentMessages[0];
+      const isUntouchedConversation =
+        currentMessages.length === 1 &&
+        currentInitialMessage?.id === "initial-assistant" &&
+        currentInitialMessage.createdAt === 0;
+
+      if (
+        isUntouchedConversation &&
+        currentInitialMessage?.text !== initialMessageText
+      ) {
+        return [
+          {
+            id: "initial-assistant",
+            role: "assistant",
+            text: initialMessageText,
+            createdAt: 0,
+          },
+        ];
+      }
+
+      return currentMessages;
+    });
+  }, [initialMessageText]);
 
   useEffect(() => {
     if (leadStatus === "idle") {
@@ -241,8 +256,7 @@ const GeoChatbotSection = () => {
   }, [messages]);
 
   const showLeadCapture = useMemo(() => {
-    if (!lastAssistantMessage) return false;
-    if (leadStatus === "success") return false;
+    if (!lastAssistantMessage || !lastUserMessage) return false;
 
     const hasPricingSource = lastAssistantMessage.sourceKinds?.includes("pricing");
     const looksLikePricingAnswer =
@@ -251,7 +265,7 @@ const GeoChatbotSection = () => {
       );
 
     return Boolean(hasPricingSource || looksLikePricingAnswer);
-  }, [lastAssistantMessage, leadStatus]);
+  }, [lastAssistantMessage, lastUserMessage]);
 
   const updateAssistantMessage = (
     messageId: string,
@@ -343,6 +357,8 @@ const GeoChatbotSection = () => {
     setError(null);
     setLeadStatus("idle");
     setLeadError(null);
+    setShowLeadForm(false);
+    setShowQuickTools(false);
     setIsSending(true);
 
     try {
@@ -435,6 +451,8 @@ const GeoChatbotSection = () => {
     setLeadForm(defaultLeadForm);
     setLeadStatus("idle");
     setLeadError(null);
+    setShowLeadForm(false);
+    setShowQuickTools(false);
     window.localStorage.removeItem(THREAD_STORAGE_KEY);
   };
 
@@ -516,218 +534,248 @@ const GeoChatbotSection = () => {
     <section className="chatbot__section section-padding pt-0">
       <div className="container">
         <div className="chatbot__shell">
-          <div className="chatbot__heading">
-            <span>{chatbotContent.eyebrow}</span>
-            <h2>{chatbotContent.title}</h2>
-            <p>{chatbotContent.description}</p>
-            <div className="chatbot__heading-actions">
-              <button type="button" onClick={clearConversation} disabled={isSending}>
-                {chatbotContent.newChatLabel}
-              </button>
-              <button
-                type="button"
-                className="chatbot__toggle"
-                onClick={() => setShowQuickTools((prev) => !prev)}
-              >
-                {showQuickTools
-                  ? chatbotContent.hideQuickToolsLabel
-                  : chatbotContent.showQuickToolsLabel}
-              </button>
-            </div>
-          </div>
-
-          {showQuickTools ? (
-            <div className="chatbot__tools">
-              <div className="chatbot__faq">
-                <p>{chatbotContent.quickTopicsLabel}</p>
-                <div className="chatbot__faq-controls">
-                  <select
-                    value={selectedFaqPrompt}
-                    onChange={(event) => setSelectedFaqPrompt(event.target.value)}
-                    aria-label="Choose a quick topic"
-                    disabled={isSending}
-                  >
-                    {chatbotContent.faqShortcuts.map((shortcut) => (
-                      <option key={shortcut.label} value={shortcut.prompt}>
-                        {shortcut.label}
-                      </option>
-                    ))}
-                  </select>
-                  <button type="button" onClick={askSelectedTopic} disabled={isSending}>
-                    {chatbotContent.askTopicLabel}
+          <div className="chatbot__intro">
+            <div className="chatbot__heading">
+              <span>{chatbotContent.eyebrow}</span>
+              <h2>{chatbotContent.title}</h2>
+              <p>{chatbotContent.description}</p>
+              <div className="chatbot__heading-actions">
+                {messages.length > 1 ? (
+                  <button type="button" onClick={clearConversation} disabled={isSending}>
+                    {chatbotContent.newChatLabel}
                   </button>
-                </div>
-              </div>
-
-              <div className="chatbot__quick">
-                {suggestions.map((prompt) => (
-                  <button
-                    key={prompt}
-                    type="button"
-                    onClick={() => void sendMessage(prompt)}
-                    disabled={isSending}
-                  >
-                    {prompt}
-                  </button>
-                ))}
-              </div>
-            </div>
-          ) : null}
-
-          <div className="chatbot__conversation">
-            <div className="chatbot__conversation-head">
-              <h4>{chatbotContent.conversationTitle}</h4>
-              <p>{chatbotContent.conversationDescription}</p>
-            </div>
-
-            <div className="chatbot__messages" aria-live="polite" ref={messagesRef}>
-              {messages.map((message) => (
-                <article
-                  key={message.id}
-                  className={
-                    "chatbot__message " +
-                    (message.role === "assistant"
-                      ? "chatbot__message--assistant"
-                      : "chatbot__message--user")
-                  }
-                >
-                  <div className="chatbot__message-role">
-                    {message.role === "assistant" ? "Geo Bot" : "You"} |{" "}
-                    {formatMessageTime(message.createdAt)}
-                  </div>
-                  <div className="chatbot__message-content">
-                    {message.text ? (
-                      formatMessage(message.text).map((line, index) => (
-                        <p key={`${message.id}-${index}`}>{line}</p>
-                      ))
-                    ) : (
-                      <p>Thinking through your request...</p>
-                    )}
-                  </div>
-                  {message.isTyping ? (
-                    <div className="chatbot__typing" aria-hidden="true">
-                      <span />
-                      <span />
-                      <span />
-                    </div>
-                  ) : null}
-                  {message.role === "assistant" && !message.isTyping && message.text ? (
-                    <div className="chatbot__meta">
-                      <button type="button" onClick={() => void copyMessage(message)}>
-                        {copiedId === message.id ? "Copied" : "Copy"}
-                      </button>
-                    </div>
-                  ) : null}
-                </article>
-              ))}
-            </div>
-
-            <form className="chatbot__form" onSubmit={onSubmit}>
-              <input
-                type="text"
-                value={inputValue}
-                onChange={(event) => setInputValue(event.target.value)}
-                placeholder={chatbotContent.inputPlaceholder}
-                aria-label="Ask the Geo Gas chatbot"
-                disabled={isSending}
-              />
-              <button type="submit" disabled={!canSend}>
-                {isSending
-                  ? chatbotContent.askButtonLoadingLabel
-                  : chatbotContent.askButtonLabel}
-              </button>
-              {isSending ? (
+                ) : null}
                 <button
                   type="button"
-                  className="chatbot__stop"
-                  onClick={stopStreaming}
+                  className="chatbot__toggle"
+                  onClick={() => setShowQuickTools((prev) => !prev)}
+                  aria-expanded={showQuickTools}
+                  aria-controls="chatbot-quick-tools"
                 >
-                  {chatbotContent.stopButtonLabel}
+                  {showQuickTools
+                    ? chatbotContent.hideQuickToolsLabel
+                    : chatbotContent.showQuickToolsLabel}
                 </button>
-              ) : null}
-            </form>
-
-            <div className="chatbot__status">
-              <span />
-              <p>{chatbotContent.statusText}</p>
-            </div>
-            {error ? <p className="chatbot__error">{error}</p> : null}
-          </div>
-
-          {showLeadCapture ? (
-            <div className="chatbot__handoff">
-              <div className="chatbot__handoff-head">
-                <h4>{chatbotContent.leadCaptureHeading}</h4>
-                <p>{chatbotContent.leadCaptureDescription}</p>
               </div>
-              {leadStatus === "success" ? (
-                <div className="chatbot__handoff-success">
-                  <p>{chatbotContent.leadSuccessMessage}</p>
-                  <div className="chatbot__handoff-actions">
-                    <a href={content.global.emergencyPhoneHref}>
-                      {chatbotContent.leadEmergencyCtaLabel}
-                    </a>
-                    <Link href="/contact">{chatbotContent.leadContactCtaLabel}</Link>
+            </div>
+
+            {showQuickTools ? (
+              <div className="chatbot__tools" id="chatbot-quick-tools">
+                <div className="chatbot__faq">
+                  <p>{chatbotContent.quickTopicsLabel}</p>
+                  <div className="chatbot__faq-controls">
+                    <select
+                      value={selectedFaqPrompt}
+                      onChange={(event) => setSelectedFaqPrompt(event.target.value)}
+                      aria-label="Choose a quick topic"
+                      disabled={isSending}
+                    >
+                      {chatbotContent.faqShortcuts.map((shortcut) => (
+                        <option key={shortcut.label} value={shortcut.prompt}>
+                          {shortcut.label}
+                        </option>
+                      ))}
+                    </select>
+                    <button type="button" onClick={askSelectedTopic} disabled={isSending}>
+                      {chatbotContent.askTopicLabel}
+                    </button>
                   </div>
                 </div>
-              ) : (
-                <form className="chatbot__handoff-form" onSubmit={submitLead}>
-                  <input
-                    type="text"
-                    value={leadForm.name}
-                    onChange={updateLeadField("name")}
-                    placeholder={chatbotContent.fieldPlaceholders.name}
-                    aria-label="Full name"
-                    required
-                  />
-                  <input
-                    type="email"
-                    value={leadForm.email}
-                    onChange={updateLeadField("email")}
-                    placeholder={chatbotContent.fieldPlaceholders.email}
-                    aria-label="Email address"
-                    required
-                  />
-                  <input
-                    type="text"
-                    value={leadForm.phone}
-                    onChange={updateLeadField("phone")}
-                    placeholder={chatbotContent.fieldPlaceholders.phone}
-                    aria-label="Phone number"
-                    required
-                  />
-                  <input
-                    type="text"
-                    value={leadForm.postcode}
-                    onChange={updateLeadField("postcode")}
-                    placeholder={chatbotContent.fieldPlaceholders.postcode}
-                    aria-label="Postcode"
-                    required
-                  />
-                  <input
-                    type="text"
-                    value={leadForm.service}
-                    onChange={updateLeadField("service")}
-                    placeholder={chatbotContent.fieldPlaceholders.service}
-                    aria-label="Service required"
-                    required
-                  />
-                  <textarea
-                    value={leadForm.note}
-                    onChange={updateLeadField("note")}
-                    placeholder={chatbotContent.fieldPlaceholders.note}
-                    aria-label="Additional details"
-                  />
-                  <button type="submit" disabled={leadStatus === "sending"}>
-                    {leadStatus === "sending"
-                      ? chatbotContent.submitLeadLoadingLabel
-                      : chatbotContent.submitLeadLabel}
+
+                <div className="chatbot__quick">
+                  {suggestions.map((prompt) => (
+                    <button
+                      key={prompt}
+                      type="button"
+                      onClick={() => void sendMessage(prompt)}
+                      disabled={isSending}
+                    >
+                      {prompt}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            ) : null}
+          </div>
+
+          <div className="chatbot__workspace">
+            <div className="chatbot__conversation">
+              <div className="chatbot__conversation-head">
+                <h4>{chatbotContent.conversationTitle}</h4>
+                <p>{chatbotContent.conversationDescription}</p>
+              </div>
+
+              <div className="chatbot__messages" aria-live="polite" ref={messagesRef}>
+                {messages.map((message) => (
+                  <article
+                    key={message.id}
+                    className={
+                      "chatbot__message " +
+                      (message.role === "assistant"
+                        ? "chatbot__message--assistant"
+                        : "chatbot__message--user")
+                    }
+                  >
+                    <div className="chatbot__message-role">
+                      {message.role === "assistant" ? "Geo Bot" : "You"} |{" "}
+                      {formatMessageTime(message.createdAt)}
+                    </div>
+                    <div className="chatbot__message-content">
+                      {message.text ? (
+                        formatMessage(message.text).map((line, index) => (
+                          <p key={`${message.id}-${index}`}>{line}</p>
+                        ))
+                      ) : (
+                        <p>Thinking through your request...</p>
+                      )}
+                    </div>
+                    {message.isTyping ? (
+                      <div className="chatbot__typing" aria-hidden="true">
+                        <span />
+                        <span />
+                        <span />
+                      </div>
+                    ) : null}
+                    {message.role === "assistant" &&
+                    message.id !== "initial-assistant" &&
+                    !message.isTyping &&
+                    message.text ? (
+                      <div className="chatbot__meta">
+                        <button type="button" onClick={() => void copyMessage(message)}>
+                          {copiedId === message.id ? "Copied" : "Copy"}
+                        </button>
+                      </div>
+                    ) : null}
+                  </article>
+                ))}
+              </div>
+
+              <form className="chatbot__form" onSubmit={onSubmit}>
+                <input
+                  type="text"
+                  value={inputValue}
+                  onChange={(event) => setInputValue(event.target.value)}
+                  placeholder={chatbotContent.inputPlaceholder}
+                  aria-label="Ask the Geo Gas chatbot"
+                  disabled={isSending}
+                />
+                <button type="submit" disabled={!canSend}>
+                  {isSending
+                    ? chatbotContent.askButtonLoadingLabel
+                    : chatbotContent.askButtonLabel}
+                </button>
+                {isSending ? (
+                  <button
+                    type="button"
+                    className="chatbot__stop"
+                    onClick={stopStreaming}
+                  >
+                    {chatbotContent.stopButtonLabel}
                   </button>
-                </form>
-              )}
-              {leadError ? <p className="chatbot__lead-error">{leadError}</p> : null}
+                ) : null}
+              </form>
+
+              <div className="chatbot__status">
+                <span />
+                <p>{chatbotContent.statusText}</p>
+              </div>
+              {error ? <p className="chatbot__error">{error}</p> : null}
             </div>
-          ) : null}
+
+            {showLeadCapture || leadStatus === "success" ? (
+              <div className="chatbot__handoff">
+                <div className="chatbot__handoff-head">
+                  <div>
+                    <h4>{chatbotContent.leadCaptureHeading}</h4>
+                    <p>{chatbotContent.leadCaptureDescription}</p>
+                  </div>
+                  {leadStatus !== "success" ? (
+                    <button
+                      type="button"
+                      className="chatbot__handoff-toggle"
+                      onClick={() => setShowLeadForm((prev) => !prev)}
+                      aria-expanded={showLeadForm}
+                      aria-controls="chatbot-lead-form"
+                    >
+                      {showLeadForm ? "Hide details" : "Add my details"}
+                    </button>
+                  ) : null}
+                </div>
+                {leadStatus === "success" ? (
+                  <div className="chatbot__handoff-success">
+                    <p>{chatbotContent.leadSuccessMessage}</p>
+                    <div className="chatbot__handoff-actions">
+                      <a href={content.global.emergencyPhoneHref}>
+                        {chatbotContent.leadEmergencyCtaLabel}
+                      </a>
+                      <Link href="/contact">{chatbotContent.leadContactCtaLabel}</Link>
+                    </div>
+                  </div>
+                ) : showLeadForm ? (
+                  <form
+                    className="chatbot__handoff-form"
+                    id="chatbot-lead-form"
+                    onSubmit={submitLead}
+                  >
+                    <input
+                      type="text"
+                      value={leadForm.name}
+                      onChange={updateLeadField("name")}
+                      placeholder={chatbotContent.fieldPlaceholders.name}
+                      aria-label="Full name"
+                      required
+                    />
+                    <input
+                      type="email"
+                      value={leadForm.email}
+                      onChange={updateLeadField("email")}
+                      placeholder={chatbotContent.fieldPlaceholders.email}
+                      aria-label="Email address"
+                      required
+                    />
+                    <input
+                      type="text"
+                      value={leadForm.phone}
+                      onChange={updateLeadField("phone")}
+                      placeholder={chatbotContent.fieldPlaceholders.phone}
+                      aria-label="Phone number"
+                      required
+                    />
+                    <input
+                      type="text"
+                      value={leadForm.postcode}
+                      onChange={updateLeadField("postcode")}
+                      placeholder={chatbotContent.fieldPlaceholders.postcode}
+                      aria-label="Postcode"
+                      required
+                    />
+                    <input
+                      type="text"
+                      value={leadForm.service}
+                      onChange={updateLeadField("service")}
+                      placeholder={chatbotContent.fieldPlaceholders.service}
+                      aria-label="Service required"
+                      required
+                    />
+                    <textarea
+                      value={leadForm.note}
+                      onChange={updateLeadField("note")}
+                      placeholder={chatbotContent.fieldPlaceholders.note}
+                      aria-label="Additional details"
+                    />
+                    <button type="submit" disabled={leadStatus === "sending"}>
+                      {leadStatus === "sending"
+                        ? chatbotContent.submitLeadLoadingLabel
+                        : chatbotContent.submitLeadLabel}
+                    </button>
+                  </form>
+                ) : null}
+                {leadError ? (
+                  <p className="chatbot__lead-error">{leadError}</p>
+                ) : null}
+              </div>
+            ) : null}
+          </div>
         </div>
       </div>
     </section>

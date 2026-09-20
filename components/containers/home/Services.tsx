@@ -24,7 +24,7 @@ const Services = () => {
   }, []);
 
   return (
-    <div className="services__two section-padding">
+    <section className="services__two section-padding">
       <div className="container">
         <div className="row mb-20">
           <div className="col-xl-12 ">
@@ -92,7 +92,7 @@ const Services = () => {
           </Swiper>
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 
