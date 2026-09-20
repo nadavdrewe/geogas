@@ -5,6 +5,30 @@ const path = require("path");
 const rootDir = path.join(__dirname, "..");
 const distDirName = process.env.NEXT_DIST_DIR || ".next-build";
 const buildDir = path.join(rootDir, distDirName);
+const generatedConfigPaths = ["next-env.d.ts", "tsconfig.json"];
+const generatedConfigSnapshots = new Map(
+  generatedConfigPaths.map((relativePath) => {
+    const absolutePath = path.join(rootDir, relativePath);
+    return [
+      absolutePath,
+      fs.existsSync(absolutePath) ? fs.readFileSync(absolutePath) : null,
+    ];
+  })
+);
+
+let configRestored = false;
+function restoreGeneratedConfig() {
+  if (configRestored) return;
+  configRestored = true;
+
+  for (const [absolutePath, content] of generatedConfigSnapshots) {
+    if (content === null) {
+      fs.rmSync(absolutePath, { force: true });
+    } else {
+      fs.writeFileSync(absolutePath, content);
+    }
+  }
+}
 
 function validateBuildOutput() {
   const requiredPaths = [
@@ -52,6 +76,8 @@ const child = spawn(process.execPath, ["--max-old-space-size=4096", nextBin, "bu
 });
 
 child.on("exit", (code, signal) => {
+  restoreGeneratedConfig();
+
   if (signal) {
     process.kill(process.pid, signal);
     return;
@@ -63,4 +89,10 @@ child.on("exit", (code, signal) => {
   }
 
   process.exit(validateBuildOutput() ? 0 : 1);
+});
+
+child.on("error", (error) => {
+  restoreGeneratedConfig();
+  console.error(`[build] Unable to start Next.js build: ${error.message}`);
+  process.exit(1);
 });

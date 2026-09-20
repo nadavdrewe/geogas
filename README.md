@@ -1,55 +1,80 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# GeoGas Services website
 
-## Getting Started
+Production website and content-management application for GeoGas Services. It is a Next.js 16 application with a SQLite-backed content editor, customer forms, competition entry management, and a context-restricted OpenAI chatbot.
 
-First, run the development server:
+## Local development
+
+Requirements:
+
+- Node.js 20.x
+- npm 10 or later
+
+Set up a clean checkout:
 
 ```bash
+npm ci
+cp .env.example .env.local
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open <http://localhost:3000>. Never copy the production `.env`, SQLite database, certificates, uploads, or logs into Git.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Useful checks:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm run lint
+npm run typecheck
+npm run audit:dependencies
+npm run build
+npm run verify
+```
 
-## Admin Content Editor
+`npm run build` uses an isolated build directory and restores Next.js-generated changes to `next-env.d.ts` and `tsconfig.json`, keeping the working tree clean.
 
-The project now includes a starter admin panel for editable site content:
+## Configuration
 
-- Open `/admin` to edit website text and image paths in visual mode or raw JSON mode.
-- Upload images/videos/PDFs from `/admin` and paste returned `/uploads/...` paths into content fields.
-- Manage homepage video posts directly in `/admin` (add/edit/remove cards, file/poster paths).
-- Download a JSON snapshot from `/admin` for manual backups.
-- Content is stored in `content/geogas-content.sqlite` in the `content_documents` table.
-- A fresh database is seeded from the versioned JSON documents in `content/`; keep those files as the recoverable source of truth.
-- `/admin` reads and writes content through `/api/admin/documents`, with the site document stored as `site:published`.
-- Public client refreshes read site content through `/api/content/site`.
-- `ADMIN_PANEL_KEY` is required: without it, all admin content and upload routes fail closed.
-- `LEAD_WEBHOOK_URL` (or the contact/newsletter-specific override) remains the fallback form delivery method. Contact/quote and chatbot booking forms can instead use the Gmail SMTP configuration below; without either delivery method, forms return a safe temporary-unavailable response and do not log personal data.
-- To send contact/quote and chatbot booking notifications directly through a personal Gmail account, set `GMAIL_SMTP_USER`, `GMAIL_SMTP_APP_PASSWORD`, and `BOOKING_NOTIFICATION_TO`. When all three are set, Gmail SMTP is used in preference to the legacy webhook. The App Password must never be committed or exposed to the browser.
-- `FORM_ALLOWED_ORIGINS` is a comma-separated list of public origins that can submit chatbot booking requests. Set it to the public domain(s) when the app is behind a reverse proxy; Geo Gas's `www` and non-`www` domains are allowed by default.
-- Competition entries submitted from the site-load modal are stored in the local `competition_entries` SQLite table. Retrieve the latest entries from `/api/competition/entries` using the configured `x-admin-key`; the endpoint never exposes entries publicly.
-- The QR-code destination is `/competition`; it uses the same entry flow and records entries with the `competition-page` source.
+Copy `.env.example` to `.env.local` and provide only the values needed for the feature being tested.
 
-## Learn More
+- `ADMIN_PANEL_KEY`: long random secret for `/admin` API requests.
+- `CONTACT_CAPTCHA_SECRET`: separate long random HMAC secret for contact challenges.
+- `OPENAI_API_KEY` and `OPENAI_MODEL`: chatbot access and model selection.
+- `GMAIL_SMTP_USER`, `GMAIL_SMTP_APP_PASSWORD`, and `BOOKING_NOTIFICATION_TO`: direct booking notifications.
+- `LEAD_WEBHOOK_URL`, `CONTACT_WEBHOOK_URL`, and `NEWSLETTER_WEBHOOK_URL`: optional delivery fallbacks.
+- `FORM_ALLOWED_ORIGINS`: comma-separated production origins accepted by booking routes.
+- `CONTENT_DATABASE_PATH`: optional SQLite path; defaults to `content/geogas-content.sqlite`.
 
-To learn more about Next.js, take a look at the following resources:
+No real credential belongs in a tracked file. Production secrets must remain in the server environment and the operator's password manager.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Project layout
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- `app/`: pages and server API routes.
+- `components/`: reusable UI and form components.
+- `content/`: versioned seed content; runtime SQLite files are ignored.
+- `data/`: typed default site content.
+- `lib/`: authentication, validation, database, email, and request-security code.
+- `public/`: static assets; runtime uploads are not source code.
+- `scripts/`: build and Windows production-runner scripts.
 
-## Deploy on Vercel
+The admin editor is available at `/admin`. It fails closed unless `ADMIN_PANEL_KEY` is configured. Public form and chatbot routes enforce origin, size, validation, and per-client rate limits.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Production model
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+The production application must:
+
+- bind only to `127.0.0.1:15023` behind Nginx;
+- run through the low-privilege `NETWORK SERVICE` watchdog;
+- be deployed from a reviewed, clean commit;
+- keep `.env`, databases, uploads, certificates, build output, dependencies, and logs untracked;
+- pass `npm run verify`, a staged secret/IOC scan, and a malware scan before release.
+
+The Windows deployment helpers are intentionally specific to the managed production host. Do not use the removed legacy PM2 startup path.
+
+## Content and data
+
+Editable content is stored in `content/geogas-content.sqlite` at runtime and seeded from versioned JSON documents under `content/`. Competition entries and website leads contain personal data and must never be copied into Git or a development fixture.
+
+Uploaded media is served from `public/uploads` in production. Review files before deliberately promoting any upload into versioned source.
+
+## Security
+
+Report security concerns through a private GitHub security advisory for this repository. Do not include credentials, customer data, exploit payloads, or production logs in a public issue.

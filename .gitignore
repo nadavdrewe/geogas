@@ -27,12 +27,8 @@ yarn-error.log*
 pnpm-debug.log*
 
 # env files
-.env
-.env.local
-.env.development.local
-.env.test.local
-.env.production
-.env.production.local
+.env*
+!.env.example
 Creds.md
 
 # misc cache/temp
@@ -43,6 +39,9 @@ Creds.md
 *.tmp
 *.tsbuildinfo
 content/*.sqlite
+content/*.sqlite-*
+public/uploads/*
+!public/uploads/.gitkeep
 __pycache__/
 *.py[cod]
 

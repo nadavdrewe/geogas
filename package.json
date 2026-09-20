@@ -1,14 +1,21 @@
 {
-  "name": "pipepro",
+  "name": "geogas-services",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "node": "20.x",
+    "npm": ">=10 <12"
+  },
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "node ./scripts/build.js",
     "deploy": "cmd /c scripts\\deploy.cmd",
     "live-build": "cmd /c scripts\\live-build.cmd",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit",
+    "audit:dependencies": "npm audit",
+    "verify": "npm run lint && npm run typecheck && npm run audit:dependencies && npm run build"
   },
   "dependencies": {
     "aos": "^2.3.4",
@@ -30,7 +37,6 @@
     "yet-another-react-lightbox": "^3.21.7"
   },
   "devDependencies": {
-    "@eslint/eslintrc": "^3",
     "@types/aos": "^3.0.7",
     "@types/node": "^20",
     "@types/nodemailer": "^8.0.1",
