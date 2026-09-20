@@ -8,6 +8,7 @@ import {
   isAdminPanelConfigured,
   isAdminPanelRequestAuthorized,
 } from "@/lib/adminAuth";
+import { requestIsSameOrigin } from "@/lib/apiRequestSecurity";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -95,17 +96,8 @@ const validate = (payload: CompetitionEntryPayload): string | null => {
   return null;
 };
 
-const requestIsSameOrigin = (request: Request): boolean => {
-  const origin = request.headers.get("origin");
-  const fetchSite = request.headers.get("sec-fetch-site");
-  return (
-    (!origin || origin === new URL(request.url).origin) &&
-    (!fetchSite || fetchSite === "same-origin")
-  );
-};
-
 export async function POST(request: Request) {
-  if (!requestIsSameOrigin(request)) {
+  if (!requestIsSameOrigin(request, { requireOrigin: true })) {
     return NextResponse.json(
       { error: "Invalid competition entry request." },
       { status: 403 }

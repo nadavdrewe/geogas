@@ -123,3 +123,4 @@ All live sitemap entries share one generated last-modified timestamp, rather tha
 - Normalised SEO hero heading sizing so image and non-image landing pages use the same desktop scale.
 - Retired the unused template surfaces with permanent redirects: the alternate homepage now resolves to `/`, legacy blog routes resolve to `/guides`, testimonials resolve to `/about`, and project/service-detail templates resolve to `/services`.
 - Changed `/error` from a misleading HTTP 200 page to the shared real 404 response.
+- Corrected reverse-proxy origin validation so legitimate public chatbot, contact, newsletter, captcha, lead and competition form submissions are accepted while cross-origin submissions remain blocked.

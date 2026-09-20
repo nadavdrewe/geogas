@@ -39,11 +39,47 @@ export const requestIsSameOrigin = (
   if (fetchSite && fetchSite !== "same-origin") return false;
   if (!origin) return !options.requireOrigin;
 
-  try {
-    return origin === new URL(request.url).origin;
-  } catch {
-    return false;
+  const normalizeOrigin = (value: string): string | null => {
+    try {
+      const parsed = new URL(value);
+      if (parsed.protocol !== "http:" && parsed.protocol !== "https:") {
+        return null;
+      }
+      return parsed.origin;
+    } catch {
+      return null;
+    }
+  };
+
+  const requestOrigin = normalizeOrigin(origin);
+  if (!requestOrigin) return false;
+
+  const allowedOrigins = new Set<string>();
+  const directOrigin = normalizeOrigin(request.url);
+  if (directOrigin) allowedOrigins.add(directOrigin);
+
+  // Next.js constructs request.url from its loopback listener in production.
+  // Nginx overwrites Host and X-Forwarded-Proto before proxying, so together
+  // they describe the browser-facing origin without trusting a forwarding
+  // header supplied by the client.
+  const host = request.headers.get("host")?.trim();
+  const forwardedProtocol = request.headers
+    .get("x-forwarded-proto")
+    ?.split(",", 1)[0]
+    ?.trim()
+    .toLowerCase();
+
+  if (host && (forwardedProtocol === "http" || forwardedProtocol === "https")) {
+    const proxyOrigin = normalizeOrigin(`${forwardedProtocol}://${host}`);
+    if (proxyOrigin) allowedOrigins.add(proxyOrigin);
   }
+
+  for (const configuredOrigin of (process.env.FORM_ALLOWED_ORIGINS ?? "").split(",")) {
+    const normalized = normalizeOrigin(configuredOrigin.trim());
+    if (normalized) allowedOrigins.add(normalized);
+  }
+
+  return allowedOrigins.has(requestOrigin);
 };
 
 export const consumeRateLimit = (
