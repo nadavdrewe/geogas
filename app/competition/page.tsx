@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import CompetitionEntryCount from "@/components/competition/CompetitionEntryCount";
 import CompetitionEntryForm from "@/components/competition/CompetitionEntryForm";
 import CompetitionGallery from "@/components/competition/CompetitionGallery";
 import FooterTwo from "@/components/layout/footer/FooterTwo";
@@ -39,7 +38,6 @@ const CompetitionPage = () => {
                   Enter for a free boiler service and gas inspection, plus a new
                   carbon monoxide detector with a 10-year warranty. Worth £200.
                 </p>
-                <CompetitionEntryCount />
                 <ul className="competition-page__steps">
                   <li>Complete the short entry form below.</li>
                   <li>Follow, like and comment <strong>HERO</strong> on the competition post.</li>

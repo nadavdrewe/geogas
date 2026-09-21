@@ -1,6 +1,5 @@
 import Image from "next/image";
 import Link from "next/link";
-import CompetitionEntryCount from "@/components/competition/CompetitionEntryCount";
 import { competitionSlides } from "@/components/competition/competitionSlides";
 
 const CompetitionHomeHero = () => {
@@ -19,7 +18,6 @@ const CompetitionHomeHero = () => {
               Enter for a free boiler service and gas inspection, plus a new
               carbon monoxide detector with a 10-year warranty. Worth £200.
             </p>
-            <CompetitionEntryCount variant="dark" />
             <ul className="competition-hero__benefits">
               <li>
                 <i className="fa-solid fa-shield" aria-hidden="true" />

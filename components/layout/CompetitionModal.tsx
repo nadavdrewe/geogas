@@ -3,7 +3,6 @@
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
-import CompetitionEntryCount from "@/components/competition/CompetitionEntryCount";
 import CompetitionEntryForm from "@/components/competition/CompetitionEntryForm";
 import { competitionSlides } from "@/components/competition/competitionSlides";
 
@@ -225,7 +224,6 @@ const CompetitionModal = () => {
           <p id="competition-entry-description" className="competition-modal__description">
             Enter for a free boiler service and gas inspection, plus a new carbon monoxide detector with a 10-year warranty. Worth £200.
           </p>
-          <CompetitionEntryCount />
           <CompetitionEntryForm
             source="competition-modal"
             successAction={{ label: "Close", onClick: closeModal }}
