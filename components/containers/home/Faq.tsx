@@ -15,6 +15,7 @@ const Faq = ({ addClass = false, fullPage = false }: FaqProps) => {
 
   return (
     <div
+      id={!addClass && !fullPage ? "home-faq" : undefined}
       className={
         (addClass ? "section-padding pt-0 " : "section-padding ") +
         "faq__two" +

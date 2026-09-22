@@ -8,7 +8,7 @@ const SubscribeArea = () => {
   const subscribe = content.home.subscribe;
 
   return (
-    <div className="subscribe__two">
+    <div className="subscribe__two" id="home-updates">
       <div className="container">
         <div className="row">
           <div className="col-xl-8 col-lg-7 lg-mb-20">

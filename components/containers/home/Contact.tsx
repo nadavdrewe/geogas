@@ -10,6 +10,7 @@ const Contact = ({ addClass = false }) => {
 
   return (
     <div
+      id={addClass ? undefined : "home-contact"}
       className={(addClass ? " section-padding pt-0" : " ") + " contact__one"}
     >
       <div className="container">

@@ -11,11 +11,18 @@ const Testimonial = () => {
   const testimonial = content.home.testimonial;
 
   return (
-    <div className="testimonial__two section-padding">
+    <div className="testimonial__two section-padding" id="home-reviews">
       <div className="container">
         <div className="row">
           <div className="col-xl-12">
             <div className="testimonial__two-area">
+              <div className="row mb-40">
+                <div className="col-xl-12">
+                  <div className="testimonial__two-area-title">
+                    <h2>{testimonial.title}</h2>
+                  </div>
+                </div>
+              </div>
               <div className="row">
                 <div className="col-xl-12">
                   <div className="testimonial__two-area-brand">
@@ -68,13 +75,6 @@ const Testimonial = () => {
                     <div className="testimonial__two-area-brand-line">
                       <span>{testimonial.brandLine}</span>
                     </div>
-                  </div>
-                </div>
-              </div>
-              <div className="row mb-60">
-                <div className="col-xl-12">
-                  <div className="testimonial__two-area-title">
-                    <h2>{testimonial.title}</h2>
                   </div>
                 </div>
               </div>

@@ -10,7 +10,7 @@ const ContractsOverview = () => {
   const contractsOverview = content.home.contractsOverview;
 
   return (
-    <section className="contracts__overview section-padding pt-0">
+    <section className="contracts__overview section-padding" id="home-contracts">
       <div className="container">
         <div className="row ai-center">
           <div className="col-xl-6 lg-mb-30">
@@ -30,10 +30,16 @@ const ContractsOverview = () => {
                 ))}
               </ul>
               <div className="contracts__overview-buttons">
-                {contractsOverview.buttons.map((button) => (
+                {contractsOverview.buttons.map((button, index) => (
                   <Link
                     key={`${button.label}-${button.href}`}
-                    className={button.variant === "primary" ? "button-1" : "button-2"}
+                    className={[
+                      button.variant === "primary" ? "button-1" : "button-2",
+                      "contracts__overview-button",
+                      index === 2 ? "contracts__overview-button--tertiary" : "",
+                    ]
+                      .filter(Boolean)
+                      .join(" ")}
                     href={button.href}
                   >
                     {button.label}

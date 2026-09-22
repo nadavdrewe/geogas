@@ -53,17 +53,19 @@ const page = () => {
         {homeHeroVariant === "competition" ? <CompetitionHomeHero /> : <BannerTwo />}
         <GeoChatbotSection />
         <Services />
-        <ContractsOverview />
-        <PricingListing compact={true} />
-        <Solutions />
-        <WorkProcess />
-        <Faq />
-        <Team />
-        <Testimonial />
-        <Contact />
-        <Blog />
-        <SubscribeArea />
-        <ComicStripSection />
+        <div className="home-tail">
+          <ContractsOverview />
+          <PricingListing compact={true} />
+          <Solutions />
+          <WorkProcess />
+          <Faq />
+          <Team />
+          <Testimonial />
+          <Contact />
+          <Blog />
+          <ComicStripSection />
+          <SubscribeArea />
+        </div>
       </main>
       <FooterTwo />
       <InitAnimations />

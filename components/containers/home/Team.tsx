@@ -23,7 +23,7 @@ const Team = () => {
   const staffProfiles = teamContent.members;
 
   return (
-    <div className="team__two section-padding">
+    <div className="team__two section-padding" id="home-team">
       <div className="container">
         <div className="row mb-40 ai-end">
           <div className="col-xl-8">
@@ -39,6 +39,9 @@ const Team = () => {
             </Link>
           </div>
         </div>
+        <p className="team__two-profiles-note">
+          <strong>{teamContent.profilesTitle}:</strong> {teamContent.profilesDescription}
+        </p>
         <div className="row">
           {staffProfiles.map((member, index) => {
             const heroImagePath = getHeroImagePath(
@@ -100,89 +103,36 @@ const Team = () => {
                     <Link href="/contact" aria-label={`Contact ${member.name}`}>
                       <i className="fa-regular fa-arrow-up-right"></i>
                     </Link>
+                    <details className="team__two-card-details">
+                      <summary>
+                        View profile
+                        <i className="fa-regular fa-angle-down"></i>
+                      </summary>
+                      <div className="team__two-card-details-body">
+                        <p>{member.shortProfile}</p>
+                        <div className="team__two-card-details-specialties">
+                          {member.specialties.map((specialty) => (
+                            <span key={`${member.id}-detail-${specialty}`}>
+                              {specialty}
+                            </span>
+                          ))}
+                        </div>
+                        <ul>
+                          {member.certifications.map((certification) => (
+                            <li key={`${member.id}-detail-cert-${certification}`}>
+                              <i className="fa-solid fa-shield-check"></i>
+                              <span>{certification}</span>
+                            </li>
+                          ))}
+                        </ul>
+                        <Link href="/contact">
+                          {teamContent.contactMemberPrefix} {member.name}
+                          <i className="fa-regular fa-angle-right"></i>
+                        </Link>
+                      </div>
+                    </details>
                   </div>
                 </div>
-              </div>
-            );
-          })}
-        </div>
-
-        <div className="row mt-40">
-          <div className="col-xl-12">
-            <div className="team__two-profiles-title">
-              <h3>{teamContent.profilesTitle}</h3>
-              <p>{teamContent.profilesDescription}</p>
-            </div>
-          </div>
-        </div>
-        <div className="row">
-          {staffProfiles.map((member, index) => {
-            const heroImagePath = getHeroImagePath(
-              member.imagePath,
-              member.heroImagePath
-            );
-            return (
-              <div
-                key={`${member.id}-profile`}
-                className="col-xl-6 mt-30"
-                data-aos-duration="800"
-                data-aos="fade-up"
-                data-aos-delay={250 + index * 80}
-              >
-                <article className="team__two-profile">
-                  <div className="team__two-profile-image">
-                    <Image
-                      className="team__two-profile-image-normal"
-                      src={member.imagePath}
-                      alt={`${member.name} profile`}
-                      width={680}
-                      height={980}
-                      sizes="(max-width: 767px) 100vw, (max-width: 1199px) 50vw, 34vw"
-                    />
-                    <Image
-                      className="team__two-profile-image-hero"
-                      src={heroImagePath}
-                      alt={`${member.name} hero profile`}
-                      width={680}
-                      height={980}
-                      sizes="(max-width: 767px) 100vw, (max-width: 1199px) 50vw, 34vw"
-                    />
-                  </div>
-                  <div className="team__two-profile-content">
-                    <h4>{member.name}</h4>
-                    <span>{member.role}</span>
-                    <p>{member.shortProfile}</p>
-                    <div className="team__two-profile-facts">
-                      <div>
-                        <i className="fa-solid fa-briefcase"></i>
-                        <span>{member.experience}</span>
-                      </div>
-                      <div>
-                        <i className="fa-solid fa-location-dot"></i>
-                        <span>{member.serviceArea}</span>
-                      </div>
-                    </div>
-                    <div className="team__two-profile-specialties">
-                      {member.specialties.map((specialty) => (
-                        <span key={`${member.id}-specialty-${specialty}`}>
-                          {specialty}
-                        </span>
-                      ))}
-                    </div>
-                    <ul className="team__two-profile-certifications">
-                      {member.certifications.map((certification) => (
-                        <li key={`${member.id}-cert-${certification}`}>
-                          <i className="fa-solid fa-shield-check"></i>
-                          <span>{certification}</span>
-                        </li>
-                      ))}
-                    </ul>
-                    <Link href="/contact">
-                      {teamContent.contactMemberPrefix} {member.name}
-                      <i className="fa-regular fa-angle-right"></i>
-                    </Link>
-                  </div>
-                </article>
               </div>
             );
           })}

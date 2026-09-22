@@ -21,7 +21,7 @@ const Blog = () => {
   const videos = blogContent.videos;
 
   return (
-    <div className="blog__two section-padding">
+    <div className="blog__two section-padding" id="home-gallery">
       <div className="container">
         <div className="row mb-30">
           <div className="col-xl-12">

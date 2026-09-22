@@ -1,5 +1,4 @@
 "use client";
-import Counter from "../Counter";
 import BoilerAnimationPanel from "./BoilerAnimationPanel";
 import { useSiteContent } from "@/components/providers/SiteContentProvider";
 
@@ -10,8 +9,9 @@ const Solutions = ({ addClass = false }) => {
   return (
     <>
       <div
+        id={addClass ? undefined : "home-proof"}
         className={
-          (addClass ? " section-padding " : " section-padding pt-0") +
+          (addClass ? " section-padding " : " section-padding") +
           " solutions__area"
         }
       >
@@ -32,7 +32,7 @@ const Solutions = ({ addClass = false }) => {
               <div className="solutions__area-right">
                 <h2>
                   <span className="counter">
-                    <Counter value={solutions.categoriesCount} />
+                    {solutions.categoriesCount}
                   </span>
                   <span className="pre">+</span>
                 </h2>
@@ -52,7 +52,7 @@ const Solutions = ({ addClass = false }) => {
                 <div className="counter__two-item">
                   <h2>
                     <span className="counter">
-                      <Counter value={metric.value} />
+                      {metric.value}
                     </span>
                     <span className="pre">{metric.suffix}</span>
                   </h2>

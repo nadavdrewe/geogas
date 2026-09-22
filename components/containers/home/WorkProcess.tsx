@@ -14,6 +14,7 @@ const WorkProcess = ({ addClass = false }) => {
 
   return (
     <div
+      id={addClass ? undefined : "home-process"}
       className={
         (addClass ? " pt-0 bg-transparent" : " ") +
         " work__process section-padding"

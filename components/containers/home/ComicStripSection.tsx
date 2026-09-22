@@ -2,7 +2,7 @@ import Image from "next/image";
 
 const ComicStripSection = () => {
   return (
-    <section className="comic-strip section-padding pt-0">
+    <section className="comic-strip section-padding" id="home-story">
       <div className="container">
         <div className="comic-strip__shell">
           <div className="comic-strip__header" data-aos="fade-up" data-aos-duration="800">
