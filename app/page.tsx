@@ -59,8 +59,10 @@ const page = () => {
           <Solutions />
           <WorkProcess />
           <Faq />
-          <Team />
-          <Testimonial />
+          <section className="home-people-proof" aria-labelledby="home-team-heading">
+            <Team />
+            <Testimonial />
+          </section>
           <Contact />
           <Blog />
           <ComicStripSection />

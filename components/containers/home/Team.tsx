@@ -28,7 +28,8 @@ const Team = () => {
         <div className="row mb-40 ai-end">
           <div className="col-xl-8">
             <div className="team__two-title">
-              <h2>{teamContent.title}</h2>
+              <span className="team__two-eyebrow">Our people &amp; customer stories</span>
+              <h2 id="home-team-heading">{teamContent.title}</h2>
               <p>{teamContent.description}</p>
             </div>
           </div>

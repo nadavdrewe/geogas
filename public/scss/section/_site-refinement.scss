@@ -111,3 +111,92 @@
     transition: none;
   }
 }
+
+/* Team profiles and customer proof form one continuous homepage chapter. */
+.site-home .home-tail .home-people-proof {
+  padding: clamp(78px, 7.4vw, 112px) 0;
+  background:
+    radial-gradient(circle at 96% 2%, rgba(197, 31, 45, 0.07), transparent 28%),
+    linear-gradient(180deg, #fff 0%, #f5f7fa 100%);
+}
+
+.site-home .home-tail .home-people-proof .team__two,
+.site-home .home-tail .home-people-proof .testimonial__two {
+  background: transparent;
+  overflow: visible;
+}
+
+.site-home .home-tail .home-people-proof .team__two {
+  padding: 0;
+}
+
+.site-home .home-tail .home-people-proof .team__two-title h2 {
+  color: #121722;
+}
+
+.site-home .home-tail .home-people-proof .team__two-title p {
+  color: #475569;
+}
+
+.site-home .home-tail .home-people-proof .team__two-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 17px;
+  padding: 7px 11px;
+  border: 1px solid rgba(197, 31, 45, 0.18);
+  border-radius: 999px;
+  background: #fff;
+  color: #92212d;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.site-home .home-tail .home-people-proof .team__two-eyebrow::before {
+  content: "";
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #c51f2d;
+}
+
+.site-home .home-tail .home-people-proof .team__two-profiles-note {
+  color: #536174;
+}
+
+.site-home .home-tail .home-people-proof .team__two-profiles-note strong {
+  color: #121722;
+}
+
+.site-home .home-tail .home-people-proof .testimonial__two {
+  padding: clamp(50px, 5vw, 76px) 0 0;
+}
+
+.site-home .home-tail .home-people-proof .testimonial__two-area {
+  padding: clamp(32px, 4vw, 56px) 0 0;
+  border: 0;
+  border-top: 1px solid rgba(18, 23, 34, 0.13);
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.site-home .home-tail .home-people-proof .testimonial__two-area-title {
+  max-width: none;
+}
+
+@media (max-width: 767px) {
+  .site-home .home-tail .home-people-proof {
+    padding: 70px 0;
+  }
+
+  .site-home .home-tail .home-people-proof .testimonial__two {
+    padding-top: 42px;
+  }
+
+  .site-home .home-tail .home-people-proof .testimonial__two-area {
+    padding-top: 36px;
+  }
+}
