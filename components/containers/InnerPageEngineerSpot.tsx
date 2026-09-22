@@ -71,6 +71,7 @@ const InnerPageEngineerSpot = ({
                 src={imageSrc}
                 alt={imageAlt}
                 fill
+                priority
                 sizes="(max-width: 767px) calc(100vw - 68px), (max-width: 991px) calc(100vw - 120px), 520px"
                 className="inner-engineer-spot__image-tag"
               />

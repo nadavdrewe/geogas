@@ -68,14 +68,16 @@ const Faq = ({ addClass = false, fullPage = false }: FaqProps) => {
                   const itemAnchorId = `faq-item-${item.number}`;
                   return (
                     <div key={collapseId} className="faq__area-item" id={itemAnchorId}>
-                      <h5
-                        data-bs-toggle="collapse"
-                        data-bs-target={`#${collapseId}`}
-                        className={(active == index ? "  " : " collapsed") + " icon"}
-                        onClick={() => setActive(active === index ? -1 : index)}
-                      >
-                        <span>{item.number}</span>
-                        {item.question}
+                      <h5 className={(active === index ? "" : "collapsed") + " icon"}>
+                        <button
+                          type="button"
+                          aria-expanded={active === index}
+                          aria-controls={collapseId}
+                          onClick={() => setActive(active === index ? -1 : index)}
+                        >
+                          <span>{item.number}</span>
+                          {item.question}
+                        </button>
                       </h5>
                       <div
                         id={collapseId}

@@ -1,6 +1,7 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
+import type { Swiper as SwiperInstance } from "swiper";
 import { Autoplay } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/swiper-bundle.css";
@@ -8,6 +9,7 @@ import { useSiteContent } from "@/components/providers/SiteContentProvider";
 
 const Services = () => {
   const [active, setActive] = useState(0);
+  const sliderRef = useRef<SwiperInstance | null>(null);
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
   const { content } = useSiteContent();
   const servicesContent = content.home.services;
@@ -52,6 +54,9 @@ const Services = () => {
                   }
             }
             onSlideChange={(swiper) => setActive(swiper.realIndex)}
+            onSwiper={(swiper) => {
+              sliderRef.current = swiper;
+            }}
             breakpoints={{
               0: {
                 slidesPerView: 1,
@@ -90,6 +95,22 @@ const Services = () => {
               </SwiperSlide>
             ))}
           </Swiper>
+          <div className="services__two-navigation" aria-label="Service carousel controls">
+            <span className="services__two-position" aria-live="polite">
+              {active + 1} / {serviceCards.length}
+            </span>
+            <div className="services__two-navigation-buttons">
+              <button type="button" aria-label="Previous service" onClick={() => sliderRef.current?.slidePrev()}>
+                <i className="fa-regular fa-arrow-left" aria-hidden="true" />
+              </button>
+              <button type="button" aria-label="Next service" onClick={() => sliderRef.current?.slideNext()}>
+                <i className="fa-regular fa-arrow-right" aria-hidden="true" />
+              </button>
+            </div>
+            <Link href="/services" className="services__two-all-link">
+              View all services <i className="fa-regular fa-angle-right" aria-hidden="true" />
+            </Link>
+          </div>
         </div>
       </div>
     </section>
