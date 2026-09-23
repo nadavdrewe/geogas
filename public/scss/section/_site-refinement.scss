@@ -408,3 +408,122 @@
     margin-bottom: 24px;
   }
 }
+
+/* Make the long contracts reference page easier to scan and act on. */
+.contracts__page-jump {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin-top: 24px;
+  padding: 17px 20px;
+  border: 1px solid #dce2e9;
+  border-radius: 16px;
+  background: #f6f8fa;
+}
+
+.contracts__page-jump > span {
+  flex: 0 0 auto;
+  color: #263446;
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.contracts__page-jump > div {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.contracts__page-jump a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 39px;
+  padding: 7px 13px;
+  border: 1px solid #d5dce5;
+  border-radius: 999px;
+  background: #fff;
+  color: #253244;
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+.contracts__page-jump a:hover,
+.contracts__page-jump a:focus-visible {
+  border-color: #a01e2a;
+  color: #a01e2a;
+}
+
+.contracts__page-plans-heading {
+  margin-top: 58px;
+  text-align: center;
+}
+
+.contracts__page-plans-heading h3 {
+  margin-bottom: 8px;
+}
+
+.contracts__page-plans-heading p {
+  margin-bottom: 0;
+}
+
+.contracts__page-plans-row {
+  margin-top: 8px;
+}
+
+.contracts__page-package {
+  display: flex;
+  flex-direction: column;
+}
+
+.contracts__page-package-action {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  min-height: 46px;
+  margin-top: auto;
+  padding: 10px 14px;
+  border: 1px solid #252f3d;
+  border-radius: 10px;
+  background: #252f3d;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.contracts__page-package-action:hover {
+  border-color: #a01e2a;
+  background: #a01e2a;
+  color: #fff;
+}
+
+.contracts__page-package > ul:last-of-type {
+  margin-bottom: 24px;
+}
+
+:is(#contract-benefits, #contract-plans, #contract-exclusions, #contract-terms, #contract-faq, #contract-brochure) {
+  scroll-margin-top: 110px;
+}
+
+@media (max-width: 767px) {
+  .contracts__page-jump {
+    display: block;
+    padding: 16px;
+  }
+
+  .contracts__page-jump > span {
+    display: block;
+    margin-bottom: 12px;
+  }
+
+  .contracts__page-jump a {
+    min-height: 40px;
+    padding-inline: 11px;
+  }
+
+  .contracts__page-plans-heading {
+    margin-top: 46px;
+    text-align: left;
+  }
+}

@@ -29,11 +29,23 @@ const ContractsContent = () => {
               <p>{contractsContent.currentPricingNotice}</p>
               <div className="contracts__page-reference-links">
                 <Link href="/pricing">View Current Pricing</Link>
-                <Link href="/pricing">See Call-Out Rates</Link>
+                <a href="#contract-plans">Compare Cover Plans</a>
               </div>
             </div>
           </div>
         </div>
+
+        <nav className="contracts__page-jump" aria-label="On this page">
+          <span>Explore contract cover</span>
+          <div>
+            <a href="#contract-benefits">Benefits</a>
+            <a href="#contract-plans">Plans</a>
+            <a href="#contract-exclusions">Exclusions</a>
+            <a href="#contract-terms">Terms</a>
+            <a href="#contract-faq">FAQs</a>
+            <a href="#contract-brochure">Brochure</a>
+          </div>
+        </nav>
 
         <div className="row mt-40">
           <div className="col-xl-7 lg-mb-30">
@@ -71,7 +83,7 @@ const ContractsContent = () => {
           </div>
         </div>
 
-        <div className="row mt-60">
+        <div className="row mt-60" id="contract-benefits">
           <div className="col-xl-12">
             <div className="contracts__page-benefits">
               <h3>{contractsContent.packageBenefitsTitle}</h3>
@@ -87,7 +99,11 @@ const ContractsContent = () => {
           </div>
         </div>
 
-        <div className="row mt-60">
+        <div className="contracts__page-plans-heading" id="contract-plans">
+          <h3>Compare Home Cover Plans</h3>
+          <p>See what each plan includes, then ask the team which cover fits your home.</p>
+        </div>
+        <div className="row contracts__page-plans-row">
           {contractsContent.packages.map((pkg) => (
             <div className="col-xl-6 mt-30" key={pkg.name}>
               <article className="contracts__page-package">
@@ -120,6 +136,10 @@ const ContractsContent = () => {
                     </ul>
                   </>
                 ) : null}
+                <Link className="contracts__page-package-action" href="/contact">
+                  Ask about {pkg.name}
+                  <i className="fa-regular fa-angle-right" aria-hidden="true"></i>
+                </Link>
               </article>
             </div>
           ))}
@@ -156,7 +176,7 @@ const ContractsContent = () => {
           </div>
         </div>
 
-        <div className="row mt-60">
+        <div className="row mt-60" id="contract-exclusions">
           <div className="col-xl-7 lg-mb-30">
             <div className="contracts__page-block">
               <h3>{contractsContent.annualServiceChecksTitle}</h3>
@@ -188,7 +208,7 @@ const ContractsContent = () => {
           </div>
         </div>
 
-        <div className="row mt-60">
+        <div className="row mt-60" id="contract-terms">
           <div className="col-xl-12">
             <div className="contracts__page-terms">
               <h3>{contractsContent.termsHighlightsTitle}</h3>
@@ -269,7 +289,7 @@ const ContractsContent = () => {
           </div>
         </div>
 
-        <div className="row mt-60">
+        <div className="row mt-60" id="contract-faq">
           <div className="col-xl-12">
             <div className="contracts__page-faq">
               <h3>{contractsContent.faqTitle}</h3>
@@ -285,7 +305,7 @@ const ContractsContent = () => {
           </div>
         </div>
 
-        <div className="row mt-60">
+        <div className="row mt-60" id="contract-brochure">
           <div className="col-xl-12">
             <div className="contracts__page-brochure">
               <h3>{contractsContent.brochureTitle}</h3>
