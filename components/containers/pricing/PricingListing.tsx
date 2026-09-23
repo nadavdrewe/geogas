@@ -4,6 +4,14 @@ import Link from "next/link";
 import { useSiteContent } from "@/components/providers/SiteContentProvider";
 import type { PricingItem } from "@/data/siteContent";
 
+const pricingSections = [
+  { href: "#callout-rates", label: "Hourly rates" },
+  { href: "#servicing-prices", label: "Servicing & checks" },
+  { href: "#installation-prices", label: "Installations" },
+  { href: "#upgrade-prices", label: "System upgrades" },
+  { href: "#electrical-prices", label: "Electrical" },
+];
+
 const PriceGrid = ({ items }: { items: PricingItem[] }) => (
   <div className="pricing__listing-grid">
     {items.map((item) => (
@@ -43,8 +51,21 @@ const PricingListing = ({ compact = false }: PricingListingProps) => {
             <div className="pricing__listing-note">
               <i className="fa-solid fa-circle-info"></i>
               <p>{pricingContent.note}</p>
-              <Link href="/pricing">Open Pricing Page</Link>
+              {compact ? <Link href="/pricing">Open Pricing Page</Link> : null}
             </div>
+            {!compact ? (
+              <nav className="pricing__listing-jump" aria-label="Pricing categories">
+                <span>Browse prices</span>
+                <div>
+                  {pricingSections.map((section) => (
+                    <a href={section.href} key={section.href}>
+                      {section.label}
+                      <i className="fa-regular fa-arrow-down" aria-hidden="true" />
+                    </a>
+                  ))}
+                </div>
+              </nav>
+            ) : null}
           </div>
         </div>
 
@@ -61,6 +82,13 @@ const PricingListing = ({ compact = false }: PricingListingProps) => {
                     </li>
                   ))}
                 </ul>
+                <div className="pricing__listing-summary-action">
+                  <p>Need a confirmed total for your job?</p>
+                  <Link href="/contact">
+                    Get a tailored quote
+                    <i className="fa-regular fa-angle-right" aria-hidden="true" />
+                  </Link>
+                </div>
               </div>
             </div>
             <div className="col-xl-5">
@@ -91,7 +119,7 @@ const PricingListing = ({ compact = false }: PricingListingProps) => {
           </div>
         ) : null}
 
-        <div className="row mt-10">
+        <div className="row mt-10" id={compact ? undefined : "callout-rates"}>
           {pricingContent.hourlyCategories.map((category) => (
             <div className="col-xl-4 col-md-6 mt-30" key={category.title}>
               <div className="pricing__listing-hourly">
@@ -113,7 +141,7 @@ const PricingListing = ({ compact = false }: PricingListingProps) => {
           <>
             <div className="row mt-70">
               <div className="col-xl-12">
-                <div className="pricing__listing-block">
+                <div className="pricing__listing-block" id="servicing-prices">
                   <h3>Boiler Servicing & Landlord Checks</h3>
                   <PriceGrid items={pricingContent.serviceItems} />
                 </div>
@@ -122,7 +150,7 @@ const PricingListing = ({ compact = false }: PricingListingProps) => {
 
             <div className="row mt-40">
               <div className="col-xl-12">
-                <div className="pricing__listing-block">
+                <div className="pricing__listing-block" id="installation-prices">
                   <h3>Boiler Installation & Replacements</h3>
                   <PriceGrid items={pricingContent.installationItems} />
                 </div>
@@ -131,7 +159,7 @@ const PricingListing = ({ compact = false }: PricingListingProps) => {
 
             <div className="row mt-40">
               <div className="col-xl-12">
-                <div className="pricing__listing-block">
+                <div className="pricing__listing-block" id="upgrade-prices">
                   <h3>Sales & System Upgrades</h3>
                   <PriceGrid items={pricingContent.salesItems} />
                 </div>
@@ -140,7 +168,7 @@ const PricingListing = ({ compact = false }: PricingListingProps) => {
 
             <div className="row mt-40">
               <div className="col-xl-12">
-                <div className="pricing__listing-block">
+                <div className="pricing__listing-block" id="electrical-prices">
                   <h3>Electrical Works (EICR)</h3>
                   <PriceGrid items={pricingContent.electricalItems} />
                 </div>
@@ -157,8 +185,8 @@ const PricingListing = ({ compact = false }: PricingListingProps) => {
                 <Link className="button-1" href="/contact">
                   Request A Quote<i className="fa-regular fa-angle-right"></i>
                 </Link>
-                <Link className="button-2" href="/pricing">
-                  {compact ? "View Full Pricing" : "View Pricing Page"}
+                <Link className="button-2" href={compact ? "/pricing" : "/contracts"}>
+                  {compact ? "View Full Pricing" : "Compare Contract Cover"}
                   <i className="fa-regular fa-angle-right"></i>
                 </Link>
               </div>
