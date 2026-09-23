@@ -44,6 +44,7 @@ const Blog = () => {
                 <div className="blog__two-item-image">
                   <video
                     controls
+                    aria-label={video.title}
                     preload="metadata"
                     playsInline
                     poster={video.poster ? mediaPath(video.poster) : undefined}
@@ -74,9 +75,6 @@ const Blog = () => {
                         </Link>
                       </li>
                     </ul>
-                    <a href={mediaPath(video.file)} target="_blank" rel="noreferrer">
-                      <i className="fa-regular fa-arrow-up-right"></i>
-                    </a>
                   </div>
                 </div>
               </div>

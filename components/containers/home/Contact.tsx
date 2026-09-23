@@ -21,6 +21,7 @@ const Contact = ({ addClass = false }) => {
                 <div className="col-lg-6 lg-mb-30">
                   <div className="contact__one-area-left">
                     <h2>{contactContent.title}</h2>
+                    <p className="contact__one-area-lead">{contactContent.intro}</p>
                     <div
                       className="info "
                       data-aos-duration="800"
@@ -73,6 +74,7 @@ const Contact = ({ addClass = false }) => {
                       submitLabel={contactContent.form.submitLabel}
                       submitButtonClassName="button-1"
                       source="home-contact-section"
+                      showFieldLabels
                     />
                   </div>
                 </div>
