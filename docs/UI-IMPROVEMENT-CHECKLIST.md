@@ -108,3 +108,12 @@ The authenticated admin interface is outside the public-site goal.
   Removed the nested desktop scrolling area. Full FAQ page shows every question.
 - Preview access rechecked: still disabled in Work settings. These changes remain
   development-only pending interaction and desktop/mobile visual review.
+- Shared ending batch in development: newsletter fields have persistent labels,
+  unique IDs and autofill semantics; footer is a named landmark with named link
+  groups and icon links; contact text can wrap without forced title casing.
+  WhatsApp has Escape/close focus return, a larger close target and darker action
+  colours for legibility. Newsletter input colours are explicit on dark surfaces.
+- Full verification passed after these shared changes: lint, typecheck, zero
+  dependency audit findings and production build. Browser access is still disabled;
+  no visual acceptance or deployment claimed. The three development batches must
+  be reviewed together before merging to `main`.

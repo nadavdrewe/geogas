@@ -1,0 +1,52 @@
+/* Shared newsletter and footer: persistent labels and readable contact links. */
+body:has(.header-two) {
+  .newsletter-subscribe-form label {
+    display: grid;
+    min-width: 0;
+    gap: 7px;
+    color: #e2e8f0;
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 1.5;
+  }
+  :is(.subscribe__two, .subscribe__area) .newsletter-subscribe-form input {
+    width: 100%;
+    margin: 0;
+    min-height: 50px;
+    color: #19232e;
+    background: #fff;
+    border: 1px solid #cdd5de;
+    font-size: 16px;
+    font-weight: 400;
+    &:focus { color: #19232e; border-color: #b32235; }
+    &::placeholder { color: #647184; }
+  }
+  .newsletter-subscribe-form .contact__form-feedback { grid-column: 1 / -1; }
+  .footer__two .footer__one-widget {
+    p { font-size: 15px; line-height: 1.75; }
+    .info-item-content { min-width: 0; }
+    .info-item-content :is(a, h6) {
+      overflow-wrap: anywhere;
+      text-transform: none;
+      font-size: 16px;
+      line-height: 1.5;
+    }
+    .info-item-content a { display: inline-block; padding-block: 4px; }
+  }
+  .footer__two .footer-widget-menu a { min-height: 38px; padding-block: 7px; }
+  .footer__two .social__icon a { min-width: 44px; min-height: 44px; }
+  .copyright__one-menu a { display: inline-block; padding-block: 8px; }
+  .whatsapp-widget__close { width: 44px; height: 44px; flex: 0 0 44px; }
+  .whatsapp-widget__cta {
+    min-height: 48px;
+    background: #147d45;
+    &:hover { background: #106539; }
+  }
+  .whatsapp-widget__icon { background: #147d45; }
+  @media (max-width: 767px) {
+    .footer__two .footer__one-widget h4 { margin-bottom: 14px; }
+    .footer__two-area > .row { row-gap: 28px; }
+    .footer__two-area > .row > div { margin-bottom: 0; }
+    .subscribe__two-title h2 { text-align: left; }
+  }
+}

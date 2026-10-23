@@ -1,6 +1,6 @@
 "use client";
 
-import { FormEvent, useState } from "react";
+import { FormEvent, useId, useState } from "react";
 
 type NewsletterSubscribeFormProps = {
   namePlaceholder?: string;
@@ -33,6 +33,7 @@ const NewsletterSubscribeForm = ({
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
   const [submitState, setSubmitState] = useState<SubmitState>(defaultState);
+  const formId = useId();
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -87,8 +88,11 @@ const NewsletterSubscribeForm = ({
   };
 
   return (
-    <form onSubmit={handleSubmit} className="newsletter-subscribe-form">
+    <form onSubmit={handleSubmit} className="newsletter-subscribe-form" aria-label="Subscribe to Geo Gas updates" aria-busy={submitState.status === "sending"}>
+      <label htmlFor={`${formId}-name`}>Full name
       <input
+        id={`${formId}-name`}
+        autoComplete="name"
         type="text"
         name="name"
         value={name}
@@ -97,7 +101,11 @@ const NewsletterSubscribeForm = ({
         aria-label="Full name"
         required
       />
+      </label>
+      <label htmlFor={`${formId}-phone`}>Phone number
       <input
+        id={`${formId}-phone`}
+        autoComplete="tel"
         type="tel"
         name="phone"
         value={phone}
@@ -106,7 +114,11 @@ const NewsletterSubscribeForm = ({
         aria-label="Phone number"
         required
       />
+      </label>
+      <label htmlFor={`${formId}-email`}>Email address
       <input
+        id={`${formId}-email`}
+        autoComplete="email"
         type="email"
         name="email"
         value={email}
@@ -115,6 +127,7 @@ const NewsletterSubscribeForm = ({
         aria-label="Email address"
         required
       />
+      </label>
       <button
         className={buttonClassName}
         type="submit"

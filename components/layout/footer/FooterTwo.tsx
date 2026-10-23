@@ -11,7 +11,7 @@ const FooterTwo = () => {
   const footer = content.footer;
 
   return (
-    <div className="footer__two">
+    <footer className="footer__two" aria-label="Geo Gas footer">
       <div className="container">
         <div className="row">
           <div className="col-xl-12">
@@ -35,10 +35,11 @@ const FooterTwo = () => {
                           <li key={`${item.icon}-${item.href}`}>
                             <Link
                               href={item.href}
+                              aria-label={item.href.startsWith("mailto:") ? "Email Geo Gas" : item.href.startsWith("tel:") ? "Call Geo Gas" : `Visit ${item.href.replace(/^https?:\/\//, "").replace(/\/$/, "")}`}
                               target={item.href.startsWith("http") ? "_blank" : undefined}
                               rel={item.href.startsWith("http") ? "noreferrer" : undefined}
                             >
-                              <i className={item.icon}></i>
+                              <i className={item.icon} aria-hidden="true"></i>
                             </Link>
                           </li>
                         ))}
@@ -62,7 +63,7 @@ const FooterTwo = () => {
                       data-aos-delay={200 + index * 200}
                     >
                       <h4>{group.title}</h4>
-                      <div className="footer-widget-menu">
+                      <nav className="footer-widget-menu" aria-label={`Footer ${group.title}`}>
                         <ul>
                           {group.links.map((item) => (
                             <li key={`${item.label}-${item.href}`}>
@@ -70,7 +71,7 @@ const FooterTwo = () => {
                             </li>
                           ))}
                         </ul>
-                      </div>
+                      </nav>
                     </div>
                   </div>
                 ))}
@@ -147,7 +148,7 @@ const FooterTwo = () => {
           </div>
         </div>
       </div>
-    </div>
+    </footer>
   );
 };
 
