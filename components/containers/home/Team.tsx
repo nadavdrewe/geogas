@@ -66,12 +66,12 @@ const Team = () => {
                       width={680}
                       height={980}
                       sizes="(max-width: 767px) 100vw, (max-width: 1199px) 50vw, 33vw"
-                      priority={index < 3}
                     />
                     <Image
                       className="team__two-card-image-hero"
                       src={heroImagePath}
-                      alt={`${member.name} hero`}
+                      alt=""
+                      aria-hidden="true"
                       width={680}
                       height={980}
                       sizes="(max-width: 767px) 100vw, (max-width: 1199px) 50vw, 33vw"
@@ -105,7 +105,7 @@ const Team = () => {
                       <i className="fa-regular fa-arrow-up-right"></i>
                     </Link>
                     <details className="team__two-card-details">
-                      <summary>
+                      <summary aria-label={`View ${member.name}'s profile`}>
                         View profile
                         <i className="fa-regular fa-angle-down"></i>
                       </summary>

@@ -1,8 +1,5 @@
 "use client";
 import Image from "next/image";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Autoplay, Pagination } from "swiper/modules";
-import "swiper/swiper-bundle.css";
 import quote from "@/public/img/icon/quote.svg";
 import { useSiteContent } from "@/components/providers/SiteContentProvider";
 
@@ -80,43 +77,21 @@ const Testimonial = () => {
               </div>
               <div className="row">
                 <div className="col-xl-12">
-                  <div className="swiper testimonial_slider_two">
-                    <Swiper
-                      slidesPerView={1}
-                      spaceBetween={30}
-                      speed={2000}
-                      loop={true}
-                      roundLengths={true}
-                      modules={[Autoplay, Pagination]}
-                      autoplay={{
-                        delay: 4500,
-                        disableOnInteraction: false,
-                      }}
-                      pagination={{
-                        el: ".testimonial_pagination",
-                        clickable: true,
-                      }}
-                      breakpoints={{
-                        992: {
-                          slidesPerView: 2,
-                        },
-                      }}
-                      className="swiper-wrapper"
-                    >
+                  <div className="testimonial__two-stories" aria-label="Customer stories">
                       {testimonial.items.map((item, index) => (
-                        <SwiperSlide
+                        <article
                           key={`${item.clientType}-${item.location}-${index}`}
                         >
-                          <div className="testimonial__two-area-item swiper-slide">
+                          <div className="testimonial__two-area-item">
                             <div className="testimonial__two-area-item-client">
                               <div className="testimonial__two-area-item-client-title">
                                 <h4>{item.clientType}</h4>
                                 <span>{item.location}</span>
                               </div>
-                              <Image src={quote} alt="icon" priority />
+                              <Image src={quote} alt="" />
                             </div>
                             <p>{item.quote}</p>
-                            <div className="testimonial__two-area-item-reviews">
+                            <div className="testimonial__two-area-item-reviews" aria-label="5 out of 5 stars">
                               <i className="fas fa-star"></i>
                               <i className="fas fa-star"></i>
                               <i className="fas fa-star"></i>
@@ -124,15 +99,9 @@ const Testimonial = () => {
                               <i className="fas fa-star"></i>
                             </div>
                           </div>
-                        </SwiperSlide>
+                        </article>
                       ))}
-                    </Swiper>
                   </div>
-                </div>
-              </div>
-              <div className="row mt-60">
-                <div className="testimonial__two-pagination">
-                  <div className="testimonial_pagination"></div>
                 </div>
               </div>
             </div>

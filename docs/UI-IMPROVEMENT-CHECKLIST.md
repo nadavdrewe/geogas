@@ -66,6 +66,10 @@ The authenticated admin interface is outside the public-site goal.
 
 ## Batch acceptance
 
+User steering: continue implementation across sections and perform the full
+desktop/mobile verification at the end. Unchecked items may have development
+changes; they are not declared complete until final verification and deployment.
+
 - Relevant improvements are implemented in the development project.
 - Review at 390px mobile and 1440px desktop, with additional widths when needed.
 - Exercise relevant controls without submitting fake production enquiries.
@@ -117,3 +121,15 @@ The authenticated admin interface is outside the public-site goal.
   dependency audit findings and production build. Browser access is still disabled;
   no visual acceptance or deployment claimed. The three development batches must
   be reviewed together before merging to `main`.
+- Continued implementation per user direction with final visual review deferred.
+  Homepage campaign hierarchy, shortcuts, contracts, rate cards, ordered call-out
+  process, team cards, booking text, gallery and storyboard received individual
+  layout/type/spacing improvements. Reviews now render as a stationary responsive
+  grid, preserving every customer story. Team images below the fold are lazy;
+  videos fetch on interaction rather than all preloading metadata. Decorative
+  imagery is excluded from spoken content and gallery links identify each clip.
+  Solutions/boiler illustration and inner-page families remain to be addressed.
+- Solutions metrics now use clearer card grouping. Boiler demonstration has a
+  pause/resume control; phase updates and decorative animations pause together,
+  and reduced-motion preferences stop automatic phase changes. These are
+  development changes awaiting the final interaction/visual review.

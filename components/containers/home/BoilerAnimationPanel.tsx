@@ -75,6 +75,16 @@ const BoilerAnimationPanel = ({
   const { content } = useSiteContent();
   const boilerAnimationContent = content.home.boilerAnimation;
   const [phaseIndex, setPhaseIndex] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
+  const [reducedMotion, setReducedMotion] = useState(false);
+
+  useEffect(() => {
+    const media = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const updatePreference = () => setReducedMotion(media.matches);
+    updatePreference();
+    media.addEventListener("change", updatePreference);
+    return () => media.removeEventListener("change", updatePreference);
+  }, []);
 
   const repairTasks =
     boilerAnimationContent.repairTasks.length > 0
@@ -99,12 +109,13 @@ const BoilerAnimationPanel = ({
       : ["Flow Stable", "Safe Pressure", "Repair Pass"];
 
   useEffect(() => {
+    if (isPaused || reducedMotion) return;
     const timer = window.setInterval(() => {
       setPhaseIndex((prev) => (prev + 1) % repairPhases.length);
     }, 2000);
 
     return () => window.clearInterval(timer);
-  }, [repairPhases.length]);
+  }, [repairPhases.length, isPaused, reducedMotion]);
 
   const phase = repairPhases[phaseIndex];
   const ambientTemp = Math.min(23, 18 + phase.timelineStep + (phaseIndex > 1 ? 1 : 0));
@@ -133,8 +144,15 @@ const BoilerAnimationPanel = ({
       data-aos="fade-up"
       data-aos-delay={aosDelay}
     >
+      <div className="boiler-demo-controls">
+        <span>How a repair progresses</span>
+        <button type="button" aria-pressed={isPaused || reducedMotion} disabled={reducedMotion} onClick={() => setIsPaused((paused) => !paused)}>
+          {reducedMotion ? "Reduced motion enabled" : isPaused ? "Resume animation" : "Pause animation"}
+        </button>
+      </div>
       <div
         className="banner__two-image-stage banner__two-image-stage--boiler"
+        data-paused={isPaused || reducedMotion}
         data-repair-step={phaseIndex}
       >
         <div className="banner__two-boiler-grid"></div>

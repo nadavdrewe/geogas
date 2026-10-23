@@ -45,7 +45,7 @@ const Blog = () => {
                   <video
                     controls
                     aria-label={video.title}
-                    preload="metadata"
+                    preload="none"
                     playsInline
                     poster={video.poster ? mediaPath(video.poster) : undefined}
                   >
@@ -63,8 +63,9 @@ const Blog = () => {
                           href={mediaPath(video.file)}
                           target="_blank"
                           rel="noreferrer"
+                          aria-label={`${blogContent.watchLabel}: ${video.title}`}
                         >
-                          <i className="fas fa-video"></i>
+                          <i className="fas fa-video" aria-hidden="true"></i>
                           {blogContent.watchLabel}
                         </a>
                       </li>

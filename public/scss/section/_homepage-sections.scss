@@ -1,0 +1,132 @@
+/* Individual homepage chapters, using the shared public-site design tokens. */
+.site-home {
+  .competition-hero {
+    padding-bottom: 30px;
+    &__grid { gap: clamp(24px, 4vw, 56px); box-shadow: 0 12px 32px #19232e12; }
+    h1 { font-size: clamp(36px, 4vw, 60px); line-height: 1.08; letter-spacing: -.04em; }
+    &__intro { font-size: 17px; line-height: 1.7; }
+    &__benefits li { align-items: flex-start; font-size: 14px; line-height: 1.6; }
+    &__benefits i { flex-shrink: 0; }
+    &__cta {
+      min-height: 52px; border: 1px solid #b32235; border-radius: 12px;
+      background: #b32235; color: #fff; box-shadow: none;
+      &:hover { background: #921b2b; border-color: #921b2b; color: #fff; transform: none; }
+    }
+    &__secondary-cta { min-height: 52px; border-radius: 12px; line-height: 1.5; }
+    &__poster { transform: none; }
+  }
+  .service-shortcuts a { align-items: flex-start; }
+  .service-shortcuts a > i { margin-top: 4px; }
+  .boiler-demo-controls {
+    display: flex; justify-content: space-between; align-items: center; gap: 16px;
+    margin-bottom: 14px; color: #526171; font-size: 13px;
+    button { min-height: 44px; padding: 9px 14px; border: 1px solid #cdd5de; border-radius: 10px; background: #fff; color: #263442; font-weight: 700; }
+  }
+  .banner__two-image-stage[data-paused="true"] {
+    &, *, *::before, *::after { animation-play-state: paused !important; }
+  }
+
+  .home-tail {
+    .solutions__area-right { border: 1px solid #dfe4eb; border-radius: 18px; padding: 24px; background: #fff; }
+    .counter__two-item { padding: 22px; border: 1px solid #dfe4eb; border-radius: 16px; background: #fff; }
+    .counter__two-item h2 { font-size: 38px; line-height: 1.2; }
+    .counter__two-item > span { font-size: 14px; line-height: 1.65; }
+    .contracts__overview-right {
+      padding: clamp(22px, 3vw, 34px);
+      border-radius: 20px;
+      background: #fff;
+      box-shadow: 0 8px 26px #19232e08;
+      &-brand { padding: 22px; border-radius: 14px; }
+      > ul { gap: 14px; }
+      > ul li { align-items: flex-start; line-height: 1.6; }
+      &-link { min-height: 44px; padding-block: 10px; }
+    }
+    .contracts__overview-points li { align-items: flex-start; line-height: 1.6; }
+    .pricing__listing-hourly {
+      padding: 24px;
+      background: #fff;
+      h4 { font-size: 25px; line-height: 1.25; }
+      li { gap: 12px; padding-block: 14px; }
+    }
+    .pricing__listing-note { font-size: 14px; line-height: 1.65; }
+    .pricing__listing-bottom { margin-top: 28px; }
+
+    .work__process-steps {
+      list-style: none;
+      padding-left: 0;
+      margin-bottom: 0;
+      row-gap: 22px;
+      > li { display: flex; }
+    }
+    .work__process-item {
+      width: 100%; height: auto; margin: 0;
+      padding: 28px; border: 1px solid #dfe4eb; border-radius: 18px;
+      background: #fff; box-shadow: none; text-align: left;
+      h3 { font-size: 23px; line-height: 1.3; margin-bottom: 12px; }
+      p { font-size: 15px; line-height: 1.75; }
+      &:hover { transform: none; }
+      &-icon { margin: 0 0 22px; width: 68px; height: 68px; border-radius: 16px; box-shadow: none; }
+    }
+
+    .team__two-card {
+      border-radius: 18px; box-shadow: none;
+      &-image { overflow: hidden; }
+      &-image-normal, &-image-hero { height: 300px; object-fit: contain; object-position: center bottom; }
+      &-badge { max-width: calc(100% - 28px); font-size: 11px; line-height: 1.5; }
+      &-content { padding: 22px; }
+      &-content h5 { font-size: 25px; line-height: 1.2; }
+      &-content > a { min-width: 44px; min-height: 44px; }
+      &-meta { line-height: 1.65; }
+      &-details summary { min-height: 46px; align-items: center; }
+      &-details-body p { line-height: 1.75; }
+    }
+
+    .testimonial__two-area-brand { padding: 24px; border-radius: 18px; box-shadow: none; }
+    .testimonial__two-area-brand-grid { gap: 14px; }
+    .testimonial__two-area-brand-item { padding: 20px; box-shadow: none; }
+    .testimonial__two-area-brand-item p { line-height: 1.65; }
+    .testimonial__two-area-brand-item-cta { margin-top: auto; padding-top: 16px; }
+    .contact__one-area { border-radius: 22px; }
+    .contact__one-area .info-item-content h5 { font-size: clamp(18px, 2vw, 24px); text-transform: none; overflow-wrap: anywhere; }
+    .contact__one-area-lead { line-height: 1.75; }
+    .blog__two-item { box-shadow: none; border-radius: 18px; }
+    .blog__two-item-image video { aspect-ratio: 16 / 9; object-fit: contain; background: #19232e; }
+    .blog__two-item-content { padding: 22px; min-height: 0; }
+    .blog__two-item-content h5 { font-size: 21px; line-height: 1.35; }
+    .comic-strip__shell { padding: clamp(18px, 3vw, 32px); border: 1px solid #dfe4eb; box-shadow: none; background: #fff; }
+    .comic-strip__header { padding: 0 0 22px; background: transparent; border: 0; box-shadow: none; }
+    .comic-strip__eyebrow { background: #f8eff0; border: 0; box-shadow: none; color: #921b2b; }
+    .comic-strip__header h2 { text-shadow: none; }
+    .comic-strip__tags { gap: 8px; }
+  }
+  @media (max-width: 767px) {
+    .competition-hero__grid { padding: 26px 22px; border-radius: 18px; }
+    .competition-hero h1 { font-size: 36px; }
+    .competition-hero__eyebrow { font-size: 10px; letter-spacing: .06em; }
+    .competition-hero__actions :is(a, span) { width: 100%; }
+    .home-tail {
+      .contracts__overview-right { padding: 20px; }
+      .contracts__overview-right-brand { padding: 18px; }
+      .pricing__listing-hourly { padding: 20px; }
+      .work__process-steps { row-gap: 14px; }
+      .work__process-item { padding: 22px; }
+      .team__two-card-image-normal, .team__two-card-image-hero { height: 270px; }
+      .testimonial__two-area-brand { padding: 18px; }
+      .blog__two-item-content { padding: 20px; }
+    }
+  }
+}
+
+/* Stories remain visible and stationary rather than advancing while read. */
+.testimonial__two-stories {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+  > article { min-width: 0; }
+  .testimonial__two-area-item { height: 100%; margin: 0; padding: 26px; border: 1px solid #dfe4eb; border-radius: 18px; box-shadow: none; }
+  .testimonial__two-area-item > p { font-size: 16px; line-height: 1.8; }
+  @media (max-width: 767px) {
+    grid-template-columns: 1fr;
+    .testimonial__two-area-item { padding: 22px; }
+  }
+}

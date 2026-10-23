@@ -1,7 +1,6 @@
 "use client";
 
 import Image from "next/image";
-import border from "@/public/img/shape/border.svg";
 import processTwo from "@/public/img/icon/process-1.svg";
 import processThree from "@/public/img/icon/process-2.svg";
 import process from "@/public/img/icon/process-3.svg";
@@ -28,9 +27,9 @@ const WorkProcess = ({ addClass = false }) => {
             </div>
           </div>
         </div>
-        <div className="row">
+        <ol className="row work__process-steps" aria-label="Call-out steps">
           {workProcess.steps.map((step, index) => (
-            <div
+            <li
               key={`${step.step}-${step.title}`}
               className="col-lg-4 col-md-6 "
               data-aos-duration="800"
@@ -46,19 +45,16 @@ const WorkProcess = ({ addClass = false }) => {
                   .filter(Boolean)
                   .join(" ")}
               >
-                {index < 2 ? (
-                  <Image className="shape" src={border} alt="border" priority />
-                ) : null}
                 <div className="work__process-item-icon">
                   <span>{step.step}</span>
-                  <Image src={processIcons[index] || process} alt="icon" priority />
+                  <Image src={processIcons[index] || process} alt="" />
                 </div>
                 <h3>{step.title}</h3>
                 <p>{step.description}</p>
               </div>
-            </div>
+            </li>
           ))}
-        </div>
+        </ol>
       </div>
     </div>
   );
