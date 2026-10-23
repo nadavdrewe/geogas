@@ -20,12 +20,13 @@ const CompetitionModal = () => {
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
   const [activeSlide, setActiveSlide] = useState(0);
-  const [autoRotate, setAutoRotate] = useState(true);
+  const [autoRotate, setAutoRotate] = useState(false);
   const modalRef = useRef<HTMLDivElement>(null);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
   const hasMultipleSlides = competitionSlides.length > 1;
 
   const goToSlide = (index: number) => {
+    setAutoRotate(false);
     setActiveSlide((index + competitionSlides.length) % competitionSlides.length);
   };
 
@@ -153,7 +154,7 @@ const CompetitionModal = () => {
           <i className="fa-solid fa-xmark" aria-hidden="true" />
         </button>
 
-        <section className="competition-modal__art" aria-label="Competition artwork">
+        <section className="competition-modal__art" aria-label="Competition artwork" onFocusCapture={() => setAutoRotate(false)}>
           <div className="competition-modal__image-wrap">
             <Image
               key={slide.src}

@@ -66,6 +66,25 @@ The authenticated admin interface is outside the public-site goal.
 
 ## Batch acceptance
 
+## Implementation coverage (not final acceptance)
+
+| Area | Development implementation | Final acceptance |
+| --- | --- | --- |
+| Homepage hero, shortcuts, assistant, services | Updated | Pending visual/interaction review |
+| Homepage contracts, prices, solutions, process | Updated | Pending visual/interaction review |
+| Homepage FAQ, team, reviews, contact, videos, story, newsletter | Updated | Pending visual/interaction review |
+| Header navigation, search, contact panels, forms, footer, WhatsApp | Updated in baseline plus development batches | Pending visual/interaction review |
+| Breadcrumbs, engineer introductions, shared buttons/back-to-top | Baseline refresh retained | Pending combined regression review |
+| Services, pricing, contracts, about, contact | Updated by content group | Pending visual/interaction review |
+| Competition page and popup | Updated | Pending visual/interaction review |
+| FAQ, help/advice, guides hub | Updated through shared FAQ and topic navigation | Pending visual/interaction review |
+| Six dynamic service/guide page templates | Updated | Pending visual/interaction review |
+| Search initial/results/no-results/filter states | Updated; HTTP responses checked | Pending visual/interaction review |
+| Legacy blog/project/detail/testimonial/alternate-home routes | Redirects to current pages; no independent layout | Confirm destination visually |
+| Not-found recovery | Updated | Pending visual/interaction review |
+
+## Release requirements
+
 User steering: continue implementation across sections and perform the full
 desktop/mobile verification at the end. Unchecked items may have development
 changes; they are not declared complete until final verification and deployment.
@@ -170,3 +189,13 @@ changes; they are not declared complete until final verification and deployment.
   guide/category/service/about section links have exactly one matching target.
   This confirms anchor wiring only; it does not substitute for final visual and
   browser interaction review.
+- Final shared-control batch: header search and contact panels are inert while
+  closed; opening locks background scroll, puts focus inside the panel, traps Tab,
+  supports Escape and restores focus on close. Search has a visible label and
+  redesigned responsive composer. Contact forms expose busy state and autofill
+  hints. Competition popup has opt-in artwork rotation and larger controls.
+- Combined lint/typecheck/audit/build pass after shared-control changes. Local
+  production server tested across 61 routes and four search states. Recovery
+  routes return 404 and include the new search UI on recheck (the first cold
+  request to `/error` did not contain the recovery marker; recheck did).
+  Final browser review is still required; no UI success inferred from HTTP alone.

@@ -1,0 +1,46 @@
+body:has(.header-two) {
+  .header-one__right-search-box {
+    background: #19232e;
+    height: 100dvh;
+    overflow-y: auto;
+    form {
+      display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 12px;
+      width: min(700px, calc(100% - 40px));
+    }
+    .header-search-label { grid-column: 1 / -1; color: #fff; font-size: 24px; font-weight: 700; line-height: 1.3; margin-bottom: 8px; }
+    input { width: 100%; min-width: 0; min-height: 58px; padding: 14px 18px; background: #fff; color: #19232e; border: 1px solid #cdd5de; font-size: 18px; border-radius: 12px; }
+    input::placeholder { color: #647184; }
+    form button { position: static; width: 58px; height: 58px; line-height: 1; border-radius: 12px; background: #b32235; color: #fff; }
+    > .header-one__right-search-box-icon { top: 24px; right: 24px; width: 48px; height: 48px; line-height: 1; border: 1px solid #ffffff66; border-radius: 50%; }
+  }
+  .header-one__right-sidebar-popup {
+    max-width: calc(100vw - 18px);
+    .sidebar-close-btn { min-width: 44px; min-height: 44px; }
+    &-contact-item-content { min-width: 0; }
+    &-contact-item-content a { overflow-wrap: anywhere; text-transform: none; line-height: 1.6; display: inline-block; padding-block: 6px; }
+  }
+  .contact__form--labelled {
+    .row { --bs-gutter-x: 20px; }
+    .contact__form-label { display: flex; gap: 8px; align-items: baseline; color: #263442; font-size: 13px; line-height: 1.5; margin-bottom: 8px; }
+    .contact__form-label > :is(span, strong) { font-size: 10px; font-weight: 500; color: #647184; }
+    input, textarea { font-size: 16px; }
+    .contact__form-feedback { padding: 14px 16px; border-radius: 10px; background: #f5f7fa; color: #263442; font-size: 14px; line-height: 1.7; }
+    .contact__form-feedback.is-error { background: #fff0f2; color: #921b2b; }
+    .contact__form-feedback.is-success { background: #eef8f1; color: #21603b; }
+  }
+  .competition-modal {
+    &__dialog { border-radius: 20px; box-shadow: 0 20px 70px #0003; }
+    &__close { min-width: 46px; min-height: 46px; }
+    &__controls { flex-wrap: wrap; }
+    &__controls > button { min-width: 44px; min-height: 44px; }
+    &__dots button { width: 32px !important; height: 32px !important; border: 1px solid #ffffff55 !important; }
+    .competition-entry-form label { font-size: 14px; line-height: 1.5; }
+    .competition-entry-form input { min-height: 50px; font-size: 16px; border-radius: 10px; }
+    .competition-entry-form__submit { min-height: 52px; background: #b32235; border-radius: 12px; box-shadow: none; }
+  }
+  @media (max-width: 767px) {
+    .header-one__right-search-box .header-search-label { font-size: 22px; }
+    .header-one__right-search-box input { font-size: 16px; }
+    .contact__form--labelled .mb-30 { margin-bottom: 20px; }
+  }
+}

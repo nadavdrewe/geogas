@@ -2,6 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import logo from "@/public/img/geologodark.png";
 import { ContactItem } from "@/data/siteContent";
+import usePanelFocus from "./usePanelFocus";
 
 interface HamburgerProps {
   hamburger: boolean;
@@ -18,10 +19,16 @@ const Hamburger = ({
   contactTitle,
   contactItems,
 }: HamburgerProps) => {
+  const panelRef = usePanelFocus(hamburger, setHamburger);
   return (
     <>
       <div
         id="site-sidebar"
+        ref={panelRef}
+        inert={!hamburger}
+        role="dialog"
+        aria-modal={hamburger ? true : undefined}
+        aria-label={contactTitle}
         className={
           (hamburger ? " active" : " ") + " header-one__right-sidebar-popup"
         }

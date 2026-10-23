@@ -136,6 +136,8 @@ const CalloutQuoteForm = ({
     <form
       className={showFieldLabels ? "contact__form contact__form--labelled" : "contact__form"}
       onSubmit={handleSubmit}
+      aria-busy={submitState.status === "sending"}
+      aria-label="Request a call-out or quote"
     >
       <div className="row">
         <div className="col-md-6 mb-30">
@@ -145,6 +147,7 @@ const CalloutQuoteForm = ({
               type="text"
               id={`${fieldIdPrefix}-name`}
               name="name"
+              autoComplete="name"
               value={name}
               onChange={(event) => setName(event.target.value)}
               placeholder={namePlaceholder}
@@ -160,6 +163,7 @@ const CalloutQuoteForm = ({
               type="tel"
               id={`${fieldIdPrefix}-phone`}
               name="phone"
+              autoComplete="tel"
               value={phone}
               onChange={(event) => setPhone(event.target.value)}
               placeholder={phonePlaceholder}
@@ -175,6 +179,7 @@ const CalloutQuoteForm = ({
               type="email"
               id={`${fieldIdPrefix}-email`}
               name="email"
+              autoComplete="email"
               value={email}
               onChange={(event) => setEmail(event.target.value)}
               placeholder={emailPlaceholder}
@@ -192,6 +197,7 @@ const CalloutQuoteForm = ({
               type="text"
               id={`${fieldIdPrefix}-postcode`}
               name="postcode"
+              autoComplete="postal-code"
               value={postcode}
               onChange={(event) => setPostcode(event.target.value)}
               placeholder={postcodePlaceholder}
