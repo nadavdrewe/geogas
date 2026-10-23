@@ -133,3 +133,18 @@ changes; they are not declared complete until final verification and deployment.
   pause/resume control; phase updates and decorative animations pause together,
   and reduced-motion preferences stop automatic phase changes. These are
   development changes awaiting the final interaction/visual review.
+- Inner-page implementation batch: Services has section navigation, specific
+  card-link names, compact service cards and clearer support/limits panels.
+  About has section navigation, balanced image/copy proportions, founder quote,
+  stats, cover and reputation styling. Help & Advice has a topic index and more
+  readable article spacing. Pricing item/value pairs now use definition-list
+  semantics; summary, contract panel, hourly rates, all four price groups and
+  closing CTA receive specific spacing and type refinements.
+- Contracts implementation covers introduction, helpline, benefits, package
+  headers, checks/exclusions, term highlights, breakdown cards, clause index,
+  FAQs, brochure previews/viewer links and reputation cards. Brochure previews
+  show the whole page instead of cropping it. Contact implementation covers
+  channel cards, urgent-contact emphasis, wrapping details, badges and form intro.
+- All preceding entries describe development implementation only. End-to-end
+  visual and interaction verification is deferred until the final review per user
+  instruction. No new items are checked complete or deployed yet.

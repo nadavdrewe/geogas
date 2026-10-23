@@ -3,6 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useSiteContent } from "@/components/providers/SiteContentProvider";
+import SectionLinks from "@/components/layout/SectionLinks";
 
 const About = () => {
   const { content } = useSiteContent();
@@ -11,7 +12,12 @@ const About = () => {
   return (
     <section className="about__one section-padding">
       <div className="container">
-        <div className="row">
+        <SectionLinks label="Get to know Geo Gas" links={[
+          { href: "#about-team", label: "Our story" },
+          { href: "#about-cover", label: "Benefits & cover" },
+          { href: "#about-reputation", label: "Reputation & contact" },
+        ]} />
+        <div className="row" id="about-team">
           <div className="col-xl-12">
             <div
               className="about__one-area"
@@ -66,7 +72,7 @@ const About = () => {
           </div>
         </div>
 
-        <div className="row mt-40">
+        <div className="row mt-40" id="about-cover">
           <div className="col-xl-7 lg-mb-30">
             <div className="about__one-benefits">
               <h3>{aboutContent.keyBenefitsTitle}</h3>
@@ -109,7 +115,7 @@ const About = () => {
           </div>
         </div>
 
-        <div className="row mt-40">
+        <div className="row mt-40" id="about-reputation">
           <div className="col-xl-12">
             <div className="about__one-reputation">
               <div className="about__one-reputation-image">

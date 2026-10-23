@@ -1,0 +1,126 @@
+.section-links {
+  margin: 24px 0 32px;
+  padding: 18px 20px;
+  border: 1px solid #dfe4eb;
+  border-radius: 16px;
+  background: #f5f7fa;
+  > span { display: block; margin-bottom: 12px; color: #526171; font-size: 13px; font-weight: 700; }
+  ul { display: flex; flex-wrap: wrap; gap: 8px; margin: 0; padding: 0; list-style: none; }
+  a { display: inline-flex; align-items: center; gap: 12px; min-height: 44px; padding: 9px 13px; border: 1px solid #cdd5de; border-radius: 10px; background: #fff; color: #263442; font-size: 14px; line-height: 1.5; font-weight: 600; }
+  a:hover { border-color: #b32235; color: #921b2b; }
+  i { font-size: 11px; }
+}
+:is(#service-options, #service-support, #service-limits, #about-team, #about-cover, #about-reputation, [id^="help-advice-"]) { scroll-margin-top: 30px; }
+
+body:has(.header-two) {
+  .services__two.section-padding-three {
+    .services__two-item--home { min-height: 320px; padding: 24px; }
+    .services__two-item-footer > a { min-height: 44px; display: inline-flex; align-items: center; }
+    .services__page-panel { background: #fff; box-shadow: none; }
+    .services__page-panel-head h3 { max-width: 660px; font-size: 28px; line-height: 1.25; }
+    .services__page-list-grid { gap: 28px; }
+    .services__page-list li { line-height: 1.75; gap: 12px; }
+    .services__page-contact-list a { overflow-wrap: anywhere; display: inline-block; padding-block: 4px; }
+    .services__page-panel--contact { background: #f5f7fa; }
+    .services__page-panel--warning { background: #faf6ef; border-color: #e6dbc8; }
+    .services__page-chips { gap: 8px; }
+    .services__page-chips span { background: #f5f7fa; color: #526171; border-color: transparent; }
+  }
+
+  .pricing__listing:not(.pricing__listing--compact) {
+    .pricing__listing-summary, .pricing__listing-contract, .pricing__listing-block { padding: clamp(22px, 3vw, 34px); background: #fff; box-shadow: none; }
+    .pricing__listing-summary h3, .pricing__listing-block h3 { font-size: clamp(24px, 2.5vw, 32px); line-height: 1.25; margin-bottom: 20px; }
+    .pricing__listing-summary li { line-height: 1.75; }
+    .pricing__listing-contract-head { flex-wrap: wrap; gap: 14px; }
+    .pricing__listing-contract-head strong { white-space: normal; }
+    .pricing__listing-hourly { background: #fff; padding: 24px; }
+    .pricing__listing-hourly h4 { font-size: 25px; line-height: 1.3; }
+    .pricing__listing-hourly li { align-items: baseline; gap: 12px; }
+    .pricing__listing-hourly strong { font-variant-numeric: tabular-nums; }
+    .pricing__listing-grid { margin-bottom: 0; gap: 12px; }
+    .pricing__listing-grid-item { padding: 18px; background: #f7f8fa; border: 1px solid #e5e8ed; border-radius: 12px; }
+    .pricing__listing-grid-item dt { color: #526171; font-size: 15px; line-height: 1.6; font-weight: 500; }
+    .pricing__listing-grid-item dd { margin: 9px 0 0; color: #19232e; font-size: 19px; line-height: 1.4; font-weight: 750; font-variant-numeric: tabular-nums; }
+    .pricing__listing-cta { padding: 26px; border: 1px solid #dfe4eb; border-radius: 18px; background: #f5f7fa; }
+  }
+
+  .contracts__page {
+    :is(.contracts__page-intro-card, .contracts__page-contact-card, .contracts__page-benefits, .contracts__page-block, .contracts__page-terms, .contracts__page-docs, .contracts__page-clauses, .contracts__page-faq, .contracts__page-brochure, .contracts__page-viewer, .contracts__page-reputation) {
+      padding: clamp(22px, 3vw, 34px); box-shadow: none;
+    }
+    h3 { font-size: clamp(23px, 2.3vw, 30px); line-height: 1.3; }
+    :is(.contracts__page-block, .contracts__page-package, .contracts__page-docs-item) li { line-height: 1.75; }
+    .contracts__page-intro-card { background: #fff; }
+    .contracts__page-contact-card { background: #f5f7fa; }
+    .contracts__page-contact-card a { overflow-wrap: anywhere; padding-block: 4px; display: inline-block; }
+    .contracts__page-package-head { display: block; }
+    .contracts__page-package-head > span { margin-top: 18px; padding: 8px 14px; font-size: 17px; }
+    .contracts__page-package-head p { max-width: 52ch; line-height: 1.7; }
+    :is(.contracts__page-terms-item, .contracts__page-docs-item, .contracts__page-clauses-item, .contracts__page-faq-item) { padding: 20px; background: #f7f8fa; box-shadow: none; border-color: #e5e8ed; }
+    .contracts__page-docs-item h5, .contracts__page-clauses-item h5, .contracts__page-faq-item h5 { font-size: 18px; line-height: 1.4; }
+    .contracts__page-faq-item p, .contracts__page-clauses-item p { font-size: 15px; line-height: 1.8; }
+    .contracts__page-brochure-grid { gap: 18px; }
+    .contracts__page-brochure-item-image { padding: 12px; background: #f5f7fa; }
+    .contracts__page-brochure-item-image img { height: 260px; object-fit: contain; }
+    .contracts__page-brochure-item > span { min-height: 54px; padding: 14px; background: #fff; }
+    .contracts__page-viewer-link { min-height: 44px; padding-block: 10px; }
+    .contracts__page-reputation-item { padding: 18px; background: #fff; }
+  }
+
+  .about__one {
+    .about__one-area { grid-template-columns: minmax(0, .6fr) minmax(0, 1fr); box-shadow: none; }
+    .about__one-left-image { background: #f5f7fa; }
+    .about__one-left-image img { object-fit: contain; object-position: center bottom; }
+    .about__one-right { padding: clamp(24px, 3vw, 40px); }
+    .about__one-right h2 { font-size: clamp(30px, 3vw, 44px); line-height: 1.15; }
+    .about__one-right p { line-height: 1.8; }
+    .about__one-right blockquote { padding: 20px; border: 0; border-left: 3px solid #b32235; background: #f8f1f2; font-size: 18px; line-height: 1.7; }
+    .about__one-right-stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .about__one-right-stat { background: #f5f7fa; padding: 16px; border-color: #e5e8ed; }
+    .about__one-packages-item { background: #f5f7fa; border-color: #e5e8ed; padding: 20px; }
+    .about__one-benefits-item span { font-size: 15px; line-height: 1.75; }
+    .about__one-packages-item li { line-height: 1.75; }
+    .about__one-reputation { background: #fff; box-shadow: none; gap: 28px; }
+    .about__one-reputation-content p { max-width: 65ch; line-height: 1.8; }
+    .about__one-reputation-content a { display: inline-block; padding-block: 4px; overflow-wrap: anywhere; }
+  }
+
+  .contact__page {
+    .contact__page-left, .contact__page-right { background: #fff; box-shadow: none; }
+    .contact__page-image { border-radius: 14px; overflow: hidden; margin-bottom: 24px; }
+    .contact__page-direct-grid { gap: 12px; }
+    .info-item--action { padding: 18px; border: 1px solid #e5e8ed; border-radius: 12px; background: #f7f8fa; }
+    .info-item--emergency { background: #fbf0f2; border-color: #e8cdd3; }
+    .info-item-content { min-width: 0; }
+    .info-item-content h6 { font-size: 17px; line-height: 1.5; text-transform: none; overflow-wrap: anywhere; }
+    .info-item-content a { display: inline-block; padding-block: 5px; overflow-wrap: anywhere; }
+    .contact__page-info-details { gap: 20px; }
+    .contact__page-intro { font-size: 16px; line-height: 1.8; }
+    .contact__page-form-heading { padding: 18px; background: #f5f7fa; border-radius: 12px; margin-block: 22px; }
+    .contact__page-form-heading p { font-size: 14px; line-height: 1.7; margin-bottom: 0; }
+    .contact__page-badges { gap: 8px; flex-wrap: wrap; }
+  }
+  .help-advice__grid { gap: 18px; }
+  .help-advice__card { padding: clamp(22px, 3vw, 32px); box-shadow: none; }
+  .help-advice__card-head { align-items: flex-start; }
+  .help-advice__card-head h3 { font-size: 24px; line-height: 1.3; }
+  .help-advice__card > p { line-height: 1.85; max-width: 78ch; }
+
+  @media (max-width: 991px) {
+    .about__one .about__one-area { grid-template-columns: 1fr; }
+    .about__one .about__one-left-image { min-height: 0; height: 340px; }
+    .contracts__page .contracts__page-brochure-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+  @media (max-width: 575px) {
+    .section-links { padding: 16px; }
+    .section-links ul { display: grid; grid-template-columns: 1fr; }
+    .section-links a { width: 100%; justify-content: space-between; }
+    .pricing__listing:not(.pricing__listing--compact) .pricing__listing-grid { grid-template-columns: 1fr; }
+    .pricing__listing:not(.pricing__listing--compact) .pricing__listing-hourly li { flex-wrap: wrap; }
+    .pricing__listing:not(.pricing__listing--compact) .pricing__listing-hourly strong { margin-inline-start: auto; }
+    .contracts__page .contracts__page-brochure-grid { grid-template-columns: 1fr; }
+    .about__one .about__one-benefits-grid { grid-template-columns: 1fr; }
+    .contact__page .contact__page-direct-grid { grid-template-columns: 1fr; }
+    .contact__page-left-links { display: grid; grid-template-columns: 1fr; gap: 10px; }
+  }
+}

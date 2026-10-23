@@ -1,6 +1,7 @@
 "use client";
 
 import { useSiteContent } from "@/components/providers/SiteContentProvider";
+import SectionLinks from "@/components/layout/SectionLinks";
 
 const toAnchorId = (value: string) =>
   `help-advice-${value.toLowerCase().replace(/[^\w\s-]/g, "").trim().replace(/\s+/g, "-")}`;
@@ -20,6 +21,7 @@ const HelpAdviceContent = () => {
               <p>{helpAdviceContent.description}</p>
             </div>
 
+            <SectionLinks label="Find advice" links={helpAdviceContent.items.map((item) => ({ href: `#${toAnchorId(item.title)}`, label: item.title }))} />
             <div className="help-advice__grid">
               {helpAdviceContent.items.map((section, index) => (
                 <article

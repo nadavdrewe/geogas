@@ -13,14 +13,14 @@ const pricingSections = [
 ];
 
 const PriceGrid = ({ items }: { items: PricingItem[] }) => (
-  <div className="pricing__listing-grid">
+  <dl className="pricing__listing-grid">
     {items.map((item) => (
       <div className="pricing__listing-grid-item" key={item.label}>
-        <h6>{item.label}</h6>
-        <span>{item.value}</span>
+        <dt>{item.label}</dt>
+        <dd>{item.value}</dd>
       </div>
     ))}
-  </div>
+  </dl>
 );
 
 interface PricingListingProps {

@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { useSiteContent } from "@/components/providers/SiteContentProvider";
+import SectionLinks from "@/components/layout/SectionLinks";
 
 const ServiceArea = () => {
   const [active, setActive] = useState(0);
@@ -27,7 +28,12 @@ const ServiceArea = () => {
           </div>
         </div>
 
-        <div className="row services__two-grid">
+        <SectionLinks label="Explore our services" links={[
+          { href: "#service-options", label: "All services" },
+          { href: "#service-support", label: "Contract support" },
+          { href: "#service-limits", label: "Limits & exclusions" },
+        ]} />
+        <div className="row services__two-grid" id="service-options">
           {servicesContent.cards.map((service, index) => (
             <div
               key={`${service.title}-${index}`}
@@ -48,7 +54,7 @@ const ServiceArea = () => {
                 <h4>{service.title}</h4>
                 <p>{service.description}</p>
                 <div className="services__two-item-footer">
-                  <Link href={service.linkHref}>
+                  <Link href={service.linkHref} aria-label={`${service.linkLabel}: ${service.title}`}>
                     {service.linkLabel}
                     <i className="fa-regular fa-angle-right"></i>
                   </Link>
@@ -61,7 +67,7 @@ const ServiceArea = () => {
           ))}
         </div>
 
-        <div className="row mt-60">
+        <div className="row mt-60" id="service-support">
           <div className="col-xl-8 lg-mb-30">
             <div className="services__page-panel">
               <div className="services__page-panel-head">
@@ -147,7 +153,7 @@ const ServiceArea = () => {
           </div>
         </div>
 
-        <div className="row mt-40">
+        <div className="row mt-40" id="service-limits">
           <div className="col-xl-12">
             <div className="services__page-panel services__page-panel--warning">
               <h3>Important Service Limits & Exclusions (Brochure Summary)</h3>
