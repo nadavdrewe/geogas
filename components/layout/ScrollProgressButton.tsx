@@ -2,17 +2,13 @@
 import { useState, useEffect, useRef } from "react";
 
 const ScrollProgressButton = () => {
-  useEffect(() => {
-    window.scroll(0, 0);
-  }, []);
-
   const [scrollProgress, setScrollProgress] = useState(0);
   const [isActive, setIsActive] = useState(false);
   const scrollRef = useRef<HTMLButtonElement>(null);
 
   const handleScroll = () => {
     const totalHeight = document.body.scrollHeight - window.innerHeight;
-    const progress = (window.scrollY / totalHeight) * 100;
+    const progress = totalHeight > 0 ? Math.min(100, (window.scrollY / totalHeight) * 100) : 0;
     setScrollProgress(progress);
     setIsActive(window.scrollY > 50);
   };
@@ -20,13 +16,11 @@ const ScrollProgressButton = () => {
   const handleProgressClick = () => {
     window.scrollTo({
       top: 0,
-      behavior: "smooth",
+      behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth",
     });
   };
 
   useEffect(() => {
-    window.scrollTo(0, 0);
-
     window.addEventListener("scroll", handleScroll);
     handleScroll();
 
@@ -41,6 +35,8 @@ const ScrollProgressButton = () => {
       className={`progress-wrap ${isActive ? " active-progress" : " "}`}
       onClick={handleProgressClick}
       title="Go To Top"
+      aria-label="Back to top"
+      type="button"
     >
       <span></span>
       <svg

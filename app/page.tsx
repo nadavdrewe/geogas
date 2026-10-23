@@ -3,6 +3,7 @@ import HeaderTwo from "@/components/layout/header/HeaderTwo";
 import BannerTwo from "@/components/layout/banner/BannerTwo";
 import CompetitionHomeHero from "@/components/competition/CompetitionHomeHero";
 import GeoChatbotSection from "@/components/chatbot/GeoChatbotSection";
+import ServiceShortcuts from "@/components/containers/home/ServiceShortcuts";
 import ComicStripSection from "@/components/containers/home/ComicStripSection";
 import Services from "@/components/containers/home/Services";
 import ContractsOverview from "@/components/containers/home/ContractsOverview";
@@ -51,6 +52,7 @@ const page = () => {
       <HeaderTwo />
       <main className="site-home">
         {homeHeroVariant === "competition" ? <CompetitionHomeHero /> : <BannerTwo />}
+        <ServiceShortcuts />
         <GeoChatbotSection />
         <Services />
         <div className="home-tail">

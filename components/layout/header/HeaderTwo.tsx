@@ -52,6 +52,7 @@ const HeaderTwo = () => {
 
   return (
     <>
+      <a className="site-skip-link" href="#site-main-content">Skip to content</a>
       <EmergencyCallStrip contactItems={content.header.contactItems} />
       <div className="header-two">
         <div className="container">
@@ -81,6 +82,7 @@ const HeaderTwo = () => {
                                 <Link
                                   href={item.href}
                                   className={isActive ? "is-active" : ""}
+                                  aria-current={isActive ? "page" : undefined}
                                 >
                                   {item.label}
                                 </Link>
@@ -137,6 +139,7 @@ const HeaderTwo = () => {
           </div>
         </div>
       </div>
+      <div id="site-main-content" tabIndex={-1} />
       <SearchBox search={search} setSearch={setSearch} />
       <Hamburger
         hamburger={hamburger}
