@@ -1,0 +1,80 @@
+:is([id^="guide-section-"], [id^="guide-category-"]) { scroll-margin-top: 28px; }
+body:has(.header-two) {
+  .seo-page {
+    &__stack { gap: 22px; }
+    &__card, &__sidebar-card, &__cta { padding: clamp(22px, 3vw, 34px); border-radius: 18px; box-shadow: none; }
+    &__card > p, &__bullet-list { max-width: 76ch; font-size: 16px; line-height: 1.85; }
+    &__bullet-list { gap: 14px; }
+    &__bullet-list li { padding-left: 22px; }
+    &__bullet-list li::before { width: 6px; height: 6px; top: .8em; background: #b32235; }
+    &__links-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+    &__link { min-height: 60px; height: 100%; padding: 16px; border: 1px solid #dfe4eb; border-radius: 12px; background: #f7f8fa; line-height: 1.6; }
+    &__link:hover { transform: none; background: #fff5f5; border-color: #b32235; }
+    &__link span { min-width: 0; }
+    &__link i { flex-shrink: 0; }
+    &__faq-item { padding-bottom: 20px; }
+    &__faq-item h3 { font-size: 21px; line-height: 1.4; }
+    &__faq-item p { line-height: 1.85; }
+    &__sidebar-card h2 { font-size: 26px; line-height: 1.3; }
+    &__sidebar-contact-list a { min-height: 44px; line-height: 1.6; overflow-wrap: anywhere; }
+    &__sidebar-actions { gap: 10px; }
+    &__sidebar-actions a { width: 100%; }
+    &__summary-list li { padding-block: 14px; line-height: 1.65; }
+    &__summary-card { box-shadow: none; border-radius: 16px; }
+    &__visual-feature { border: 1px solid #dfe4eb; box-shadow: none; border-radius: 18px; }
+    &__visual-feature-copy { padding: 26px; }
+    &__visual-feature-copy p { line-height: 1.8; }
+    &__review { padding: 22px; background: #f7f8fa; border-radius: 14px; }
+    &__cta { margin-top: 24px; background: #f5f7fa; }
+    &__cta-copy { max-width: 70ch; }
+    &__cta-copy p { line-height: 1.8; }
+  }
+  .site-search {
+    &__panel { background: #fff; padding: clamp(22px, 3vw, 34px); }
+    &__label { display: block; margin: 22px 0 8px; color: #263442; font-size: 14px; font-weight: 700; }
+    &__form { margin-top: 0; }
+    &__results, &__empty { padding: clamp(20px, 3vw, 30px); box-shadow: none; }
+    &__chips a, &__filters a { min-height: 44px; display: inline-flex; align-items: center; }
+    &__item { padding: 24px; background: #fff; box-shadow: none; border: 1px solid #dfe4eb; border-radius: 14px; }
+    &__item h4 { font-size: 24px; line-height: 1.35; }
+    &__item p { max-width: 78ch; line-height: 1.8; }
+    &__item-path { overflow-wrap: anywhere; }
+    &__item-link { min-height: 44px; display: inline-flex; align-items: center; }
+    mark { background: #fce5a8; color: #19232e; padding-inline: 2px; }
+  }
+  .competition-page {
+    &__grid { box-shadow: none; border-radius: 22px; }
+    &__entry { padding: clamp(24px, 3.5vw, 44px); }
+    &__steps { gap: 12px; line-height: 1.7; }
+    &__terms { padding-top: 18px; border-top: 1px solid #e5e8ed; line-height: 1.75; }
+    .competition-entry-form { gap: 14px; }
+    .competition-entry-form label { font-size: 14px; line-height: 1.5; }
+    .competition-entry-form input { min-height: 50px; font-size: 16px; border: 1px solid #cdd5de; border-radius: 10px; }
+    .competition-entry-form__submit { min-height: 52px; background: #b32235; border-radius: 12px; box-shadow: none; }
+    .competition-entry-form__privacy { font-size: 12px; line-height: 1.7; }
+    .competition-gallery__controls { flex-wrap: wrap; gap: 10px; }
+    .competition-gallery__controls > button { min-width: 44px; min-height: 44px; }
+    .competition-gallery__dots button { width: 32px !important; height: 32px !important; background: transparent !important; border: 1px solid #ffffff55 !important; position: relative; }
+    .competition-gallery__dots button::after { content: ""; position: absolute; width: 8px; height: 8px; border-radius: 50%; background: #ffffff77; }
+    .competition-gallery__dots button.is-active::after { background: #fff; }
+  }
+  .error-page {
+    max-width: 760px; margin-inline: auto; text-align: center;
+    > p { max-width: 55ch; margin: 18px auto 24px; line-height: 1.8; }
+    &__search { max-width: 560px; margin: 0 auto 24px; text-align: left; }
+    &__search label { display: block; margin-bottom: 8px; font-size: 14px; font-weight: 700; }
+    &__search > div { display: flex; gap: 10px; }
+    &__search input { min-width: 0; width: 100%; padding-inline: 14px; border: 1px solid #cdd5de; }
+  }
+  @media (max-width: 767px) {
+    .seo-page__links-grid, .seo-page__review-grid { grid-template-columns: 1fr; }
+    .seo-page__sidebar { position: static; }
+    .site-search__form { grid-template-columns: 1fr; }
+    .site-search__item { padding: 20px; }
+    .site-search__item h4 { font-size: 21px; }
+    .competition-page__grid { grid-template-columns: 1fr; }
+    .competition-page__entry { padding: 24px 20px; }
+    .error-page h2 { font-size: 30px; line-height: 1.2; }
+    .error-page__search > div { flex-direction: column; }
+  }
+}

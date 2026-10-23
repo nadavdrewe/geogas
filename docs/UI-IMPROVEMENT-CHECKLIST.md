@@ -148,3 +148,25 @@ changes; they are not declared complete until final verification and deployment.
 - All preceding entries describe development implementation only. End-to-end
   visual and interaction verification is deferred until the final review per user
   instruction. No new items are checked complete or deployed yet.
+- Discovery implementation: search has a persistent input label, named search
+  landmark, current-filter semantics and specific result link names. New searches
+  reset the previous category so a stale filter does not silently hide matches.
+  Initial/results/no-results chips, result cards and highlighting have clearer
+  spacing, contrast and touch targets.
+- Guides hub has topic navigation. All six dynamic templates share a section
+  index, readable body/list/FAQ styles, related links, contact sidebar, review
+  cards and closing CTA styling. Guide summary label now says Topic rather than
+  exposing the internal term Target keyword. Page copy/data otherwise retained.
+- Competition implementation: opt-in gallery motion, pause on manual/focus
+  interaction, larger artwork controls, clearer entry-form spacing and terms.
+  Not-found screen now provides a labelled search form and recovery guidance.
+- Route audit: `/blog-grid`, `/blog-standard`, `/blog-details` redirect to
+  `/guides`; `/projects`, `/projects-details`, `/services-details` to `/services`;
+  `/testimonial` to `/about`; `/index-two` to `/`; `/error` invokes notFound.
+  These routes have no separately rendered legacy sections to redesign. Confirm
+  redirect responses in final verification instead of editing unused components.
+- Discovery batch verification: lint, typecheck, dependency audit (zero findings)
+  and production build pass. Inspected 64 generated HTML pages: all 138 generated
+  guide/category/service/about section links have exactly one matching target.
+  This confirms anchor wiring only; it does not substitute for final visual and
+  browser interaction review.

@@ -6,10 +6,11 @@ import { competitionSlides } from "@/components/competition/competitionSlides";
 
 const CompetitionGallery = () => {
   const [activeSlide, setActiveSlide] = useState(0);
-  const [autoRotate, setAutoRotate] = useState(true);
+  const [autoRotate, setAutoRotate] = useState(false);
   const hasMultipleSlides = competitionSlides.length > 1;
 
   const goToSlide = (index: number) => {
+    setAutoRotate(false);
     setActiveSlide((index + competitionSlides.length) % competitionSlides.length);
   };
 
@@ -32,7 +33,7 @@ const CompetitionGallery = () => {
   const slide = competitionSlides[activeSlide];
 
   return (
-    <section className="competition-gallery" aria-label="Competition artwork">
+    <section className="competition-gallery" aria-label="Competition artwork" onFocusCapture={() => setAutoRotate(false)}>
       <div className="competition-gallery__image-wrap">
         <Image
           key={slide.src}

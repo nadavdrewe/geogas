@@ -104,17 +104,16 @@ const page = async ({ searchParams }: { searchParams?: SearchParams }) => {
               <div className="site-search__panel">
                 <h2>{searchContent.title}</h2>
                 <p>{searchContent.description}</p>
-                <form className="site-search__form" action="/search" method="get">
+                <label className="site-search__label" htmlFor="site-search-query">What can we help you find?</label>
+                <form className="site-search__form" action="/search" method="get" role="search">
                   <input
+                    id="site-search-query"
                     type="search"
                     name="q"
                     defaultValue={query}
                     placeholder={searchContent.inputPlaceholder}
                     aria-label="Search the Geo Gas site"
                   />
-                  {selectedCategory ? (
-                    <input type="hidden" name="category" value={selectedCategory} />
-                  ) : null}
                   <button className="button-1" type="submit">
                     Search
                     <i className="fa-regular fa-angle-right"></i>
@@ -145,10 +144,11 @@ const page = async ({ searchParams }: { searchParams?: SearchParams }) => {
                   </div>
 
                   {allResults.length ? (
-                    <div className="site-search__filters" aria-label="Filter results">
+                    <nav className="site-search__filters" aria-label="Filter results">
                       <Link
                         href={`/search?q=${encodeURIComponent(query)}`}
                         className={!selectedCategory ? "is-active" : ""}
+                        aria-current={!selectedCategory ? "true" : undefined}
                       >
                         All <span>{allResults.length}</span>
                       </Link>
@@ -157,11 +157,12 @@ const page = async ({ searchParams }: { searchParams?: SearchParams }) => {
                           key={category}
                           href={`/search?q=${encodeURIComponent(query)}&category=${encodeURIComponent(category)}`}
                           className={selectedCategory === category ? "is-active" : ""}
+                          aria-current={selectedCategory === category ? "true" : undefined}
                         >
                           {category} <span>{count}</span>
                         </Link>
                       ))}
-                    </div>
+                    </nav>
                   ) : null}
 
                   {results.length ? (
@@ -179,7 +180,7 @@ const page = async ({ searchParams }: { searchParams?: SearchParams }) => {
                             <span>Page:</span>
                             <code>{result.href}</code>
                           </div>
-                          <Link className="site-search__item-link" href={result.href}>
+                          <Link className="site-search__item-link" href={result.href} aria-label={`Open ${result.title}`}>
                             Open {result.category}
                             <i className="fa-regular fa-angle-right"></i>
                           </Link>

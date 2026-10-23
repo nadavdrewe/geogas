@@ -6,6 +6,7 @@ import { buildSeoCompanyInfo } from "@/lib/seo/company";
 import { getSeoHubSections } from "@/lib/seo/content";
 import { buildGuidesHubSchemas } from "@/lib/seo/schema";
 import { getSiteContent } from "@/lib/siteContent";
+import SectionLinks from "@/components/layout/SectionLinks";
 
 export async function generateMetadata(): Promise<Metadata> {
   const content = await getSiteContent();
@@ -54,9 +55,10 @@ const GuidesPage = async () => {
             </div>
           </section>
 
+          <SectionLinks label="Browse guide topics" links={sections.map((section, index) => ({ href: `#guide-category-${index + 1}`, label: section.title }))} />
           <div className="seo-page__stack">
-            {sections.map((section) => (
-              <section key={section.title} className="seo-page__card">
+            {sections.map((section, index) => (
+              <section key={section.title} id={`guide-category-${index + 1}`} className="seo-page__card">
                 <h2>{section.title}</h2>
                 <p>{section.description}</p>
                 <div className="seo-page__links-grid">

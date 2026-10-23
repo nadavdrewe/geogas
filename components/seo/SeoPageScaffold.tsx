@@ -3,6 +3,8 @@ import { SeoCompanyInfo } from "@/lib/seo/company";
 import { SeoPage } from "@/lib/seo/types";
 import SeoHero from "@/components/seo/SeoHero";
 import SeoContactCard from "@/components/seo/SeoContactCard";
+import SectionLinks from "@/components/layout/SectionLinks";
+import { seoSectionId } from "@/lib/seo/sectionAnchors";
 
 type SummaryItem = {
   label: string;
@@ -35,6 +37,9 @@ const SeoPageScaffold = ({
           summaryItems={summaryItems}
           summaryTitle={summaryTitle}
         />
+        {page.sections.length > 1 ? (
+          <SectionLinks label="On this page" links={page.sections.map((section) => ({ href: `#${seoSectionId(section.heading)}`, label: section.heading }))} />
+        ) : null}
         <div className="row g-4">
           <div className="col-lg-8">{children}</div>
           <div className="col-lg-4">

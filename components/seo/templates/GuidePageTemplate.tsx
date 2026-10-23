@@ -18,7 +18,7 @@ const GuidePageTemplate = ({ company, page }: GuidePageTemplateProps) => {
       page={page}
       summaryTitle="Guide overview"
       summaryItems={[
-        { label: "Target keyword", value: page.targetKeyword },
+        { label: "Topic", value: page.targetKeyword },
         { label: "Guide type", value: page.guideCategory },
         { label: "Best next step", value: page.cta.heading },
       ]}
