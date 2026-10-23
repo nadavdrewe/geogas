@@ -531,13 +531,13 @@ const GeoChatbotSection = () => {
   };
 
   return (
-    <section className="chatbot__section section-padding pt-0">
+    <section className="chatbot__section section-padding pt-0" aria-labelledby="chatbot-heading">
       <div className="container">
         <div className="chatbot__shell">
           <div className="chatbot__intro">
             <div className="chatbot__heading">
               <span>{chatbotContent.eyebrow}</span>
-              <h2>{chatbotContent.title}</h2>
+              <h2 id="chatbot-heading">{chatbotContent.title}</h2>
               <p>{chatbotContent.description}</p>
               <div className="chatbot__heading-actions">
                 {messages.length > 1 ? (
@@ -601,11 +601,19 @@ const GeoChatbotSection = () => {
           <div className="chatbot__workspace">
             <div className="chatbot__conversation">
               <div className="chatbot__conversation-head">
-                <h4>{chatbotContent.conversationTitle}</h4>
+                <h3 id="chatbot-conversation-heading">{chatbotContent.conversationTitle}</h3>
                 <p>{chatbotContent.conversationDescription}</p>
               </div>
 
-              <div className="chatbot__messages" aria-live="polite" ref={messagesRef}>
+              <div
+                className="chatbot__messages"
+                role="log"
+                aria-labelledby="chatbot-conversation-heading"
+                aria-live="polite"
+                aria-busy={isSending}
+                tabIndex={0}
+                ref={messagesRef}
+              >
                 {messages.map((message) => (
                   <article
                     key={message.id}
@@ -617,8 +625,12 @@ const GeoChatbotSection = () => {
                     }
                   >
                     <div className="chatbot__message-role">
-                      {message.role === "assistant" ? "Geo Bot" : "You"} |{" "}
-                      {formatMessageTime(message.createdAt)}
+                      <span>{message.role === "assistant" ? "Geo Bot" : "You"}</span>
+                      {message.createdAt > 0 ? (
+                        <time dateTime={new Date(message.createdAt).toISOString()}>
+                          {formatMessageTime(message.createdAt)}
+                        </time>
+                      ) : null}
                     </div>
                     <div className="chatbot__message-content">
                       {message.text ? (
@@ -650,8 +662,10 @@ const GeoChatbotSection = () => {
                 ))}
               </div>
 
+              <label className="chatbot__input-label" htmlFor="chatbot-question">Your question</label>
               <form className="chatbot__form" onSubmit={onSubmit}>
                 <input
+                  id="chatbot-question"
                   type="text"
                   value={inputValue}
                   onChange={(event) => setInputValue(event.target.value)}
@@ -679,7 +693,7 @@ const GeoChatbotSection = () => {
                 <span />
                 <p>{chatbotContent.statusText}</p>
               </div>
-              {error ? <p className="chatbot__error">{error}</p> : null}
+              {error ? <p className="chatbot__error" role="alert">{error}</p> : null}
             </div>
 
             {showLeadCapture || leadStatus === "success" ? (
@@ -702,7 +716,7 @@ const GeoChatbotSection = () => {
                   ) : null}
                 </div>
                 {leadStatus === "success" ? (
-                  <div className="chatbot__handoff-success">
+                  <div className="chatbot__handoff-success" role="status">
                     <p>{chatbotContent.leadSuccessMessage}</p>
                     <div className="chatbot__handoff-actions">
                       <a href={content.global.emergencyPhoneHref}>
@@ -717,7 +731,10 @@ const GeoChatbotSection = () => {
                     id="chatbot-lead-form"
                     onSubmit={submitLead}
                   >
+                    <label htmlFor="chatbot-lead-name">Full name
                     <input
+                      id="chatbot-lead-name"
+                      autoComplete="name"
                       type="text"
                       value={leadForm.name}
                       onChange={updateLeadField("name")}
@@ -725,7 +742,11 @@ const GeoChatbotSection = () => {
                       aria-label="Full name"
                       required
                     />
+                    </label>
+                    <label htmlFor="chatbot-lead-email">Email address
                     <input
+                      id="chatbot-lead-email"
+                      autoComplete="email"
                       type="email"
                       value={leadForm.email}
                       onChange={updateLeadField("email")}
@@ -733,15 +754,23 @@ const GeoChatbotSection = () => {
                       aria-label="Email address"
                       required
                     />
+                    </label>
+                    <label htmlFor="chatbot-lead-phone">Phone number
                     <input
-                      type="text"
+                      id="chatbot-lead-phone"
+                      type="tel"
+                      autoComplete="tel"
                       value={leadForm.phone}
                       onChange={updateLeadField("phone")}
                       placeholder={chatbotContent.fieldPlaceholders.phone}
                       aria-label="Phone number"
                       required
                     />
+                    </label>
+                    <label htmlFor="chatbot-lead-postcode">Postcode
                     <input
+                      id="chatbot-lead-postcode"
+                      autoComplete="postal-code"
                       type="text"
                       value={leadForm.postcode}
                       onChange={updateLeadField("postcode")}
@@ -749,7 +778,10 @@ const GeoChatbotSection = () => {
                       aria-label="Postcode"
                       required
                     />
+                    </label>
+                    <label htmlFor="chatbot-lead-service">Service required
                     <input
+                      id="chatbot-lead-service"
                       type="text"
                       value={leadForm.service}
                       onChange={updateLeadField("service")}
@@ -757,12 +789,16 @@ const GeoChatbotSection = () => {
                       aria-label="Service required"
                       required
                     />
+                    </label>
+                    <label className="chatbot__lead-note-label" htmlFor="chatbot-lead-note">Additional details (optional)
                     <textarea
+                      id="chatbot-lead-note"
                       value={leadForm.note}
                       onChange={updateLeadField("note")}
                       placeholder={chatbotContent.fieldPlaceholders.note}
                       aria-label="Additional details"
                     />
+                    </label>
                     <button type="submit" disabled={leadStatus === "sending"}>
                       {leadStatus === "sending"
                         ? chatbotContent.submitLeadLoadingLabel
@@ -771,7 +807,7 @@ const GeoChatbotSection = () => {
                   </form>
                 ) : null}
                 {leadError ? (
-                  <p className="chatbot__lead-error">{leadError}</p>
+                  <p className="chatbot__lead-error" role="alert">{leadError}</p>
                 ) : null}
               </div>
             ) : null}

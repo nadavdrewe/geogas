@@ -1,0 +1,101 @@
+# GeoGas section-by-section UI improvement goal
+
+Goal activated: 23 October 2026.
+Baseline: `df867c7` is deployed, with matching local and GitHub source.
+
+The shared UI refresh is a foundation. It does not count as a completed individual
+review of every section. Check an item only after a specific improvement, desktop
+and mobile verification, and a successful deployment. Preserve copy, pricing,
+legal wording and existing functions. Record limitations explicitly.
+
+## Shared interface
+
+- [ ] Header, emergency strip, navigation and search
+- [ ] Mobile menu, focus, touch targets and responsive navigation
+- [ ] Breadcrumbs and inner-page engineer introductions
+- [ ] Buttons, links, focus, disabled and loading states
+- [ ] Forms, validation, error and success states
+- [ ] Newsletter, footer, WhatsApp and back-to-top controls
+
+## Homepage, in reading order
+
+- [ ] Competition hero and call-to-action hierarchy
+- [ ] Service shortcuts and transition into assistance
+- [ ] Customer assistant introduction and quick topics
+- [ ] Conversation, message presentation, composer and status
+- [ ] Assistant callback disclosure and lead form
+- [ ] Services carousel, cards and navigation
+- [ ] Home rescue contracts and included benefits
+- [ ] Current pricing, rate cards, explanatory note and actions
+- [ ] Everyday heroes / solutions and animated boiler presentation
+- [ ] Call-out process
+- [ ] FAQs
+- [ ] Team introduction, profiles and disclosures
+- [ ] Reviews and external review links
+- [ ] Booking / quotation section and form
+- [ ] Installation video gallery
+- [ ] Comic / storyboard section
+- [ ] Newsletter and footer transitions
+
+## Public page families
+
+For each page review its hero, every content group, actions, forms, shared ending
+and mobile stacking. Expand rows into sub-checklists when starting that page.
+
+- [ ] `/services`: cards, highlights, checks, limits and contact panels
+- [ ] `/pricing`: navigation, hourly rates, services, installations, upgrades, electrical, contracts and CTA
+- [ ] `/contracts`: navigation, introduction, helpline, benefits, plans, landlord cover,
+      service checks, exclusions, terms, clause index, FAQs, brochure and reputation
+- [ ] `/about`: introduction, founder message, stats, benefits, plans and reputation
+- [ ] `/contact`: contact channels, form, supplementary information and booking guidance
+- [ ] `/competition`: campaign, entry form, eligibility and terms
+- [ ] `/faq`
+- [ ] `/help-and-advice`
+- [ ] `/guides`
+- [ ] Dynamic service / brand / location pages rendered by `/[slug]`
+- [ ] Dynamic guide / advice pages rendered by `/[slug]`
+- [ ] `/search`: initial, results, empty and error states
+- [ ] `/testimonial`
+- [ ] `/projects` and `/projects-details`
+- [ ] `/blog-grid`, `/blog-standard` and `/blog-details`
+- [ ] `/services-details`
+- [ ] `/index-two` legacy public homepage
+- [ ] `/error` and not-found experience
+
+The authenticated admin interface is outside the public-site goal.
+
+## Batch acceptance
+
+- Relevant improvements are implemented in the development project.
+- Review at 390px mobile and 1440px desktop, with additional widths when needed.
+- Exercise relevant controls without submitting fake production enquiries.
+- Run required lint, typecheck, audit and production build checks.
+- Check staged diff and ignore rules for secrets and incident indicators.
+- Push, deploy with existing rollback support, verify app and HTTPS health.
+- Record deployed commit and evidence here before marking a section complete.
+
+## Operational notes
+
+- Production remains `vmi3265899`, `100.120.62.90` / `80.241.219.144`.
+- The operator's current public IP was present in AutoBlock during the previous
+  release. Tailscale remains functional; do not broaden firewall access for UI QA.
+- Use Tailscale SSH and hostname-validated HTTPS via Tailscale for release checks
+  while that public-IP condition persists. Record this verification limitation.
+
+## Progress log
+
+- Goal setup: inventoried homepage components and public routes; established this
+  checklist. Next batch: assistant visual hierarchy, message/composer readability
+  and accessible conversation status. No individual section marked complete yet.
+- Assistant batch in development: simplified shell and quick topics, readable
+  message spacing and timestamps, visible question label, keyboard-scrollable
+  conversation log and busy/error semantics. Callback inputs now have persistent
+  labels, appropriate telephone/autofill types and announced success/errors.
+- Initial local page rendered with the named assistant region and conversation
+  heading. Subsequent visual checks were stopped by Work settings reporting
+  "Local browser use is disabled in Work settings". Desktop/mobile visual review
+  and interaction checks remain pending; this batch is not deployed or marked
+  complete. Production remains at `df867c7`.
+- Final assistant batch checks: lint, TypeScript, dependency audit (zero reported
+  vulnerabilities) and production build all passed after callback-form changes.
+  Saved on `codex/assistant-section-refresh`; visual acceptance remains pending.
