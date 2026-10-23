@@ -99,3 +99,12 @@ The authenticated admin interface is outside the public-site goal.
 - Final assistant batch checks: lint, TypeScript, dependency audit (zero reported
   vulnerabilities) and production build all passed after callback-form changes.
   Saved on `codex/assistant-section-refresh`; visual acceptance remains pending.
+- Browsing batch in development: service position follows actual slides rather
+  than hover; slideshow is opt-in with play/pause, stops on keyboard focus or
+  previous/next interaction, respects reduced motion, uses Swiper accessibility
+  support and specific service link names. Controls have larger touch targets.
+- FAQ browsing now starts with four questions and an explicit show-all control,
+  with all answers retained and direct question links revealing the target.
+  Removed the nested desktop scrolling area. Full FAQ page shows every question.
+- Preview access rechecked: still disabled in Work settings. These changes remain
+  development-only pending interaction and desktop/mobile visual review.

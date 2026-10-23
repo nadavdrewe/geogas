@@ -1,0 +1,58 @@
+/* Keep service browsing deliberate and FAQ reading in the main page flow. */
+.site-home .services__two-navigation {
+  flex-wrap: wrap;
+  gap: 12px;
+  padding-top: 18px;
+  border-top: 1px solid #dfe4eb;
+  margin-top: 24px;
+}
+.site-home .services__two-navigation-buttons button {
+  width: 46px;
+  height: 46px;
+}
+.site-home .services__two-playback {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 8px 12px;
+  border: 1px solid #cdd5de;
+  border-radius: 10px;
+  background: #fff;
+  color: #263442;
+  font-size: 13px;
+  font-weight: 700;
+  &:hover { border-color: #b32235; color: #921b2b; }
+  i { font-size: 11px; }
+}
+.site-home .services__two-item-footer > a {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+}
+body:has(.header-two) .faq__two .faq__two-right-accordion {
+  max-height: none;
+  overflow: visible;
+  padding-inline-end: 0;
+}
+body:has(.header-two) .faq__two .faq__area-item[hidden] { display: none; }
+body:has(.header-two) .faq__two .faq__two-show-all {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  min-height: 48px;
+  margin-top: 18px;
+  padding: 12px 16px;
+  border: 1px solid #cdd5de;
+  border-radius: 12px;
+  background: #fff;
+  color: #263442;
+  font-weight: 700;
+  font-size: 14px;
+  &:hover { border-color: #b32235; color: #921b2b; }
+}
+@media (max-width: 767px) {
+  .site-home .services__two-all-link { width: 100%; margin-inline-start: 0; padding-block: 8px; }
+  body:has(.header-two) .faq__two .faq__two-show-all { width: 100%; }
+}

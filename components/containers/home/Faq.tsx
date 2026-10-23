@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import { useSiteContent } from "@/components/providers/SiteContentProvider";
 
@@ -10,8 +10,21 @@ interface FaqProps {
 
 const Faq = ({ addClass = false, fullPage = false }: FaqProps) => {
   const [active, setActive] = useState(0);
+  const [showAll, setShowAll] = useState(false);
   const { content } = useSiteContent();
   const faqContent = content.home.faq;
+
+  useEffect(() => {
+    const revealLinkedQuestion = () => {
+      const index = faqContent.items.findIndex((item) => `#faq-item-${item.number}` === window.location.hash);
+      if (index < 0) return;
+      setActive(index);
+      setShowAll(true);
+    };
+    revealLinkedQuestion();
+    window.addEventListener("hashchange", revealLinkedQuestion);
+    return () => window.removeEventListener("hashchange", revealLinkedQuestion);
+  }, [faqContent.items]);
 
   return (
     <div
@@ -47,11 +60,6 @@ const Faq = ({ addClass = false, fullPage = false }: FaqProps) => {
                 <p data-aos-duration="800" data-aos="fade-up" data-aos-delay="600">
                   {faqContent.description}
                 </p>
-                {!fullPage && (
-                  <span className="faq__two-right-scroll-note">
-                    Scroll to browse all FAQs
-                  </span>
-                )}
               </div>
               <div
                 className={
@@ -67,7 +75,7 @@ const Faq = ({ addClass = false, fullPage = false }: FaqProps) => {
                   const collapseId = `collapseFaq${index + 1}`;
                   const itemAnchorId = `faq-item-${item.number}`;
                   return (
-                    <div key={collapseId} className="faq__area-item" id={itemAnchorId}>
+                    <div key={collapseId} className="faq__area-item" id={itemAnchorId} hidden={!fullPage && !showAll && index >= 4}>
                       <h5 className={(active === index ? "" : "collapsed") + " icon"}>
                         <button
                           type="button"
@@ -92,6 +100,21 @@ const Faq = ({ addClass = false, fullPage = false }: FaqProps) => {
                   );
                 })}
               </div>
+              {!fullPage && faqContent.items.length > 4 ? (
+                <button
+                  type="button"
+                  className="faq__two-show-all"
+                  aria-expanded={showAll}
+                  aria-controls="accordionExample"
+                  onClick={() => {
+                    setShowAll((current) => !current);
+                    if (showAll && active >= 4) setActive(-1);
+                  }}
+                >
+                  {showAll ? "Show fewer questions" : `Show all ${faqContent.items.length} questions`}
+                  <i className={`fa-regular ${showAll ? "fa-angle-up" : "fa-angle-down"}`} aria-hidden="true" />
+                </button>
+              ) : null}
             </div>
           </div>
         </div>
