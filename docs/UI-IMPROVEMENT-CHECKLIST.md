@@ -248,3 +248,13 @@ changes; they are not declared complete until final verification and deployment.
   upstream/TLS health 200. User requested deployment and removal of the automatic
   competition popup. Removed its global mount; competition page remains intact.
   Added a generated-HTML regression check against popup close-control markup.
+- Release deployed: application commit `0c34f1e` is on production and GitHub main.
+  Windows dependency replacement required stopping the watchdog to release its
+  loaded SWC binary; clean installation and audit then succeeded. The existing
+  rollback-capable deployment built and promoted successfully.
+- Verified `/`, `/boiler-repair`, `/contracts`, `/competition`, `/pricing` and
+  `/contact` return 200 both from localhost upstream and HTTPS via the Gmail
+  tailnet with normal certificate validation. Live source no longer mounts the
+  popup; the competition route remains available. Service still listens only
+  on 127.0.0.1:15023. Final visual sign-off remains outstanding because browser
+  control is disabled; deployment health does not replace that review.
