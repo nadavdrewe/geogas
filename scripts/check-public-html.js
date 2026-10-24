@@ -13,6 +13,7 @@ function inspect(directory) {
     if (entry.isDirectory()) { inspect(file); continue; }
     if (!entry.name.endsWith(".html")) continue;
     const html = fs.readFileSync(file, "utf8");
+    assert.ok(!html.includes('aria-label="Close competition entry"'), `${file}: competition popup must not mount`);
     pages++;
     const ids = [...html.matchAll(/\bid="([^"]+)"/g)].map((match) => match[1]);
     for (const nav of html.matchAll(/<nav\b[^>]*class="section-links"[^>]*>([\s\S]*?)<\/nav>/g)) {

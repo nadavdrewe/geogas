@@ -243,3 +243,8 @@ changes; they are not declared complete until final verification and deployment.
   passes checks across 64 generated pages, 227 contents anchors and 42 FAQ pages.
   Lint/typecheck/audit/build passed for the shared component changes. Browser
   access remains disabled; this batch is not visually signed off or deployed.
+- Release preparation (24 October): SSH restored by selecting the saved Gmail
+  tailnet; confirmed hostname vmi3265899, clean production main at df867c7 and
+  upstream/TLS health 200. User requested deployment and removal of the automatic
+  competition popup. Removed its global mount; competition page remains intact.
+  Added a generated-HTML regression check against popup close-control markup.
