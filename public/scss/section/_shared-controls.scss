@@ -1,4 +1,10 @@
 body:has(.header-two) {
+  .offcanvas__info .mean-container .mean-nav ul li a[aria-current="page"] {
+    color: #992638;
+    background: #f9ebee;
+    font-weight: 700;
+    border-color: transparent;
+  }
   .header-one__right-search-box {
     background: #19232e;
     height: 100dvh;

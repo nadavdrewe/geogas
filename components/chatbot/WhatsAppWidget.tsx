@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import WhatsAppIcon from "@/components/common/WhatsAppIcon";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useSiteContent } from "@/components/providers/SiteContentProvider";
 
@@ -93,7 +94,7 @@ const WhatsAppWidget = () => {
                 className="whatsapp-widget__cta"
                 onClick={openWhatsApp}
               >
-                <i className="fa-brands fa-whatsapp" aria-hidden="true"></i>
+                <WhatsAppIcon />
                 Start WhatsApp Chat
               </button>
               <small className="whatsapp-widget__number">
@@ -112,7 +113,7 @@ const WhatsAppWidget = () => {
             aria-label="Chat to us on WhatsApp"
           >
             <span className="whatsapp-widget__icon" aria-hidden="true">
-              <i className="fa-brands fa-whatsapp"></i>
+              <WhatsAppIcon />
             </span>
             <span className="whatsapp-widget__label">Chat to us</span>
           </button>

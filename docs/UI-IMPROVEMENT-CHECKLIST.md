@@ -199,3 +199,26 @@ changes; they are not declared complete until final verification and deployment.
   routes return 404 and include the new search UI on recheck (the first cold
   request to `/error` did not contain the recovery marker; recheck did).
   Final browser review is still required; no UI success inferred from HTTP alone.
+- Browser access restored for the next refinement pass. Reviewed homepage
+  assistant/services/process at desktop width and contracts, pricing, team,
+  customer stories, contact, video gallery, storyboard and newsletter at 390px.
+  Services, Pricing and Guides inner-page mobile layouts also inspected.
+- Fixed three broken process SVG sources, replaced missing WhatsApp/font-based
+  cover artwork with inline icons, and corrected the mobile current-page link
+  contrast. Mobile contract benefits now use compact separators rather than
+  stacked boxes; team introduction has breathing room before its action.
+- Verified service next/play/pause controls, mobile-menu Escape/focus restoration,
+  and direct linking to the initially hidden FAQ item 10 (expanded and scrolled
+  into view). Invalid saved chatbot timestamps now fall back safely.
+- This is partial browser QA, not final whole-site sign-off. Development changes
+  remain separate from live. The production SSH health check timed out this pass;
+  no production changes were attempted.
+- Search-overlay visual testing exposed a focus timing issue during its opening
+  transition. The shared focus hook now handles delayed visibility and keyboard
+  focus arriving from outside the panel. Confirmed search-input focus and a
+  `boiler` search returning 24 results in the browser.
+- Upgraded Nodemailer from 10.0.10 to 10.2.1 after the current audit reported
+  address-parser advisories. Dependency audit now reports zero vulnerabilities.
+- Full lint/typecheck/audit/production-build verification passed again after the
+  focus fix. HTTPS from this operator connection also timed out, so live health
+  could not be established; this alone does not prove the public site is down.

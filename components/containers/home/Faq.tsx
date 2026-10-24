@@ -20,6 +20,9 @@ const Faq = ({ addClass = false, fullPage = false }: FaqProps) => {
       if (index < 0) return;
       setActive(index);
       setShowAll(true);
+      requestAnimationFrame(() => {
+        document.getElementById(`faq-item-${faqContent.items[index].number}`)?.scrollIntoView({ block: "start" });
+      });
     };
     revealLinkedQuestion();
     window.addEventListener("hashchange", revealLinkedQuestion);

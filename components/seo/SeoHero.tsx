@@ -1,4 +1,5 @@
 import Image from "next/image";
+import WhatsAppIcon from "@/components/common/WhatsAppIcon";
 import { SeoCompanyInfo } from "@/lib/seo/company";
 import { getSeoPageVisuals } from "@/lib/seo/pageVisuals";
 import { SeoPage } from "@/lib/seo/types";
@@ -53,7 +54,7 @@ const SeoHero = ({ company, page, summaryTitle, summaryItems }: SeoHeroProps) =>
                     London &amp; Sussex coverage
                   </span>
                   <span>
-                    <i className="fa-brands fa-whatsapp"></i>
+                    <WhatsAppIcon />
                     WhatsApp support available
                   </span>
                 </div>
@@ -68,7 +69,7 @@ const SeoHero = ({ company, page, summaryTitle, summaryItems }: SeoHeroProps) =>
                     Sussex office {company.sussexOfficePhoneDisplay}
                   </a>
                   <span>
-                    <i className="fa-brands fa-whatsapp"></i>
+                    <WhatsAppIcon />
                     WhatsApp support available
                   </span>
                   <span>

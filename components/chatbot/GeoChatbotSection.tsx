@@ -79,7 +79,7 @@ const sanitizeStoredMessages = (value: unknown): ChatMessage[] => {
     if (!text.trim()) return acc;
 
     const createdAt =
-      typeof item?.createdAt === "number" && Number.isFinite(item.createdAt)
+      typeof item?.createdAt === "number" && Number.isFinite(new Date(item.createdAt).getTime())
         ? item.createdAt
         : Date.now();
 

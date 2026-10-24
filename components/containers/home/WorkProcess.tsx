@@ -1,15 +1,12 @@
 "use client";
 
 import Image from "next/image";
-import processTwo from "@/public/img/icon/process-1.svg";
-import processThree from "@/public/img/icon/process-2.svg";
-import process from "@/public/img/icon/process-3.svg";
 import { useSiteContent } from "@/components/providers/SiteContentProvider";
 
 const WorkProcess = ({ addClass = false }) => {
   const { content } = useSiteContent();
   const workProcess = content.home.workProcess;
-  const processIcons = [processTwo, processThree, process];
+  const processIcons = ["/img/icon/process-1.svg", "/img/icon/process-2.svg", "/img/icon/process-3.svg"];
 
   return (
     <div
@@ -47,7 +44,7 @@ const WorkProcess = ({ addClass = false }) => {
               >
                 <div className="work__process-item-icon">
                   <span>{step.step}</span>
-                  <Image src={processIcons[index] || process} alt="" />
+                  <Image src={processIcons[index % processIcons.length]} width={65} height={65} alt="" />
                 </div>
                 <h3>{step.title}</h3>
                 <p>{step.description}</p>

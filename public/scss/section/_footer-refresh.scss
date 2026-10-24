@@ -1,5 +1,8 @@
 /* Shared newsletter and footer: persistent labels and readable contact links. */
 body:has(.header-two) {
+  .whatsapp-mark { display: inline-block; flex-shrink: 0; vertical-align: middle; }
+  .whatsapp-widget__icon .whatsapp-mark { width: 30px; height: 30px; color: #fff; }
+  .whatsapp-widget__cta .whatsapp-mark { color: #fff; }
   .newsletter-subscribe-form label {
     display: grid;
     min-width: 0;

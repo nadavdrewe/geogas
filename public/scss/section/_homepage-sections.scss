@@ -17,6 +17,7 @@
   }
   .service-shortcuts a { align-items: flex-start; }
   .service-shortcuts a > i { margin-top: 4px; }
+  .service-shortcuts__icon { flex: 0 0 22px; margin-top: 4px; color: #b32235; }
   .boiler-demo-controls {
     display: flex; justify-content: space-between; align-items: center; gap: 16px;
     margin-bottom: 14px; color: #526171; font-size: 13px;
@@ -107,10 +108,16 @@
     .home-tail {
       .contracts__overview-right { padding: 20px; }
       .contracts__overview-right-brand { padding: 18px; }
+      .contracts__overview-right > ul {
+        gap: 0;
+        li { padding: 12px 0; border: 0; border-bottom: 1px solid #e4e8ee; border-radius: 0; background: transparent; box-shadow: none; }
+        li:last-child { border-bottom: 0; }
+      }
       .pricing__listing-hourly { padding: 20px; }
       .work__process-steps { row-gap: 14px; }
       .work__process-item { padding: 22px; }
       .team__two-card-image-normal, .team__two-card-image-hero { height: 270px; }
+      .team__two-title p { margin-bottom: 20px; }
       .testimonial__two-area-brand { padding: 18px; }
       .blog__two-item-content { padding: 20px; }
     }
