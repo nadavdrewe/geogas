@@ -258,3 +258,13 @@ changes; they are not declared complete until final verification and deployment.
   popup; the competition route remains available. Service still listens only
   on 127.0.0.1:15023. Final visual sign-off remains outstanding because browser
   control is disabled; deployment health does not replace that review.
+- Public-access incident after release: upstream and HTTPS through Tailscale
+  were healthy, but the operator public IPv4 137.220.68.144 was in both automatic
+  block rules. Added only that confirmed current operator address to the existing
+  trusted-IP file and reran the blocker. Both rules remain enabled with 999 other
+  addresses blocked. Public HTTPS from the operator connection then returned 200
+  for all six tested routes, without a private-address override.
+- Additional API sweep found campaign GET attempted SQLite writes despite the
+  low-privilege runtime having read-only database access. Changed public campaign
+  reads to a read-only connection with phase-1 fallback for absent settings; no
+  database ACL expansion. Administrative update behaviour is unchanged.

@@ -1,4 +1,4 @@
-import { mkdirSync } from "fs";
+import { existsSync, mkdirSync } from "fs";
 import path from "path";
 import DatabaseConstructor from "better-sqlite3";
 import type { Database } from "better-sqlite3";
@@ -14,10 +14,12 @@ const openDatabase = (): Database => {
 };
 
 export const getActiveCompetitionPhase = (): CompetitionPhase => {
-  const db = openDatabase();
+  // Public reads must not require write access to the content database.
+  if (!existsSync(databasePath)) return "phase-1";
+  const db = new DatabaseConstructor(databasePath, { readonly: true, fileMustExist: true, timeout: 5000 });
   try {
-    db.exec("CREATE TABLE IF NOT EXISTS competition_settings (setting_key TEXT PRIMARY KEY, value TEXT NOT NULL, updated_at TEXT NOT NULL);");
-    db.prepare("INSERT OR IGNORE INTO competition_settings (setting_key, value, updated_at) VALUES ('active_phase', 'phase-1', ?)").run(new Date().toISOString());
+    const table = db.prepare("SELECT name FROM sqlite_master WHERE type = 'table' AND name = 'competition_settings'").get();
+    if (!table) return "phase-1";
     const row = db.prepare("SELECT value FROM competition_settings WHERE setting_key = 'active_phase';").get() as { value?: unknown } | undefined;
     return isCompetitionPhase(row?.value) ? row.value : "phase-1";
   } finally {
