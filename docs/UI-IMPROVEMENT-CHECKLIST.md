@@ -234,3 +234,12 @@ changes; they are not declared complete until final verification and deployment.
   sections during anchor navigation. Full lint/typecheck/audit/build passed.
   Browser control became disabled again before the planned 360px service FAQ
   check; that narrower-width review remains outstanding.
+- Service/advice consistency follow-up: all six dynamic templates now use the
+  same native FAQ disclosure component as Contracts. Contents navigation includes
+  FAQ and related-page shortcuts when those sections exist. Empty groups are
+  omitted, and contact sidebars no longer repeat phone links immediately above
+  identical labelled call buttons. Both office numbers/actions are retained.
+- Added `npm run test:public-output` to the verification pipeline. Current build
+  passes checks across 64 generated pages, 227 contents anchors and 42 FAQ pages.
+  Lint/typecheck/audit/build passed for the shared component changes. Browser
+  access remains disabled; this batch is not visually signed off or deployed.

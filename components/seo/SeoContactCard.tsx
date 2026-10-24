@@ -24,10 +24,6 @@ const SeoContactCard = ({ company, cta }: SeoContactCardProps) => {
       {cta.eyebrow ? <span className="seo-page__eyebrow">{cta.eyebrow}</span> : null}
       <h2>{cta.heading}</h2>
       <p>{cta.text}</p>
-      <div className="seo-page__sidebar-contact-list">
-        <a href={company.londonOfficePhoneHref}>London office {company.londonOfficePhoneDisplay}</a>
-        <a href={company.sussexOfficePhoneHref}>Sussex office {company.sussexOfficePhoneDisplay}</a>
-      </div>
       <div className="seo-page__sidebar-actions">
         <SeoActionLink
           className="button-1"

@@ -15,7 +15,8 @@
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
     "audit:dependencies": "npm audit",
-    "verify": "npm run lint && npm run typecheck && npm run audit:dependencies && npm run build"
+    "verify": "npm run lint && npm run typecheck && npm run audit:dependencies && npm run build && npm run test:public-output",
+    "test:public-output": "node scripts/check-public-html.js"
   },
   "dependencies": {
     "aos": "^2.3.4",

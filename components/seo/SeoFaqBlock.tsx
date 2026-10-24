@@ -1,21 +1,19 @@
 import { SeoFaqItem } from "@/lib/seo/types";
+import DisclosureList from "@/components/common/DisclosureList";
 
 type SeoFaqBlockProps = {
   faq: SeoFaqItem[];
 };
 
 const SeoFaqBlock = ({ faq }: SeoFaqBlockProps) => {
+  if (!faq.length) return null;
   return (
-    <section className="seo-page__card">
+    <section id="page-faq" className="seo-page__card">
       <h2>Frequently asked questions</h2>
-      <div className="seo-page__faq-list">
-        {faq.map((item) => (
-          <article key={item.question} className="seo-page__faq-item">
-            <h3>{item.question}</h3>
-            <p>{item.answer}</p>
-          </article>
-        ))}
-      </div>
+      <DisclosureList label="page questions" items={faq.map((item) => ({
+        title: item.question,
+        content: <p>{item.answer}</p>,
+      }))} />
     </section>
   );
 };

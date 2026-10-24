@@ -28,6 +28,11 @@ const SeoPageScaffold = ({
   children,
   sidebarExtra,
 }: SeoPageScaffoldProps) => {
+  const contentsLinks = [
+    ...page.sections.map((section) => ({ href: `#${seoSectionId(section.heading)}`, label: section.heading })),
+    ...(page.faq.length ? [{ href: "#page-faq", label: "Frequently asked questions" }] : []),
+    ...(page.internalLinks?.length ? [{ href: "#page-related", label: "Related pages" }] : []),
+  ];
   return (
     <main className="seo-page section-padding-three">
       <div className="container">
@@ -37,8 +42,8 @@ const SeoPageScaffold = ({
           summaryItems={summaryItems}
           summaryTitle={summaryTitle}
         />
-        {page.sections.length > 1 ? (
-          <SectionLinks label="On this page" links={page.sections.map((section) => ({ href: `#${seoSectionId(section.heading)}`, label: section.heading }))} />
+        {contentsLinks.length > 1 ? (
+          <SectionLinks label="On this page" links={contentsLinks} />
         ) : null}
         <div className="row g-4">
           <div className="col-lg-8">{children}</div>

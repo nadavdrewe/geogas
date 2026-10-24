@@ -10,8 +10,9 @@ const SeoInternalLinks = ({
   links,
   title = "Related pages",
 }: SeoInternalLinksProps) => {
+  if (!links.length) return null;
   return (
-    <section className="seo-page__card">
+    <section id="page-related" className="seo-page__card">
       <h2>{title}</h2>
       <div className="seo-page__links-grid">
         {links.map((link) => (
