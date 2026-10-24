@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
+import DisclosureList from "@/components/common/DisclosureList";
 import { useSiteContent } from "@/components/providers/SiteContentProvider";
 
 const ContractsContent = () => {
@@ -249,10 +250,9 @@ const ContractsContent = () => {
           <div className="col-xl-12">
             <div className="contracts__page-docs">
               <h3>{contractsContent.termsBreakdownTitle}</h3>
-              <div className="contracts__page-docs-grid">
-                {contractsContent.termsSections.map((section) => (
-                  <article key={section.title} className="contracts__page-docs-item">
-                    <h5>{section.title}</h5>
+              <DisclosureList label="contract terms" items={contractsContent.termsSections.map((section) => ({
+                  title: section.title,
+                  content: (
                     <ul>
                       {section.points.map((point) => (
                         <li key={point}>
@@ -261,9 +261,8 @@ const ContractsContent = () => {
                         </li>
                       ))}
                     </ul>
-                  </article>
-                ))}
-              </div>
+                  ),
+                }))} />
             </div>
           </div>
         </div>
@@ -293,14 +292,10 @@ const ContractsContent = () => {
           <div className="col-xl-12">
             <div className="contracts__page-faq">
               <h3>{contractsContent.faqTitle}</h3>
-              <div className="contracts__page-faq-list">
-                {contractsContent.faq.map((faq) => (
-                  <article key={faq.question} className="contracts__page-faq-item">
-                    <h5>{faq.question}</h5>
-                    <p>{faq.answer}</p>
-                  </article>
-                ))}
-              </div>
+              <DisclosureList label="contract questions" items={contractsContent.faq.map((faq) => ({
+                title: faq.question,
+                content: <p>{faq.answer}</p>,
+              }))} />
             </div>
           </div>
         </div>

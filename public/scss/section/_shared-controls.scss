@@ -45,6 +45,8 @@ body:has(.header-two) {
     .competition-entry-form__submit { min-height: 52px; background: #b32235; border-radius: 12px; box-shadow: none; }
   }
   @media (max-width: 767px) {
+    // Mobile readers should never wait for delayed scroll reveals to see content.
+    [data-aos] { opacity: 1 !important; transform: none !important; transition: none !important; }
     .header-one__right-search-box .header-search-label { font-size: 22px; }
     .header-one__right-search-box input { font-size: 16px; }
     .contact__form--labelled .mb-30 { margin-bottom: 20px; }

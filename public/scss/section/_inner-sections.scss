@@ -13,6 +13,27 @@
 :is(#service-options, #service-support, #service-limits, #about-team, #about-cover, #about-reputation, [id^="help-advice-"]) { scroll-margin-top: 30px; }
 
 body:has(.header-two) {
+  .detail-list {
+    &__tools { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 16px; }
+    &__tools p { margin: 0; color: #526171; font-size: 14px; line-height: 1.6; }
+    &__tools button { min-height: 44px; flex-shrink: 0; padding: 9px 14px; border: 1px solid #cdd5de; border-radius: 10px; background: #fff; color: #263442; font-size: 14px; font-weight: 650; }
+    &__items { display: grid; gap: 10px; }
+    details { border: 1px solid #dfe4eb; border-radius: 12px; background: #fff; }
+    summary { display: flex; align-items: center; justify-content: space-between; gap: 20px; min-height: 62px; padding: 18px 20px; cursor: pointer; list-style: none; color: #263442; font-size: 16px; line-height: 1.5; font-weight: 650; }
+    summary::-webkit-details-marker { display: none; }
+    summary:focus-visible, &__tools button:focus-visible { outline: 3px solid #b32235; outline-offset: 3px; }
+    summary:hover { color: #921b2b; }
+    &__indicator { position: relative; flex: 0 0 16px; width: 16px; height: 16px; }
+    &__indicator::before, &__indicator::after { content: ""; position: absolute; top: 7px; left: 1px; width: 14px; height: 2px; background: currentColor; }
+    &__indicator::after { transform: rotate(90deg); }
+    details[open] { border-color: #d6b5bd; background: #fffafb; }
+    details[open] .detail-list__indicator::after { display: none; }
+    &__body { padding: 0 20px 20px; }
+    &__body p, &__body li { color: #526171; font-size: 15px; line-height: 1.8; }
+    &__body p:last-child, &__body ul { margin-bottom: 0; }
+    &__body li { display: flex; align-items: baseline; gap: 12px; margin-top: 10px; }
+    &__body li i { color: #b32235; }
+  }
   .services__two.section-padding-three {
     .services__two-item--home { min-height: 320px; padding: 24px; }
     .services__two-item-footer > a { min-height: 44px; display: inline-flex; align-items: center; }
@@ -112,6 +133,9 @@ body:has(.header-two) {
     .contracts__page .contracts__page-brochure-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   }
   @media (max-width: 575px) {
+    .detail-list__tools { align-items: flex-start; flex-direction: column; gap: 8px; }
+    .detail-list summary { padding: 16px; gap: 12px; }
+    .detail-list__body { padding: 0 16px 16px; }
     .section-links { padding: 16px; }
     .section-links ul { display: grid; grid-template-columns: 1fr; }
     .section-links a { width: 100%; justify-content: space-between; }

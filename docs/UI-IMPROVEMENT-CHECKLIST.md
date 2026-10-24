@@ -222,3 +222,15 @@ changes; they are not declared complete until final verification and deployment.
 - Full lint/typecheck/audit/production-build verification passed again after the
   focus fix. HTTPS from this operator connection also timed out, so live health
   could not be established; this alone does not prove the public site is down.
+- Contracts follow-up: converted the seven detailed term topics and six contract
+  FAQs to native disclosures with explicit expand/collapse-all controls. Benefits,
+  comparison plans, exclusions and clause summaries remain visible. All original
+  term and FAQ wording is retained in the rendered page.
+- Verified individual FAQ opening, all six FAQ expansion/collapse, keyboard Enter
+  on Service Limits, all seven term expansion, and desktop/mobile presentation.
+  Reviewed About introduction and Contact content at 390px, plus Boiler Repair
+  hero at desktop and its first content section at mobile width.
+- Mobile decorative AOS entrance delays removed after observing temporary blank
+  sections during anchor navigation. Full lint/typecheck/audit/build passed.
+  Browser control became disabled again before the planned 360px service FAQ
+  check; that narrower-width review remains outstanding.
